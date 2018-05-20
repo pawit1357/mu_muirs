@@ -25,8 +25,7 @@ Login page
   padding-top: 10px;
   overflow: hidden;
   position: relative; }
-  
-  
+
 .login .content h3 {
   color: #4db3a5;
   text-align: center;
@@ -84,9 +83,6 @@ Login page
   padding: 25px 30px 25px 30px;
   margin-left: -30px;
   margin-right: -30px; }
-  
-  
-  
 
 .login-options {
   margin-bottom: 30px;

@@ -12,7 +12,7 @@ $departments = MDepartment::model ()->findAll ();
 				<?php echo  MenuUtil::getMenuName($_SERVER['REQUEST_URI'])?>
 			</div>
 			<div class="actions">
-			<?php echo CHtml::link('ย้อนกลับ',array('Form1/'),array('class'=>'btn btn-default btn-sm'));?>
+			<?php echo (UserLoginUtils::getUserRole()!=6)? '' : CHtml::link('ย้อนกลับ',array('NormalPerson/'),array('class'=>'btn btn-default btn-sm'));?>
 			</div>
 		</div>
 		<div class="portlet-body form">

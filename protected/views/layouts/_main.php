@@ -25,9 +25,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <meta content="" name="description" />
 <meta content="" name="author" />
 <!-- BEGIN GLOBAL MANDATORY STYLES -->
-<link
-	href="<?php echo ConfigUtil::getAppName();?>/assets/global/plugins/font-awesome/css/font-awesome.min.css"
-	rel="stylesheet" type="text/css" />
+<link href="<?php echo ConfigUtil::getAppName();?>/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 <link
 	href="<?php echo ConfigUtil::getAppName();?>/assets/global/plugins/simple-line-icons/simple-line-icons.min.css"
 	rel="stylesheet" type="text/css" />
@@ -48,9 +46,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <link
 	href="<?php echo ConfigUtil::getAppName();?>/assets/global/plugins/select2/css/select2-bootstrap.min.css"
 	rel="stylesheet" type="text/css" />
-<link
-	href="<?php echo ConfigUtil::getAppName();?>/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css"
-	rel="stylesheet" type="text/css" />
+
 <link
 	href="<?php echo ConfigUtil::getAppName();?>/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css"
 	rel="stylesheet" type="text/css" />
@@ -66,6 +62,9 @@ License: You must have a valid license purchased only from themeforest(the above
 <link
 	href="<?php echo ConfigUtil::getAppName();?>/assets/global/plugins/icheck/skins/all.css"
 	rel="stylesheet" type="text/css" />
+	
+<link href="<?php echo ConfigUtil::getAppName();?>/assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo ConfigUtil::getAppName();?>/assets/global/plugins/bootstrap-modal/css/bootstrap-modal.css" rel="stylesheet" type="text/css" />
 
 <!-- END PAGE LEVEL PLUGINS -->
 <!-- BEGIN THEME GLOBAL STYLES -->
@@ -88,10 +87,12 @@ License: You must have a valid license purchased only from themeforest(the above
 <link
 	href="<?php echo ConfigUtil::getAppName();?>/assets/layouts/layout/css/custom.min.css"
 	rel="stylesheet" type="text/css" />
-<link href="<?php echo ConfigUtil::getAppName();?>/css/lock.min.css" rel="stylesheet" type="text/css" />
 
 <link
 	href="<?php echo ConfigUtil::getAppName();?>/css/jquery-ui-1.11.4.custom.css"
+	rel="stylesheet" type="text/css" />
+	<link
+	href="<?php echo ConfigUtil::getAppName();?>/css/jquery.datetimepicker.css"
 	rel="stylesheet" type="text/css" />
 <!--  <link href="<?//php echo ConfigUtil::getAppName();?>/css/SpecialDateSheet.css" rel="stylesheet" type="text/css" /> -->
 
@@ -224,7 +225,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <?php echo MenuUtil::getNavigator($_SERVER['REQUEST_URI']);?>
 </ul>
 					<div class="page-toolbar">
-<?php echo UserLoginUtils::getDepartmentInfo();//.'  '.ConfigUtil::getApplicationUpdateVersion();?>
+<?php echo ConfigUtil::getApplicationUpdateVersion();?>
 </div>
 				</div>
 				<!-- END PAGE BAR -->
@@ -346,9 +347,7 @@ License: You must have a valid license purchased only from themeforest(the above
 	<script
 		src="<?php echo ConfigUtil::getAppName();?>/assets/global/plugins/icheck/icheck.min.js"
 		type="text/javascript"></script>
-	<script
-		src="<?php echo ConfigUtil::getAppName();?>/js/components-date-time-pickers.min.js"
-		type="text/javascript"></script>
+
 	<script src="<?php echo ConfigUtil::getAppName();?>/js/mycustom.js"
 		type="text/javascript"></script>
 
@@ -361,9 +360,6 @@ License: You must have a valid license purchased only from themeforest(the above
 		src="<?php echo ConfigUtil::getAppName();?>/assets/layouts/global/scripts/quick-sidebar.min.js"
 		type="text/javascript"></script>
 		
-	<script
-		src="<?php echo ConfigUtil::getAppName();?>/assets/global/plugins/ckeditor/ckeditor.js"
-		type="text/javascript"></script>
 		
 	<!-- END THEME LAYOUT SCRIPTS -->
 
@@ -374,7 +370,8 @@ License: You must have a valid license purchased only from themeforest(the above
 	<script src="<?php echo ConfigUtil::getAppName();?>/js/moment.js"
 		type="text/javascript"></script>
 
-
+	<script src="<?php echo ConfigUtil::getAppName();?>/js/jquery.datetimepicker.full.js"
+		type="text/javascript"></script>
 
 
 

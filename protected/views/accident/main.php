@@ -1,6 +1,6 @@
-<?php 
-$criteria = new CDbCriteria ();
-$departments = MDepartment::model ()->findAll ();
+<?php
+$criteria = new CDbCriteria();
+$departments = MDepartment::model()->findAll();
 ?>
 <form id="Form1" method="post" enctype="multipart/form-data"
 	class="form-horizontal">
@@ -12,7 +12,7 @@ $departments = MDepartment::model ()->findAll ();
 				<?php echo  MenuUtil::getMenuName($_SERVER['REQUEST_URI'])?>
 			</div>
 			<div class="actions">
-			<?php echo CHtml::link('ย้อนกลับ',array('Form1/'),array('class'=>'btn btn-default btn-sm'));?>
+			<?php echo (UserLoginUtils::getUserRole()!=6)? '' : CHtml::link('ย้อนกลับ',array('NormalPerson/'),array('class'=>'btn btn-default btn-sm'));?>
 			</div>
 		</div>
 		<div class="portlet-body form">
@@ -68,26 +68,26 @@ $departments = MDepartment::model ()->findAll ();
 									</div>
 								</div>
 							</div>
-				<div class="row">
-					<div class="col-md-10">
-						<div class="form-group">
-							<label class="control-label col-md-4">คณะ/ส่วนงาน:<span
-								class="required">*</span></label>
-							<div class="col-md-6">
+							<div class="row">
+								<div class="col-md-10">
+									<div class="form-group">
+										<label class="control-label col-md-4">คณะ/ส่วนงาน:<span
+											class="required">*</span></label>
+										<div class="col-md-6">
 
-								<select class="form-control select2"
-									name="Accident[department_id]" id="department_id">
-									<option value="-1">-- (ไม่มีสังกัด) --</option>
+											<select class="form-control select2"
+												name="Accident[department_id]" id="department_id">
+												<option value="-1">-- (ไม่มีสังกัด) --</option>
 			<?php foreach($departments as $item) {?>
 			<option value="<?php echo $item->id?>"><?php echo sprintf('%02d', $item->id).'-'. $item->name?></option>
 			<?php }?>
 			</select>
 
+										</div>
+										<div id="divReq-faculty_id"></div>
+									</div>
+								</div>
 							</div>
-							<div id="divReq-faculty_id"></div>
-						</div>
-					</div>
-				</div>
 							<div class="row">
 								<div class="col-md-10">
 									<div class="form-group">
@@ -124,10 +124,20 @@ $departments = MDepartment::model ()->findAll ();
 											class="required">*</span>
 										</label>
 										<div class="col-md-4">
-											<input type="text" value="" id="report_date"
-												style="width: 80px !important" name="Accident[report_date]" />
 
+											<div class="input-group date date-picker"
+												data-date-format="dd-mm-yyyy">
+												<input type="text" value="<?php echo CommonUtil::getCurDate();?>" id="report_date"
+													class="form-control" name="Accident[report_date]" /> <span
+													class="input-group-btn">
+													<button class="btn default" type="button">
+														<i class="fa fa-calendar"></i>
+													</button>
+												</span>
+											</div>
 										</div>
+
+
 										<div id="divReq-report_date"></div>
 									</div>
 								</div>
@@ -182,8 +192,17 @@ $departments = MDepartment::model ()->findAll ();
 											:<span class="required">*</span>
 										</label>
 										<div class="col-md-4">
-											<input type="text" value="" id="case_date"
-												style="width: 80px !important" name="Accident[case_date]" />
+											<div class="input-group date date-picker"
+												data-date-format="dd-mm-yyyy">
+												<input type="text" value="<?php echo CommonUtil::getCurDate();?>" id="case_date"
+													class="form-control" name="Accident[case_date]" /> <span
+													class="input-group-btn">
+													<button class="btn default" type="button">
+														<i class="fa fa-calendar"></i>
+													</button>
+												</span>
+											</div>
+
 
 										</div>
 										<div id="divReq-case_date"></div>
@@ -204,7 +223,7 @@ $departments = MDepartment::model ()->findAll ();
 									</div>
 								</div>
 							</div>
-							
+
 							<div class="row">
 								<div class="col-md-10">
 									<div class="form-group">
@@ -245,28 +264,28 @@ $departments = MDepartment::model ()->findAll ();
 									<div class="form-group last">
 										<label class="control-label col-md-4">แนบรูปภาพ (ถ้ามี)</label>
 										<div class="col-md-4">
-											<div class="fileinput fileinput-new"
-												data-provides="fileinput">
-												<div class="fileinput-new thumbnail"
-													style="width: 200px; height: 150px;">
-													<img
-														src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image"
-														alt="" />
+											
+											<div class="row fileupload-buttonbar">
+												<div class="col-lg-7">
+													<!-- The fileinput-button span is used to style the file input field as button -->
+													<span class="btn green fileinput-button"> <input
+														type="file" name="img1[]" multiple="multiple">
+													</span>
+													<!-- The global file processing state -->
+													<span class="fileupload-process"> </span>
 												</div>
-												<div class="fileinput-preview fileinput-exists thumbnail"
-													style="max-width: 200px; max-height: 150px;"></div>
-												<div>
-													<span class="btn default btn-file"> <span
-														class="fileinput-new"> Select image </span> <span
-														class="fileinput-exists"> Change </span> <input
-														type="file" name="img1[]">
-													</span> <a href="javascript:;"
-														class="btn red fileinput-exists" data-dismiss="fileinput">
-														Remove </a>
+												<!-- The global progress information -->
+												<div class="col-lg-5 fileupload-progress fade">
+													<!-- The global progress bar -->
+													<div class="progress progress-striped active"
+														role="progressbar" aria-valuemin="0" aria-valuemax="100">
+														<div class="progress-bar progress-bar-success"
+															style="width: 0%;"></div>
+													</div>
+													<!-- The extended global progress information -->
+													<div class="progress-extended">&nbsp;</div>
 												</div>
-												<span class="required"> ไฟล์ไม่เกิน 1MB</span>
 											</div>
-
 											<div class="clearfix margin-top-10"></div>
 										</div>
 									</div>
@@ -308,26 +327,26 @@ $departments = MDepartment::model ()->findAll ();
 									<div class="form-group last">
 										<label class="control-label col-md-4">แนบรูปภาพ (ถ้ามี)</label>
 										<div class="col-md-4">
-											<div class="fileinput fileinput-new"
-												data-provides="fileinput">
-												<div class="fileinput-new thumbnail"
-													style="width: 200px; height: 150px;">
-													<img
-														src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image"
-														alt="" />
+											<div class="row fileupload-buttonbar">
+												<div class="col-lg-7">
+													<!-- The fileinput-button span is used to style the file input field as button -->
+													<span class="btn green fileinput-button"> <input
+														type="file" name="img2[]" multiple="multiple">
+													</span>
+													<!-- The global file processing state -->
+													<span class="fileupload-process"> </span>
 												</div>
-												<div class="fileinput-preview fileinput-exists thumbnail"
-													style="max-width: 200px; max-height: 150px;"></div>
-												<div>
-													<span class="btn default btn-file"> <span
-														class="fileinput-new"> Select image </span> <span
-														class="fileinput-exists"> Change </span> <input
-														type="file" name="img2[]">
-													</span> <a href="javascript:;"
-														class="btn red fileinput-exists" data-dismiss="fileinput">
-														Remove </a>
+												<!-- The global progress information -->
+												<div class="col-lg-5 fileupload-progress fade">
+													<!-- The global progress bar -->
+													<div class="progress progress-striped active"
+														role="progressbar" aria-valuemin="0" aria-valuemax="100">
+														<div class="progress-bar progress-bar-success"
+															style="width: 0%;"></div>
+													</div>
+													<!-- The extended global progress information -->
+													<div class="progress-extended">&nbsp;</div>
 												</div>
-												<span class="required"> ไฟล์ไม่เกิน 1MB</span>
 											</div>
 
 											<div class="clearfix margin-top-10"></div>
@@ -352,11 +371,15 @@ $departments = MDepartment::model ()->findAll ();
 						</div>
 						<div id="collapse_3" class="panel-collapse in">
 							<br>
+
 							<div class="row">
 
 								<div class="col-md-10">
 									<div class="form-group">
 										<label class="control-label col-md-1"></label>
+
+
+
 										<div class="col-md-8">
 											<table>
 												<tr>
@@ -501,35 +524,74 @@ $departments = MDepartment::model ()->findAll ();
 
     
     jQuery(document).ready(function () {
+
+    	 // กรณีใช้แบบ input
+        $("#report_date").datetimepicker({
+            timepicker:false,
+            format:'d/m/Y',  // กำหนดรูปแบบวันที่ ที่ใช้ เป็น 00-00-0000            
+            lang:'th',  // ต้องกำหนดเสมอถ้าใช้ภาษาไทย และ เป็นปี พ.ศ.
+            onSelectDate:function(dp,$input){
+                var yearT=new Date(dp).getFullYear()-0;  
+                var yearTH=yearT+543;
+                var fulldate=$input.val();
+                var fulldateTH=fulldate.replace(yearT,yearTH);
+                $input.val(fulldateTH);
+            },
+        });       
+
+
+        // กรณีใช้กับ input ต้องกำหนดส่วนนี้ด้วยเสมอ เพื่อปรับปีให้เป็น ค.ศ. ก่อนแสดงปฏิทิน
+        $("#report_date").on("mouseenter mouseleave",function(e){
+            var dateValue=$(this).val();
+            if(dateValue!=""){
+                    var arr_date=dateValue.split("/"); // ถ้าใช้ตัวแบ่งรูปแบบอื่น ให้เปลี่ยนเป็นตามรูปแบบนั้น
+                    // ในที่นี้อยู่ในรูปแบบ 00-00-0000 เป็น d-m-Y  แบ่งด่วย - ดังนั้น ตัวแปรที่เป็นปี จะอยู่ใน array
+                    //  ตัวที่สอง arr_date[2] โดยเริ่มนับจาก 0 
+                    if(e.type=="mouseenter"){
+                        var yearT=arr_date[2]-543;
+                    }       
+                    if(e.type=="mouseleave"){
+                        var yearT=parseInt(arr_date[2])+543;
+                    }   
+                    dateValue=dateValue.replace(arr_date[2],yearT);
+                    $(this).val(dateValue);                                                 
+            }       
+        });
+        // กรณีใช้แบบ input
+        $("#case_date").datetimepicker({
+            timepicker:false,
+            format:'d/m/Y',  // กำหนดรูปแบบวันที่ ที่ใช้ เป็น 00-00-0000            
+            lang:'th',  // ต้องกำหนดเสมอถ้าใช้ภาษาไทย และ เป็นปี พ.ศ.
+            onSelectDate:function(dp,$input){
+                var yearT=new Date(dp).getFullYear()-0;  
+                var yearTH=yearT+543;
+                var fulldate=$input.val();
+                var fulldateTH=fulldate.replace(yearT,yearTH);
+                $input.val(fulldateTH);
+            },
+        });       
+
+
+        // กรณีใช้กับ input ต้องกำหนดส่วนนี้ด้วยเสมอ เพื่อปรับปีให้เป็น ค.ศ. ก่อนแสดงปฏิทิน
+        $("#case_date").on("mouseenter mouseleave",function(e){
+            var dateValue=$(this).val();
+            if(dateValue!=""){
+                    var arr_date=dateValue.split("/"); // ถ้าใช้ตัวแบ่งรูปแบบอื่น ให้เปลี่ยนเป็นตามรูปแบบนั้น
+                    // ในที่นี้อยู่ในรูปแบบ 00-00-0000 เป็น d-m-Y  แบ่งด่วย - ดังนั้น ตัวแปรที่เป็นปี จะอยู่ใน array
+                    //  ตัวที่สอง arr_date[2] โดยเริ่มนับจาก 0 
+                    if(e.type=="mouseenter"){
+                        var yearT=arr_date[2]-543;
+                    }       
+                    if(e.type=="mouseleave"){
+                        var yearT=parseInt(arr_date[2])+543;
+                    }   
+                    dateValue=dateValue.replace(arr_date[2],yearT);
+                    $(this).val(dateValue);                                                 
+            }       
+        });
         
-		 $.datepicker.regional['th'] ={
-			        changeMonth: true,
-			        changeYear: true,
-			        //defaultDate: GetFxupdateDate(FxRateDateAndUpdate.d[0].Day),
-			        yearOffSet: 543,
-			        showOn: "button",
-			        buttonImage: '/images/calendar.gif',
-			        buttonImageOnly: true,
-			        dateFormat: 'dd/mm/yy',
-			        dayNames: ['อาทิตย์', 'จันทร์', 'อังคาร', 'พุธ', 'พฤหัสบดี', 'ศุกร์', 'เสาร์'],
-			        dayNamesMin: ['อา', 'จ', 'อ', 'พ', 'พฤ', 'ศ', 'ส'],
-			        monthNames: ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'],
-			        monthNamesShort: ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'],
-			        constrainInput: true,
-			       
-			        prevText: 'ก่อนหน้า',
-			        nextText: 'ถัดไป',
-			        yearRange: '-20:+20',
-			        buttonText: 'เลือก',
-			      
-			    };
-		    
-			$.datepicker.setDefaults($.datepicker.regional['th']);
-		    $( "#report_date" ).datepicker( $.datepicker.regional["th"] ); // Set ภาษาที่เรานิยามไว้ด้านบน
-		    $( "#report_date" ).datepicker("setDate", new Date()); //Set ค่าวันปัจจุบัน
-		    $( "#case_date" ).datepicker( $.datepicker.regional["th"] ); // Set ภาษาที่เรานิยามไว้ด้านบน
-		    $( "#case_date" ).datepicker("setDate", new Date()); //Set ค่าวันปัจจุบัน
-		    
+
+
     	$( "#Form1" ).submit(function( event ) {
         	
      		//Validate date format

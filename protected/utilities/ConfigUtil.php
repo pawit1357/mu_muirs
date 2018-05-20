@@ -1,8 +1,8 @@
 <?php
 class ConfigUtil {
 	private static $emailSubject = 'MU Accident Report System';
-	private static $hostName = 'http://localhost:81/';
-	private static $siteName = 'http://localhost:81/muirs/index.php/Site/LogOut';
+	private static $hostName = 'http://localhost:88/';
+	private static $siteName = 'http://localhost:88/muirs/index.php/Site/LogOut';
 	
 	
 	private static $ApplicationTitle = 'MU-IRS | MU Incident Report System';

@@ -99,6 +99,12 @@ class CommonUtil {
 		
 		return ((( int ) $year) - 543) . '-' . $month . '-' . $day;
 	}
+	public static function getCurDate()
+	{
+	    list ($day, $month, $year) = explode("/", date("d/m/Y"));
+	    
+	    return $day . '/' . $month . '/' . (((int) $year) + 543);
+	}
 	public function upload($file) {
 		$currentdir = getcwd ();
 		
@@ -164,14 +170,14 @@ class CommonUtil {
 	// $somevariable = $row->revision;
 	// return $somevariable + 1;
 	// }
-	public static function getValue($id) {
-		$criteria = new CDbCriteria ();
-		$criteria->condition = "id ='" . $id . "'";
-		$criteria->order = 'id DESC';
-		$row = MSetting::model ()->find ( $criteria );
-		$somevariable = $row->value;
-		return $somevariable;
-	}
+// 	public static function getValue($id) {
+// 		$criteria = new CDbCriteria ();
+// 		$criteria->condition = "id ='" . $id . "'";
+// 		$criteria->order = 'id DESC';
+// 		$row = MSetting::model ()->find ( $criteria );
+// 		$somevariable = $row->value;
+// 		return $somevariable;
+// 	}
 	public static function reArrayFiles($file_post) {
 		$file_ary = array ();
 		$file_count = count ( $file_post ['name'] );

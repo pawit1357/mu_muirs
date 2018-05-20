@@ -177,7 +177,7 @@ $year1 = str_split ( $_year1 + 543 );
 		<br>
 		<div class="create-account">
 			<p>
-<?php echo CHtml::link('Login บุคลากร/นักศึกษา ',array('Site/Reg'),array('class'=>'uppercase'));?> &nbsp;&nbsp;|&nbsp;&nbsp;
+<?php echo CHtml::link('บุคคลทั่วไป',array('NormalPerson/'),array('class'=>'uppercase'));?> &nbsp;&nbsp;|&nbsp;&nbsp;
 <?php echo CHtml::link('ผู้ดูแลประจำส่วนงาน',array('Site/Login'),array('class'=>'uppercase'));?>
 			
 <!-- 				<a href="javascript:;" id="register-btn" class="uppercase">ลงทะเบียนใช้งาน</a> -->
