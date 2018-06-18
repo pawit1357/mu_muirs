@@ -37,6 +37,17 @@ class IncidentController extends CController {
 			}
 			
 			$model->save ();
+			
+			// Notify//
+			$model = new Notify();
+			$model->report_type = 2;//1:Acicent&Investigate,2:Incident,3:Accident
+			$model->title = 'Incident';
+			$model->remark = '';
+			$model->isRead = false;
+			$model->create_date = date("Y-m-d H:i:s");
+			$model->save();
+			// End-Notify//
+			
 			// echo "SAVE";
 			$transaction->commit ();
 			

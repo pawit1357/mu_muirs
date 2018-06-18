@@ -47,6 +47,18 @@ class AccidentController extends CController
                 $srh->save();
             }
             $model->save();
+            
+            // Notify//
+            $model = new Notify();
+            $model->report_type = 3;//1:Acicent&Investigate,2:Incident,3:Accident
+            $model->title = 'Accident';
+            $model->remark = '';
+            $model->isRead = false;
+            $model->create_date = date("Y-m-d H:i:s");
+            $model->save();
+            // End-Notify//
+            
+            
             $img1 = $_FILES['img1'];
             
             if (isset($img1)) {

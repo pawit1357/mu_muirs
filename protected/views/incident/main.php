@@ -1,3 +1,8 @@
+<?php
+$criteria = new CDbCriteria();
+$departments = MDepartment::model()->findAll();
+
+?>
 <form id="Form1" method="post" enctype="multipart/form-data"
 	class="form-horizontal">
 
@@ -14,7 +19,7 @@
 		<div class="portlet-body form">
 			<div class="form-body">
 				<!-- BEGIN FORM-->
-           
+
 				<div class="note note-info">
 					<p>
 						<b>อุบัติการณ์ (Incident)</b> หมายถึง
@@ -64,28 +69,58 @@
 						<div id="collapse_1" class="panel-collapse in">
 							<br>
 
-
-
 							<div class="row">
 								<div class="col-md-10">
 									<div class="form-group">
-										<label class="control-label col-md-4">วันที่แจ้ง:<span
-											class="required">*</span>
-										</label>
-										<div class="col-md-4">
-											<input type="text" value="" id="report_date"
-												style="width: 80px !important" name="Incident[report_date]" />
+										<label class="control-label col-md-4">คณะ/ส่วนงาน:<span
+											class="required">*</span></label>
+										<div class="col-md-6">
+											<select class="form-control select2" name="Incident[owner_department_id]"
+												id="owner_department_id">
+												<option value="-1">-- (ไม่มีสังกัด) --</option>
+			<?php foreach($departments as $item) {?>
+			<option value="<?php echo $item->id?>"><?php echo (($item->faculty_id < 0)? '' : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- '). $item->name?></option>
+			<?php }?>
+			</select>
 
 										</div>
-										<div id="divReq-report_date"></div>
+										<div id="divReq-owner_department_id"></div>
 									</div>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-md-10">
 									<div class="form-group">
+										<label class="control-label col-md-4">วันที่แจ้ง
+											:<span class="required">*</span>
+										</label>
+										<div class="col-md-4">
+											<div class="input-group date date-picker"
+												data-date-format="dd-mm-yyyy">
+												<input type="text"
+													value="<?php echo CommonUtil::getCurDate();?>"
+													id="report_date" class="form-control"
+													name="Incident[report_date]" /> <span
+													class="input-group-btn">
+													<button class="btn default" type="button">
+														<i class="fa fa-calendar"></i>
+													</button>
+												</span>
+											</div>
 
-										<label class="control-label col-md-4">สถานที่เกิดเหตุ.: </label>
+
+										</div>
+										<div id="divReq-report_date"></div>
+									</div>
+								</div>
+							</div>
+							
+
+							<div class="row">
+								<div class="col-md-10">
+									<div class="form-group">
+
+										<label class="control-label col-md-4">สถานที่เกิดเหตุ.:<span class="required">*</span> </label>
 										<div class="col-md-4">
 											<textarea rows="5" cols="70" id="accident_location"
 												name="Incident[accident_location]"></textarea>
@@ -125,11 +160,11 @@
 
 										</div>
 										<div class="col-md-4">
-											<textarea rows="5" cols="70" id="accident_characteristics"
-												name="Incident[accident_characteristics]"></textarea>
+											<textarea rows="5" cols="70" id="accident_cause"
+												name="Incident[accident_cause]"></textarea>
 
 										</div>
-										<div id="divReq-accident_characteristics"></div>
+										<div id="divReq-accident_cause"></div>
 									</div>
 								</div>
 							</div>
@@ -143,10 +178,10 @@
 											ชื่อ-สกุล :<span class="required">*</span>
 										</label>
 										<div class="col-md-4">
-											<input type="text" value="" id="accident_cause"
-												class="form-control" name="Incident[accident_cause]" />
+											<input type="text" value="" id="accident_event_withness_first"
+												class="form-control" name="Incident[accident_event_withness_first]" />
 										</div>
-										<div id="divReq-accident_cause"></div>
+										<div id="divReq-accident_event_withness_first"></div>
 									</div>
 								</div>
 							</div>
@@ -205,7 +240,7 @@
 						<div class="row">
 							<div class="col-md-offset-3 col-md-10">
 								<button type="submit" class="btn green uppercase"><?php echo ConfigUtil::getBtnSaveButton();?></button>
-								<?php echo CHtml::link(ConfigUtil::getBtnCancelButton(),array('Form1/'),array('class'=>'btn btn-default uppercase'));?>
+								<?php echo CHtml::link(ConfigUtil::getBtnCancelButton(),array('Incident/'),array('class'=>'btn btn-default uppercase'));?>
 							</div>
 						</div>
 					</div>
@@ -225,33 +260,41 @@
 
     
     jQuery(document).ready(function () {
-        
-		 $.datepicker.regional['th'] ={
-			        changeMonth: true,
-			        changeYear: true,
-			        //defaultDate: GetFxupdateDate(FxRateDateAndUpdate.d[0].Day),
-			        yearOffSet: 543,
-			        showOn: "button",
-			        buttonImage: '/images/calendar.gif',
-			        buttonImageOnly: true,
-			        dateFormat: 'dd/mm/yy',
-			        dayNames: ['อาทิตย์', 'จันทร์', 'อังคาร', 'พุธ', 'พฤหัสบดี', 'ศุกร์', 'เสาร์'],
-			        dayNamesMin: ['อา', 'จ', 'อ', 'พ', 'พฤ', 'ศ', 'ส'],
-			        monthNames: ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'],
-			        monthNamesShort: ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'],
-			        constrainInput: true,
-			       
-			        prevText: 'ก่อนหน้า',
-			        nextText: 'ถัดไป',
-			        yearRange: '-20:+20',
-			        buttonText: 'เลือก',
-			      
-			    };
-		    
-			$.datepicker.setDefaults($.datepicker.regional['th']);
-		    $( "#report_date" ).datepicker( $.datepicker.regional["th"] ); // Set ภาษาที่เรานิยามไว้ด้านบน
-		    $( "#report_date" ).datepicker("setDate", new Date()); //Set ค่าวันปัจจุบัน
-		    
+
+        // กรณีใช้แบบ input
+        $("#report_date").datetimepicker({
+            timepicker:false,
+            format:'d/m/Y',  // กำหนดรูปแบบวันที่ ที่ใช้ เป็น 00-00-0000            
+            lang:'th',  // ต้องกำหนดเสมอถ้าใช้ภาษาไทย และ เป็นปี พ.ศ.
+            onSelectDate:function(dp,$input){
+                var yearT=new Date(dp).getFullYear()-0;  
+                var yearTH=yearT+543;
+                var fulldate=$input.val();
+                var fulldateTH=fulldate.replace(yearT,yearTH);
+                $input.val(fulldateTH);
+            },
+        });       
+
+
+        // กรณีใช้กับ input ต้องกำหนดส่วนนี้ด้วยเสมอ เพื่อปรับปีให้เป็น ค.ศ. ก่อนแสดงปฏิทิน
+        $("#report_date").on("mouseenter mouseleave",function(e){
+            var dateValue=$(this).val();
+            if(dateValue!=""){
+                    var arr_date=dateValue.split("/"); // ถ้าใช้ตัวแบ่งรูปแบบอื่น ให้เปลี่ยนเป็นตามรูปแบบนั้น
+                    // ในที่นี้อยู่ในรูปแบบ 00-00-0000 เป็น d-m-Y  แบ่งด่วย - ดังนั้น ตัวแปรที่เป็นปี จะอยู่ใน array
+                    //  ตัวที่สอง arr_date[2] โดยเริ่มนับจาก 0 
+                    if(e.type=="mouseenter"){
+                        var yearT=arr_date[2]-543;
+                    }       
+                    if(e.type=="mouseleave"){
+                        var yearT=parseInt(arr_date[2])+543;
+                    }   
+                    dateValue=dateValue.replace(arr_date[2],yearT);
+                    $(this).val(dateValue);                                                 
+            }       
+        });
+
+
     	$( "#Form1" ).submit(function( event ) {
         	
      		//Validate date format
@@ -266,17 +309,51 @@
 //         	}
         	
         	
-//         	if($("#code_usage_id").val() == "0"){
-//         		$("#code_usage_id").closest('.form-group').addClass('has-error');
-//         		$("#divReq-code_usage_id").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
-//         		$("#code_usage_id").focus();
+        	if($("#owner_department_id").val() =="-1"){
+        		$("#owner_department_id").closest('.form-group').addClass('has-error');
+        		$("#divReq-owner_department_id").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+        		$("#owner_department_id").focus();
+        		return false;
+            }else{
+            	$("#divReq-owner_department_id").html('');
+            	$("#owner_department_id").closest('.form-group').removeClass('has-error');
+        	}
+        	if($("#accident_location").val().length == 0){
+        		$("#accident_location").closest('.form-group').addClass('has-error');
+        		$("#divReq-accident_location").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+        		$("#accident_location").focus();
+        		return false;
+            }else{
+            	$("#divReq-accident_location").html('');
+            	$("#accident_location").closest('.form-group').removeClass('has-error');
+        	}
+//         	if($("#accident_characteristics").val().length == 0){
+//         		$("#accident_characteristics").closest('.form-group').addClass('has-error');
+//         		$("#divReq-accident_characteristics").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+//         		$("#accident_characteristics").focus();
 //         		return false;
 //             }else{
-//             	$("#divReq-code_usage_id").html('');
-//             	$("#code_usage_id").closest('.form-group').removeClass('has-error');
+//             	$("#divReq-accident_characteristics").html('');
+//             	$("#accident_characteristics").closest('.form-group').removeClass('has-error');
 //         	}
-        	
-        	
+//         	if($("#accident_cause").val().length == 0){
+//         		$("#accident_cause").closest('.form-group').addClass('has-error');
+//         		$("#divReq-accident_cause").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+//         		$("#accident_cause").focus();
+//         		return false;
+//             }else{
+//             	$("#divReq-accident_cause").html('');
+//             	$("#accident_cause").closest('.form-group').removeClass('has-error');
+//         	}
+        	if($("#accident_event_withness_first").val().length == 0){
+        		$("#accident_event_withness_first").closest('.form-group').addClass('has-error');
+        		$("#divReq-accident_event_withness_first").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+        		$("#accident_event_withness_first").focus();
+        		return false;
+            }else{
+            	$("#divReq-accident_event_withness_first").html('');
+            	$("#accident_event_withness_first").closest('.form-group').removeClass('has-error');
+        	}
         	this.submit();
     	});
     });

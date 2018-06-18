@@ -1,10 +1,10 @@
-<?php
+﻿<?php
 
-// $criteria = new CDbCriteria ();
-// $criteria->condition = " parent_id <> -1";
-$criteria = new CDbCriteria ();
-$departments = MDepartment::model ()->findAll ();
-// $departments = MDepartment::model ()->findAll ($criteria);
+$criDept = new CDbCriteria ();
+$criDept->condition = " id <> -1";
+$departments = MDepartment::model ()->findAll ($criDept);
+
+
 
 $titles = MTitle::model ()->findAll ();
 $userRoles = UsersRole::model ()->findAll ();
@@ -12,7 +12,7 @@ $userRoles = UsersRole::model ()->findAll ();
 <form id="Form1" method="post" enctype="multipart/form-data"
 	class="form-horizontal">
 
-	<div class="portlet light">
+	<div class="<?php echo ConfigUtil::getPortletTheme(); ?>">
 		<div class="portlet-title">
 			<div class="caption">
 				<?php echo  MenuUtil::getMenuName($_SERVER['REQUEST_URI'])?>
@@ -29,7 +29,7 @@ $userRoles = UsersRole::model ()->findAll ();
 				<div class="row">
 					<div class="col-md-6">
 						<div class="form-group">
-							<label class="control-label col-md-3">สิทธิ์การใช้งานระบบ:<span
+							<label class="control-label col-md-4">กลุ่มผู้ใช้:<span
 								class="required">*</span></label>
 							<div class="col-md-6">
 								<select class="form-control select2" name="UsersLogin[role_id]"
@@ -50,7 +50,7 @@ $userRoles = UsersRole::model ()->findAll ();
 				<div class="row">
 					<div class="col-md-6">
 						<div class="form-group">
-							<label class="control-label col-md-3">รหัสผู้ใช้:<span
+							<label class="control-label col-md-4">รหัสผู้ใช้:<span
 								class="required">*</span></label>
 							<div class="col-md-6">
 								<input id="username" type="text" value="" class="form-control"
@@ -65,11 +65,11 @@ $userRoles = UsersRole::model ()->findAll ();
 				<div class="row">
 					<div class="col-md-6">
 						<div class="form-group">
-							<label class="control-label col-md-3">รหัสผ่าน:<span
+							<label class="control-label col-md-4">รหัสผ่าน:<span
 								class="required">*</span></label>
 							<div class="col-md-6">
 								<input id="password" type="password" value=""
-									class="form-control" name="UsersLogin[username]">
+									class="form-control" name="UsersLogin[password]">
 							</div>
 							<div id="divReq-password"></div>
 						</div>
@@ -78,7 +78,7 @@ $userRoles = UsersRole::model ()->findAll ();
 				<div class="row">
 					<div class="col-md-6">
 						<div class="form-group">
-							<label class="control-label col-md-3">อีเมล์:<span
+							<label class="control-label col-md-4">อีเมล์:<span
 								class="required">*</span></label>
 							<div class="col-md-6">
 								<input id="email" type="text" value="" class="form-control"
@@ -91,7 +91,7 @@ $userRoles = UsersRole::model ()->findAll ();
 				<div class="row">
 					<div class="col-md-6">
 						<div class="form-group">
-							<label class="control-label col-md-3"> สถานะ:<span
+							<label class="control-label col-md-4"> สถานะ:<span
 								class="required"> * </span>
 							</label>
 							<div class="radio-list">
@@ -109,7 +109,7 @@ $userRoles = UsersRole::model ()->findAll ();
 				<div class="row">
 					<div class="col-md-6">
 						<div class="form-group">
-							<label class="control-label col-md-3">คำนำหน้า:<span
+							<label class="control-label col-md-4">คำนำหน้า:<span
 								class="required">*</span></label>
 							<div class="col-md-6">
 								<select class="form-control select2" name="UsersLogin[title_id]"
@@ -128,7 +128,7 @@ $userRoles = UsersRole::model ()->findAll ();
 
 					<div class="col-md-6">
 						<div class="form-group">
-							<label class="control-label col-md-3">ชื่อ:<span class="required">*</span></label>
+							<label class="control-label col-md-4">ชื่อ:<span class="required">*</span></label>
 							<div class="col-md-6">
 								<input id="first_name" type="text" value="" class="form-control"
 									name="UsersLogin[first_name]">
@@ -141,7 +141,7 @@ $userRoles = UsersRole::model ()->findAll ();
 				<div class="row">
 					<div class="col-md-6">
 						<div class="form-group">
-							<label class="control-label col-md-3">นามสกุล:<span
+							<label class="control-label col-md-4">นามสกุล:<span
 								class="required">*</span></label>
 							<div class="col-md-6">
 								<input id="last_name" type="text" value="" class="form-control"
@@ -154,7 +154,7 @@ $userRoles = UsersRole::model ()->findAll ();
 				<div class="row">
 					<div class="col-md-6">
 						<div class="form-group">
-							<label class="control-label col-md-3">เบอร์ติดต่อ:<span
+							<label class="control-label col-md-4">เบอร์ติดต่อ:<span
 								class="required">*</span></label>
 							<div class="col-md-6">
 								<input id="mobile_phone" type="text" value=""
@@ -167,20 +167,18 @@ $userRoles = UsersRole::model ()->findAll ();
 				<div class="row">
 					<div class="col-md-6">
 						<div class="form-group">
-							<label class="control-label col-md-4">คณะ/ส่วนงาน:<span
+							<label class="control-label col-md-4">สังกัดหน่วยงาน:<span
 								class="required">*</span></label>
 							<div class="col-md-6">
-
 								<select class="form-control select2"
 									name="UsersLogin[department_id]" id="department_id">
-									<option value="-1">-- (ไม่มีสังกัด) --</option>
-			<?php foreach($departments as $item) {?>
-			<option value="<?php echo $item->id?>"><?php echo sprintf('%02d', $item->id).'-'. $item->name?></option>
-			<?php }?>
-			</select>
-
+									<option value="0">-- โปรดเลือก --</option>
+                        			<?php foreach($departments as $item) {?>
+                        			<option value="<?php echo $item->id?>"><?php echo ' '.$item->name;?></option>
+                        			<?php }?>
+								</select>
 							</div>
-							<div id="divReq-faculty_id"></div>
+							<div id="divReq-department_id"></div>
 						</div>
 					</div>
 				</div>
@@ -276,6 +274,8 @@ $userRoles = UsersRole::model ()->findAll ();
                 	$("#title_id").closest('.form-group').removeClass('has-error');
             	}
 
+
+
             	if($("#first_name").val().length ==0){
             		$("#first_name").closest('.form-group').addClass('has-error');
             		$("#divReq-first_name").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
@@ -315,7 +315,15 @@ $userRoles = UsersRole::model ()->findAll ();
                 	$("#divReq-department_id").html('');
                 	$("#department_id").closest('.form-group').removeClass('has-error');
             	}
-            	
+            	if($("#branch_group_id").val() == "0"){
+            		$("#branch_group_id").closest('.form-group').addClass('has-error');
+            		$("#divReq-branch_group_id").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+            		$("#branch_group_id").focus();
+                		return false;
+                }else{
+                	$("#divReq-branch_group_id").html('');
+                	$("#branch_group_id").closest('.form-group').removeClass('has-error');
+            	}
             	this.submit();
         	});
         

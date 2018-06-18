@@ -1,35 +1,26 @@
 <?php
-class Incident extends CActiveRecord {
+class Notify extends CActiveRecord {
 	public static function model($className = __CLASS__) {
 		return parent::model ( $className );
 	}
 	public function tableName() {
-		return 'tb_incident';
+		return 'tb_notify';
 	}
 	public function relations() {
-		return array (
-				'onwerdepartment' => array(
-						self::BELONGS_TO,
-						'MDepartment',
-						'owner_department_id'
-				),
-		);}
+		return array ();
+	}
 	public function rules() {
 		return array (
 				array (
-						'id,owner_department_id,
-						report_date,
-						accident_location,
-						accident_cause,
-						accident_characteristics,accident_event_withness_first,
-						img1,create_date,create_by',
+						'id,report_type,remark,isRead,create_date',
 						'safe' 
 				) 
 		);
 	}
 	public function attributeLabels() {
-		return array ();
-		
+		return array ()
+
+		;
 	}
 	public function getUrl($post = null) {
 		if ($post === null)
@@ -44,19 +35,19 @@ class Incident extends CActiveRecord {
 		return new CActiveDataProvider ( get_class ( $this ), array (
 				'criteria' => $criteria,
 				'sort' => array (
-						'defaultOrder' => 't.id asc' 
+						'defaultOrder' => 't.create_date desc' 
 				),
 				'pagination' => array (
 						'pageSize' => 15 
-				)  // ConfigUtil::getDefaultPageSize()
-		
+				) // ConfigUtil::getDefaultPageSize()
+ 
 		) );
 	}
-	public static function getMax() {
-		$criteria = new CDbCriteria ();
-		$criteria->order = 'id DESC';
-		$row = self::model ()->find ( $criteria );
-		$max = $row->id;
-		return $max + 1;
-	}
+// 	public static function getMax() {
+// 		$criteria = new CDbCriteria ();
+// 		$criteria->order = 'id DESC';
+// 		$row = self::model ()->find ( $criteria );
+// 		$max = $row->id;
+// 		return $max+1;
+// 	}
 }

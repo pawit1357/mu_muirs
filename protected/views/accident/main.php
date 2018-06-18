@@ -127,8 +127,10 @@ $departments = MDepartment::model()->findAll();
 
 											<div class="input-group date date-picker"
 												data-date-format="dd-mm-yyyy">
-												<input type="text" value="<?php echo CommonUtil::getCurDate();?>" id="report_date"
-													class="form-control" name="Accident[report_date]" /> <span
+												<input type="text"
+													value="<?php echo CommonUtil::getCurDate();?>"
+													id="report_date" class="form-control"
+													name="Accident[report_date]" /> <span
 													class="input-group-btn">
 													<button class="btn default" type="button">
 														<i class="fa fa-calendar"></i>
@@ -194,9 +196,10 @@ $departments = MDepartment::model()->findAll();
 										<div class="col-md-4">
 											<div class="input-group date date-picker"
 												data-date-format="dd-mm-yyyy">
-												<input type="text" value="<?php echo CommonUtil::getCurDate();?>" id="case_date"
-													class="form-control" name="Accident[case_date]" /> <span
-													class="input-group-btn">
+												<input type="text"
+													value="<?php echo CommonUtil::getCurDate();?>"
+													id="case_date" class="form-control"
+													name="Accident[case_date]" /> <span class="input-group-btn">
 													<button class="btn default" type="button">
 														<i class="fa fa-calendar"></i>
 													</button>
@@ -231,8 +234,8 @@ $departments = MDepartment::model()->findAll();
 											class="required">*</span>
 										</label>
 										<div class="col-md-4">
-											<input type="text" value="" id="chronology"
-												class="form-control" name="Accident[accident_chronology]" />
+											<textarea rows="5" cols="70" id="chronology"
+												 name="Accident[accident_chronology]" ></textarea>
 										</div>
 										<div id="divReq-chronology"></div>
 									</div>
@@ -264,7 +267,7 @@ $departments = MDepartment::model()->findAll();
 									<div class="form-group last">
 										<label class="control-label col-md-4">แนบรูปภาพ (ถ้ามี)</label>
 										<div class="col-md-4">
-											
+
 											<div class="row fileupload-buttonbar">
 												<div class="col-lg-7">
 													<!-- The fileinput-button span is used to style the file input field as button -->
@@ -384,24 +387,27 @@ $departments = MDepartment::model()->findAll();
 											<table>
 												<tr>
 													<td><label class="radio-inline"> <input type="radio"
-															checked="checked" id="dammage_type"
-															name="Accident[dammage_type]" value="1" />เสียชีวิต จำนวน
+															class="rdDamageTypeCls" checked="checked"
+															id="dammage_type" name="Accident[dammage_type]" value="1" />เสียชีวิต
+															จำนวน
 
 													</label></td>
-													<td>&nbsp;&nbsp; <input type="text" value=""
+													<td>&nbsp;&nbsp; <input type="text" value="" class='allowNum'
 														id="dammage_type_1_value"
 														style="border: none; border-bottom-style: dotted; width: 80px;"
 														name="Accident[dammage_type_1_value]" />&nbsp;&nbsp;
+														
 													</td>
 													<td>ราย</td>
 												</tr>
 												<tr>
 													<td><label class="radio-inline"> <input type="radio"
-															id="dammage_type" name="Accident[dammage_type]" value="2" />สูญเสียอวัยวะ/ทุพพลภาพ
+															class="rdDamageTypeCls" id="dammage_type"
+															name="Accident[dammage_type]" value="2" />สูญเสียอวัยวะ/ทุพพลภาพ
 															จำนวน
 
 													</label></td>
-													<td>&nbsp;&nbsp; <input type="text" value=""
+													<td>&nbsp;&nbsp; <input type="text" value="" class='allowNum'
 														id="dammage_type_2_value"
 														style="border: none; border-bottom-style: dotted; width: 80px;"
 														name="Accident[dammage_type_2_value]" />&nbsp;&nbsp;
@@ -410,11 +416,12 @@ $departments = MDepartment::model()->findAll();
 												</tr>
 												<tr>
 													<td><label class="radio-inline"> <input type="radio"
-															id="dammage_type" name="Accident[dammage_type]" value="3" />บาดเจ็บ/เจ็บป่วย
+															class="rdDamageTypeCls" id="dammage_type"
+															name="Accident[dammage_type]" value="3" />บาดเจ็บ/เจ็บป่วย
 															จำนวน
 
 													</label></td>
-													<td>&nbsp;&nbsp; <input type="text" value=""
+													<td>&nbsp;&nbsp; <input type="text" value="" class='allowNum'
 														id="dammage_type_3_value"
 														style="border: none; border-bottom-style: dotted; width: 80px;"
 														name="Accident[dammage_type_3_value]" />&nbsp;&nbsp;
@@ -423,11 +430,12 @@ $departments = MDepartment::model()->findAll();
 												</tr>
 												<tr>
 													<td><label class="radio-inline"> <input type="radio"
-															id="dammage_type" name="Accident[dammage_type]" value="4" />ทรัพย์สินเสียหาย
+															class="rdDamageTypeCls" id="dammage_type"
+															name="Accident[dammage_type]" value="4" />ทรัพย์สินเสียหาย
 															จำนวน
 
 													</label></td>
-													<td>&nbsp;&nbsp; <input type="text" value=""
+													<td>&nbsp;&nbsp; <input type="text" value="" class='allowNum'
 														id="dammage_type_4_value"
 														style="border: none; border-bottom-style: dotted; width: 80px;"
 														name="Accident[dammage_type_4_value]" />&nbsp;&nbsp;
@@ -445,11 +453,12 @@ $departments = MDepartment::model()->findAll();
 												</tr>
 												<tr>
 													<td><label class="radio-inline"> <input type="radio"
-															id="dammage_type" name="Accident[dammage_type]" value="5" />มีการหยุดการปฏิบัติงาน
+															class="rdDamageTypeCls" id="dammage_type"
+															name="Accident[dammage_type]" value="5" />มีการหยุดการปฏิบัติงาน
 															จำนวนวันที่หยุดการปฏิบัติงาน
 
 													</label></td>
-													<td><input type="text" value="" id="dammage_type_5_value"
+													<td><input type="text" value="" id="dammage_type_5_value" class='allowNum'
 														style="border: none; border-bottom-style: dotted; width: 80px;"
 														name="Accident[dammage_type_5_value]" /></td>
 													<td>วัน</td>
@@ -504,7 +513,7 @@ $departments = MDepartment::model()->findAll();
 						<div class="row">
 							<div class="col-md-offset-3 col-md-10">
 								<button type="submit" class="btn green uppercase"><?php echo ConfigUtil::getBtnSaveButton();?></button>
-								<?php echo CHtml::link(ConfigUtil::getBtnCancelButton(),array('Form1/'),array('class'=>'btn btn-default uppercase'));?>
+								<?php echo CHtml::link(ConfigUtil::getBtnCancelButton(),array('Accident/'),array('class'=>'btn btn-default uppercase'));?>
 							</div>
 						</div>
 					</div>
@@ -589,11 +598,17 @@ $departments = MDepartment::model()->findAll();
                     $(this).val(dateValue);                                                 
             }       
         });
-        
-
+     
+        $(".allowNum").keypress(function (e) {
+            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+               alert('ป้อนข้อมูลได้เฉพาะตัวเลข');
+               return false;
+           }
+          });
 
     	$( "#Form1" ).submit(function( event ) {
-        	
+
+
      		//Validate date format
 //     	   	if(!moment($("#license_expire_date").val(), 'DD/MM/YYYY',true).isValid()){
 //         		$("#license_expire_date").closest('.form-group').addClass('has-error');
@@ -606,16 +621,167 @@ $departments = MDepartment::model()->findAll();
 //         	}
         	
         	
-//         	if($("#code_usage_id").val() == "0"){
-//         		$("#code_usage_id").closest('.form-group').addClass('has-error');
-//         		$("#divReq-code_usage_id").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
-//         		$("#code_usage_id").focus();
+        	if($("#name").val().length == 0){
+        		$("#name").closest('.form-group').addClass('has-error');
+        		$("#divReq-name").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+        		$("#name").focus();
+        		return false;
+            }else{
+            	$("#divReq-name").html('');
+            	$("#name").closest('.form-group').removeClass('has-error');
+        	}
+        	if($("#positon_or_level").val().length == 0){
+        		$("#positon_or_level").closest('.form-group').addClass('has-error');
+        		$("#divReq-positon_or_level").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+        		$("#positon_or_level").focus();
+        		return false;
+            }else{
+            	$("#divReq-positon_or_level").html('');
+            	$("#positon_or_level").closest('.form-group').removeClass('has-error');
+        	}
+        	if($("#department_id").val() == "-1"){
+        		$("#department_id").closest('.form-group').addClass('has-error');
+        		$("#divReq-department_id").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+        		$("#department_id").focus();
+        		return false;
+            }else{
+            	$("#divReq-department_id").html('');
+            	$("#department_id").closest('.form-group').removeClass('has-error');
+        	}
+        	if($("#phone_number").val().length == 0){
+        		$("#phone_number").closest('.form-group').addClass('has-error');
+        		$("#divReq-phone_number").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+        		$("#phone_number").focus();
+        		return false;
+            }else{
+            	$("#divReq-phone_number").html('');
+            	$("#phone_number").closest('.form-group').removeClass('has-error');
+        	}
+        	if($("#email").val().length == 0){
+        		$("#email").closest('.form-group').addClass('has-error');
+        		$("#divReq-email").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+        		$("#email").focus();
+        		return false;
+            }else{
+            	$("#divReq-email").html('');
+            	$("#email").closest('.form-group').removeClass('has-error');
+        	}
+        	if($("#report_date").val().length == 0){
+        		$("#report_date").closest('.form-group').addClass('has-error');
+        		$("#divReq-report_date").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+        		$("#report_date").focus();
+        		return false;
+            }else{
+            	$("#divReq-report_date").html('');
+            	$("#report_date").closest('.form-group').removeClass('has-error');
+        	}
+        	if($("#name2").val().length == 0){
+        		$("#name2").closest('.form-group').addClass('has-error');
+        		$("#divReq-name2").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+        		$("#name2").focus();
+        		return false;
+            }else{
+            	$("#divReq-name2").html('');
+            	$("#name2").closest('.form-group').removeClass('has-error');
+        	}
+           	if($("#belong_to").val().length == 0){
+        		$("#belong_to").closest('.form-group').addClass('has-error');
+        		$("#divReq-belong_to").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+        		$("#belong_to").focus();
+        		return false;
+            }else{
+            	$("#divReq-belong_to").html('');
+            	$("#belong_to").closest('.form-group').removeClass('has-error');
+        	}
+          	if($("#case_date").val().length == 0){
+        		$("#case_date").closest('.form-group').addClass('has-error');
+        		$("#divReq-case_date").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+        		$("#case_date").focus();
+        		return false;
+            }else{
+            	$("#divReq-case_date").html('');
+            	$("#case_date").closest('.form-group').removeClass('has-error');
+        	}
+         	if($("#Accident_location").val().length == 0){
+        		$("#Accident_location").closest('.form-group').addClass('has-error');
+        		$("#divReq-Accident_location").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+        		$("#Accident_location").focus();
+        		return false;
+            }else{
+            	$("#divReq-Accident_location").html('');
+            	$("#Accident_location").closest('.form-group').removeClass('has-error');
+        	}
+         	if($("#chronology").val().length == 0){
+        		$("#chronology").closest('.form-group').addClass('has-error');
+        		$("#divReq-chronology").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+        		$("#chronology").focus();
+        		return false;
+            }else{
+            	$("#divReq-chronology").html('');
+            	$("#chronology").closest('.form-group').removeClass('has-error');
+        	}
+//            	if($("#Accident_event").val().length == 0){
+//         		$("#Accident_event").closest('.form-group').addClass('has-error');
+//         		$("#divReq-Accident_event").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+//         		$("#Accident_event").focus();
 //         		return false;
 //             }else{
-//             	$("#divReq-code_usage_id").html('');
-//             	$("#code_usage_id").closest('.form-group').removeClass('has-error');
+//             	$("#divReq-Accident_event").html('');
+//             	$("#Accident_event").closest('.form-group').removeClass('has-error');
 //         	}
-        	
+//         	if($("#Accident_cause").val().length == 0){
+//         		$("#Accident_cause").closest('.form-group').addClass('has-error');
+//         		$("#divReq-Accident_cause").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+//         		$("#Accident_cause").focus();
+//         		return false;
+//             }else{
+//             	$("#divReq-Accident_cause").html('');
+//             	$("#Accident_cause").closest('.form-group').removeClass('has-error');
+//         	}
+//         	if($("#Accident_solve").val().length == 0){
+//         		$("#Accident_solve").closest('.form-group').addClass('has-error');
+//         		$("#divReq-Accident_solve").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+//         		$("#Accident_solve").focus();
+//         		return false;
+//             }else{
+//             	$("#divReq-Accident_solve").html('');
+//             	$("#Accident_solve").closest('.form-group').removeClass('has-error');
+//         	}
+
+    		var damageType = $('.rdDamageTypeCls:checked').val();
+			switch(damageType){
+    			case "1":
+    				if($("#dammage_type_1_value").val().length == 0){
+        				alert('ระบุจำนวนผู้เสียชีวิต');
+						return false;
+        			}
+        			break;
+    			case "2":
+    				if($("#dammage_type_2_value").val().length == 0){
+        				alert('ระบุจำนวนผู้สูญเสียอวัยวะ/ทุพพลภาพ');
+						return false;
+        			}
+        			break;
+    			case "3":
+       				if($("#dammage_type_3_value").val().length == 0){
+        				alert('ระบุจำนวนผู้บาดเจ็บ/เจ็บป่วย');
+						return false;
+        			}
+        			break;
+    			case "4":
+       				if($("#dammage_type_4_value").val().length == 0){
+        				alert('ระบุจำนวนผู้ทรัพย์สินเสียหาย');
+						return false;
+        			}
+        			break;
+    			case "5":
+       				if($("#dammage_type_5_value").val().length == 0){
+        				alert('ระบุจำนวนวันที่หยุดการปฏิบัติงาน');
+						return false;
+        			}
+        			break;
+			}
+
         	
         	this.submit();
     	});

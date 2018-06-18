@@ -32,23 +32,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-lg-3 col-md-6">
-		<div class="portlet light">
-			<div class="card-icon">
-				<a
-					href="<?php echo ConfigUtil::getAppName();?>/index.php/AccidentInvestigation">
 
-					<i class="icon-shield font-purple-wisteria theme-font"></i>
-				</a>
-			</div>
-			<div class="card-title">
-				<span> Accident Investigation  </span>
-			</div>
-			<div class="card-desc">
-				<span>Report</span>
-			</div>
-		</div>
-	</div>
 	<div class="col-lg-3 col-md-6">
 		<div class="portlet light">
 			<div class="card-icon">

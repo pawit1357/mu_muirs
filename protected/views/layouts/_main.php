@@ -133,7 +133,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
  <img src="<?php echo ConfigUtil::getAppName();?>/images/ataluk.png" style="position: absolute;top: 0px;right:0px; !important" />
 
-					
+					<?php echo InformationUtil::getNotification();?>
 					<li class="dropdown dropdown-user"><a href="javascript:;"
 						class="dropdown-toggle" data-toggle="dropdown"
 						data-hover="dropdown" data-close-others="true"> <!--<img alt="" class="img-circle" src="../assets/layouts/layout/img/avatar3_small.jpg" />-->

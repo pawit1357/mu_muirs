@@ -16,10 +16,8 @@ require_once dirname(__FILE__).'/protected/utilities/InformationUtil.php';
 
 
 
+
 // create a Web application instance and run
 $app = Yii::createWebApplication($config);
-Yii::app()->setTimeZone('UTC');
+Yii::app()->setTimeZone('Asia/Bangkok');
 $app->run();
-// Yii::createWebApplication($config);
-// Yii::app()->setTimeZone('UTC');
-// app->run()

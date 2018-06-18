@@ -16,7 +16,8 @@ class ConfigUtil {
 	private static $btnSaveButton = 'บันทึก';
 	private static $btnCancelButton = 'ยกเลิก';
 	private static $btnCloseButton = 'ปิด';
-
+	private static $portletTheme ='portlet box blue-hoki';
+	
 
 	private static $defaultPageSize = 200;
 
@@ -32,7 +33,10 @@ class ConfigUtil {
 		list($xx, $hostName) = explode('=', $host);
 		return $hostName;
 	}
-	
+	public static function getPortletTheme()
+	{
+	    return self::$portletTheme;
+	}
 	public static function getBtnAddName(){
 		return self::$btnAddButton;	
 	}

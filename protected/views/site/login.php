@@ -45,10 +45,11 @@
 
 		<div class="create-account">
 			<p>
-			<i class="fa fa-bar-chart"></i>
-<?php echo CHtml::link('สถิติความปลอดภัย',array('Site/'),array('class'=>'uppercase'));?>
-			
-<!-- 				<a href="javascript:;" id="register-btn" class="uppercase">ลงทะเบียนใช้งาน</a> -->
+			<i class="fa fa-home"></i>
+<?php echo CHtml::link('หน้าหลัก',array('Site/'),array('class'=>'uppercase'));?>
+						<i class="fa fa-user"></i>
+<?php echo CHtml::link('ลงทะเบียนใช้งาน',array('Site/Reg'),array('class'=>'uppercase'));?>
+
 			</p>
 		</div>
 

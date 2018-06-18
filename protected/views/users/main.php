@@ -4,7 +4,7 @@
 	<div class="row">
 		<div class="col-md-12">
 			<!-- BEGIN EXAMPLE TABLE PORTLET-->
-	<div class="portlet light">
+	<div class="<?php echo ConfigUtil::getPortletTheme(); ?>">
 				<div class="portlet-title">
 					<div class="caption">
 						<?php echo  MenuUtil::getMenuName($_SERVER['REQUEST_URI'])?>
@@ -24,6 +24,7 @@
 								<th>คำนำหน้า</th>
 								<th>ชื่อ</th>
 								<th>นามสกุล</th>
+								<th>สังกัดหน่วยงาน</th>
 								<th>อีเมล์</th>
 								<th>เบอร์ติดต่อ</th>
 								<th class="no-sort"></th>
@@ -36,13 +37,14 @@
 	
 	foreach ( $dataProvider->data as $data ) {
 		?>
-				<tr class="line-<?php echo $counter%2 == 0 ? '1' : '2'?>">
+				<tr>
 								<td class="center"><?php echo  $counter;?></td>
 								<td class="center"><?php echo $data->users_role->ROLE_NAME?></td>
 								<td class="center"><?php echo $data->username?></td>
 								<td class="center"><?php echo $data->title->name?></td>
 								<td class="center"><?php echo $data->first_name?></td>
 								<td class="center"><?php echo $data->last_name?></td>
+								<td class="center"><?php echo $data->department->name?></td>
 								<td class="center"><?php echo $data->email?></td>
 								<td class="center"><?php echo $data->mobile_phone?></td>
 
@@ -53,8 +55,11 @@
 <a title="Edit" class="fa fa-edit" href="<?php echo Yii::app()->CreateUrl('Users/Update/id/'.$data->id)?>"></a>
 <?php }?>
 
-
-								
+<?php if(strcmp($data->role_id,"1")!=0){?>
+<a title="Delete" onclick="return confirm('ต้องการลบข้อมูลใช่หรือไม่?')"
+									class="fa fa-trash"
+									href="<?php echo Yii::app()->CreateUrl('Users/Delete/id/'.$data->id)?>"></a>
+<?php }?>		
 								</td>
 							</tr>
 			<?php
