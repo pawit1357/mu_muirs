@@ -1,8 +1,8 @@
 <?php
 class ConfigUtil {
 	private static $emailSubject = 'MU Accident Report System';
-	private static $hostName = 'http://localhost:88/';
-	private static $siteName = 'http://localhost:88/muirs/index.php/Site/LogOut';
+	private static $hostName = 'http://localhost:90/muirs/';
+	private static $siteName = 'http://localhost:90/muirs/index.php/Site/LogOut';
 	
 	
 	private static $ApplicationTitle = 'MU-IRS | MU Incident Report System';
@@ -20,7 +20,8 @@ class ConfigUtil {
 	
 
 	private static $defaultPageSize = 200;
-
+	private static $defaultMaxUploadFileSize = 5;//MB
+	
 	public static function getDbName() {
 		$str = Yii::app()->db->connectionString;
 		list($host, $db) = explode(';', $str);
@@ -79,6 +80,9 @@ class ConfigUtil {
 	
 	public static function getDefaultPageSize() {
 		return self::$defaultPageSize;
+	}
+	public static function getDefaultMaxUploadFileSize() {
+	    return self::$defaultMaxUploadFileSize;
 	}
 	public static function getUrlHostName() {
 		return self::$hostName;

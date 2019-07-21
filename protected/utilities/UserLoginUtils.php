@@ -111,7 +111,14 @@ class UserLoginUtils {
 			return '';
 		}
 	}
-	
+	public static function getDepartmentInfoName(){
+	    if (self::isLogin ()) {
+	        $UsersLogin = self::getUserInfo ();
+	        return $UsersLogin->department->name;
+	    } else {
+	        return '';
+	    }
+	}
 	public static function canCreate($cur_page) {
 		if (! self::isLogin ()) {
 			$this->redirect ( Yii::app ()->createUrl ( 'Site/login' ) );

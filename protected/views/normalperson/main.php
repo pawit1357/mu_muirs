@@ -1,34 +1,32 @@
-
-
 <div class="row margin-bottom-20">
 	<div class="col-lg-3 col-md-6">
 		<div class="portlet light">
 			<div class="card-icon">
-				<a href="<?php echo ConfigUtil::getAppName();?>/index.php/Accident">
+				<a href="<?php echo ConfigUtil::getAppName();?>/index.php/Accident/Create">
 					<i class="icon-fire font-red-sunglo theme-font"></i>
 				</a>
 			</div>
 			<div class="card-title">
-				<span> Accident  </span>
+				<span>Accident Report</span>
 			</div>
 			<div class="card-desc">
-				<span>Report</span>
+				<span>รายงานอุบัติเหตุ</span>
 			</div>
 		</div>
 	</div>
 	<div class="col-lg-3 col-md-6">
 		<div class="portlet light">
 			<div class="card-icon">
-				<a href="<?php echo ConfigUtil::getAppName();?>/index.php/Incident">
+				<a href="<?php echo ConfigUtil::getAppName();?>/index.php/Incident/Create">
 
 					<i class="icon-energy font-green-haze theme-font"></i>
 				</a>
 			</div>
 			<div class="card-title">
-				<span> Incident  </span>
+				<span>Incident Report</span>
 			</div>
 			<div class="card-desc">
-				<span>Report</span>
+				<span>รายงานอุบัติการณ์</span>
 			</div>
 		</div>
 	</div>

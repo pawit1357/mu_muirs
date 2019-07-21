@@ -17,6 +17,23 @@ class AccidentInvestigationController extends CController
             $this->redirect(Yii::app()->createUrl('DashBoard/Permission'));
         }
         
+        // Render
+        $model = new AccidentInvestigation();
+        $this->render('//accidentinvestigation/main', array(
+            'data' => $model
+        ));
+    }
+
+    public function actionCreate()
+    {
+        // Authen Login
+        if (! UserLoginUtils::isLogin()) {
+            $this->redirect(Yii::app()->createUrl('Site/login'));
+        }
+        if (! UserLoginUtils::authorizePage($_SERVER['REQUEST_URI'])) {
+            $this->redirect(Yii::app()->createUrl('DashBoard/Permission'));
+        }
+        
         if (isset($_POST['AccidentInvestigation'])) {
             
             $transaction = Yii::app()->db->beginTransaction();
@@ -42,7 +59,7 @@ class AccidentInvestigationController extends CController
                 $model->case_date = CommonUtil::getDate($model->case_date);
                 $model->create_date = date("Y-m-d H:i:s");
                 $model->create_by = UserLoginUtils::getUsersLoginId();
-
+                
                 //
                 $model->person_type = $person_types[$index];
                 $model->person_type_other = $person_type_others[$index];
@@ -76,12 +93,13 @@ class AccidentInvestigationController extends CController
                     $accident_type = "";
                 }
                 $model->accident_type = rtrim($accident_type, ",");
+                $model->group_id = date("YmdHis");
                 $model->save();
                 $index ++;
             }
             // Notify//
             $model = new Notify();
-            $model->report_type = 1;//1:Acicent&Investigate,2:Incident,3:Accident
+            $model->report_type = 1; // 1:Acicent&Investigate,2:Incident,3:Accident
             $model->title = 'Acicent&Investigate';
             $model->remark = '';
             $model->isRead = false;
@@ -138,45 +156,11 @@ class AccidentInvestigationController extends CController
                 }
             }
             
- 
-            
             // echo "SAVE";
             $transaction->commit();
             
             // $transaction->rollback ();
             $this->render('//accidentinvestigation/result');
-        } else {
-            // Render
-            $model = new AccidentInvestigation();
-            $this->render('//accidentinvestigation/main', array(
-                'data' => $model
-            ));
-        }
-    }
-
-    public function actionCreate()
-    {
-        // Authen Login
-        if (! UserLoginUtils::isLogin()) {
-            $this->redirect(Yii::app()->createUrl('Site/login'));
-        }
-        if (! UserLoginUtils::authorizePage($_SERVER['REQUEST_URI'])) {
-            $this->redirect(Yii::app()->createUrl('DashBoard/Permission'));
-        }
-        
-        if (isset($_POST['AccidentInvestigation'])) {
-            
-            $transaction = Yii::app()->db->beginTransaction();
-            // Add Request
-            $model = new MTitle();
-            $model->attributes = $_POST['AccidentInvestigation'];
-            
-            $model->save();
-            // echo "SAVE";
-            $transaction->commit();
-            
-            // $transaction->rollback ();
-            $this->redirect(Yii::app()->createUrl('AccidentInvestigation'));
         } else {
             // Render
             $this->render('//accidentinvestigation/create');
@@ -207,19 +191,98 @@ class AccidentInvestigationController extends CController
         if (! UserLoginUtils::authorizePage($_SERVER['REQUEST_URI'])) {
             $this->redirect(Yii::app()->createUrl('DashBoard/Permission'));
         }
+        
+        $model = new AccidentInvestigation();
+        
         $model = $this->loadModel();
         if (isset($_POST['AccidentInvestigation'])) {
-            $transaction = Yii::app()->db->beginTransaction();
-            $model->attributes = $_POST['AccidentInvestigation'];
             
-            $model->update();
+            $transaction = Yii::app()->db->beginTransaction();
+            
+            $model->attributes = $_POST['AccidentInvestigation'];
+            $model->case_date = CommonUtil::getDate($model->case_date);
+            $model->update_date = date("Y-m-d H:i:s");
+            $model->update_by = UserLoginUtils::getUsersLoginId();
+            
+            $bodyAccidentInvestigation = '';
+            if (isset($_POST['bodyAccidentInvestigation'])) {
+                foreach ($_POST['bodyAccidentInvestigation'] as $item) {
+                    $bodyAccidentInvestigation .= $item . ',';
+                }
+            } else {
+                $bodyAccidentInvestigation = "";
+            }
+            $model->body_accident_type = rtrim($bodyAccidentInvestigation, ",");
+            
+            $accident_type = '';
+            if (isset($_POST['accident_type'])) {
+                foreach ($_POST['accident_type'] as $item) {
+                    $accident_type .= $item . ',';
+                }
+            } else {
+                $accident_type = "";
+            }
+            $model->accident_type = rtrim($accident_type, ",");
+
+            $model->save();
+            
+            $img1 = $_FILES['img1'];
+            
+            if (isset($img1)) {
+                $file_ary = CommonUtil::reArrayFiles($img1);
+                
+                $index = 0;
+                foreach ($file_ary as $file) {
+                    if ($file['size'] > 0) {
+                        $acc_img = new AccidentInvestigationImage();
+                        $acc_img->accident_investigation_id = $model->id;
+                        $acc_img->path_img1 = CommonUtil::upload($file);
+                        $acc_img->save();
+                    }
+                    $index ++;
+                }
+            }
+            $img2 = $_FILES['img2'];
+            
+            if (isset($img2)) {
+                $file_ary = CommonUtil::reArrayFiles($img2);
+                
+                $index = 0;
+                foreach ($file_ary as $file) {
+                    if ($file['size'] > 0) {
+                        $acc_img = new AccidentInvestigationImage();
+                        $acc_img->accident_investigation_id = $model->id;
+                        $acc_img->path_img2 = CommonUtil::upload($file);
+                        $acc_img->save();
+                    }
+                    $index ++;
+                }
+            }
+            $img3 = $_FILES['img3'];
+            
+            if (isset($img3)) {
+                $file_ary = CommonUtil::reArrayFiles($img3);
+                
+                $index = 0;
+                foreach ($file_ary as $file) {
+                    if ($file['size'] > 0) {
+                        $acc_img = new AccidentInvestigationImage();
+                        $acc_img->accident_investigation_id = $model->id;
+                        $acc_img->path_img3 = CommonUtil::upload($file);
+                        $acc_img->save();
+                    }
+                    $index ++;
+                }
+            }
+            
             $transaction->commit();
             
             $this->redirect(Yii::app()->createUrl('AccidentInvestigation'));
+        } else {
+            $this->render('//accidentinvestigation/update', array(
+                'data' => $model
+            ));
         }
-        $this->render('//accidentinvestigation/update', array(
-            'data' => $model
-        ));
     }
 
     public function loadModel()

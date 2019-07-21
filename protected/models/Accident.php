@@ -30,7 +30,7 @@ department_id,belong_to,
 phone_number,
 email, 
 report_date,
-case_date date 
+case_date,case_date_time,
 name2,
 belong_t,
 img1,
@@ -72,7 +72,7 @@ create_dat',
 						'defaultOrder' => 't.id asc' 
 				),
 				'pagination' => array (
-						'pageSize' => 15 
+						'pageSize' => 1500 
 				)  // ConfigUtil::getDefaultPageSize()
 		
 		) );

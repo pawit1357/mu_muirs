@@ -8,7 +8,7 @@ class Incident extends CActiveRecord {
 	}
 	public function relations() {
 		return array (
-				'onwerdepartment' => array(
+				'department' => array(
 						self::BELONGS_TO,
 						'MDepartment',
 						'owner_department_id'
@@ -17,13 +17,19 @@ class Incident extends CActiveRecord {
 	public function rules() {
 		return array (
 				array (
-						'id,owner_department_id,
-						report_date,
-						accident_location,
-						accident_cause,
-						accident_characteristics,accident_event_withness_first,
-						img1,create_date,create_by',
-						'safe' 
+						'id,
+                        report_date,
+                        accident_location,
+                        accident_cause,
+                        accident_characteristics,
+                        accident_event_withness_first,
+                        img1,
+                        owner_department_id,
+                        create_date,
+                        create_by,
+                        update_date,
+                        update_by,
+                        id,owner_department_id','safe' 
 				) 
 		);
 	}
@@ -47,16 +53,16 @@ class Incident extends CActiveRecord {
 						'defaultOrder' => 't.id asc' 
 				),
 				'pagination' => array (
-						'pageSize' => 15 
+				    'pageSize' => 1500
 				)  // ConfigUtil::getDefaultPageSize()
 		
 		) );
 	}
-	public static function getMax() {
-		$criteria = new CDbCriteria ();
-		$criteria->order = 'id DESC';
-		$row = self::model ()->find ( $criteria );
-		$max = $row->id;
-		return $max + 1;
-	}
+// 	public static function getMax() {
+// 		$criteria = new CDbCriteria ();
+// 		$criteria->order = 'id DESC';
+// 		$row = self::model ()->find ( $criteria );
+// 		$max = $row->id;
+// 		return $max + 1;
+// 	}
 }

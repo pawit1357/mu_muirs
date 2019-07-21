@@ -11,7 +11,7 @@ class AccidentInvestigation extends CActiveRecord {
 				'department' => array(
 						self::BELONGS_TO,
 						'MDepartment',
-						'department_id'
+						'person_department_id'
 				),
 				'onwerdepartment' => array(
 						self::BELONGS_TO,
@@ -60,9 +60,9 @@ class AccidentInvestigation extends CActiveRecord {
                         accidental_damage5,
                         accident_solve,
                         accident_protect,
-                        create_date date 
-                        owner_department_id,
-                        create_by',
+                        create_date, 
+                        owner_department_id,group_id,
+                        create_by,update_date,update_by',
 						'safe' 
 				) 
 		);

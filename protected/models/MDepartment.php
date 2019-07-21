@@ -18,7 +18,7 @@ class MDepartment extends CActiveRecord {
 	public function rules() {
 		return array (
 				array (
-						'id,name,faculty_id',
+						'id,name,faculty_id,order',
 						'safe' 
 				) 
 		);
@@ -41,7 +41,7 @@ class MDepartment extends CActiveRecord {
 		return new CActiveDataProvider ( get_class ( $this ), array (
 				'criteria' => $criteria,
 				'sort' => array (
-						'defaultOrder' => 't.id asc' 
+						'defaultOrder' => 't.order asc' 
 				),
 				'pagination' => array (
 						'pageSize' => 50 

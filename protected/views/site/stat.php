@@ -1,29 +1,17 @@
 <?php
-$criteria = new CDbCriteria ();
-$criteria->select = 'max(accident_date) AS accident_date';
-$row = SafetyRecordHistory::model ()->find ( $criteria );
+// // - SAFETY RECORD - ////
+$criteria = new CDbCriteria();
+$criteria->condition = " department_id = -1 and status=1";
+$safetyRecord = SafetyRecordHistory::model()->find($criteria);
 
-$criteria2 = new CDbCriteria ();
-$criteria2->select = 'max(accident_count) AS accident_count';
-$row2 = SafetyRecordHistory::model ()->find ( $criteria2 );
+$we_have_operated = str_split(sprintf('%03d', CommonUtil::dateDiff( $safetyRecord->create_date,date("Y-m-d"))));
+$days_target = str_split(sprintf('%03d', $safetyRecord->days_target));
+$the_best_record = str_split(sprintf('%03d', $safetyRecord->the_best_record));
 
-$we_have_operated = str_split ( sprintf ( '%03d', 0 ) );
-$target = str_split ( sprintf ( '%03d', 365 ) ); // $srConfig[0]->target));
-$day = str_split(0);
-$year = str_split(0);
-if (isset ( $row ['accident_date'] )) {
-	$we_have_operated = str_split ( sprintf ( '%03d', CommonUtil::dateDiff ( $row ['accident_date'], date ( "Y-m-d H:i:s" ) ) ) );
-	list ( $_year, $_month, $_day ) = explode ( "-", $row ['accident_date'] );
-	$day = str_split ( $_day );
-	$year = str_split ( $_year + 543 );
-}
-if (isset ( $row2 ['accident_count'] )) {
-	$the_best_record = str_split ( sprintf ( '%03d', $row2 ['accident_count'] ) );
-}
-
-list ( $_year1, $_month1, $_day1 ) = explode ( "-", date ( "Y-m-d H:i:s" ) . '' );
-$day1 = str_split ( $_day1 );
-$year1 = str_split ( $_year1 + 543 );
+list ($_year, $_month, $_day) = explode("-", $safetyRecord->last_accident_occurred_date);
+$day = str_split($_day);
+$year = str_split($_year + 543);
+// // - ************* - ////
 ?>
 
 <style>
@@ -65,16 +53,16 @@ $year1 = str_split ( $_year1 + 543 );
 		<br>
 		<table class="main-table">
 			<tr>
-				<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp; <img
+				<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;<img
 					src="<?php echo ConfigUtil::getAppName();?>/images/logo3.png"
 					alt="logo" class="logo-default" height="45" />
 				</td>
 				<td style="text-align: left;" colspan="3"><font color="green">&nbsp;&nbsp;&nbsp;&nbsp;สถิติความปลอดภัย<br>SAFETY
 						FIRST<br></font></td>
-				<td style="text-align: right;"><img
+				<td style="text-align: right;"> <img
 					src="<?php echo ConfigUtil::getAppName();?>/images/logo4.png"
 					alt="logo" class="logo-default" height="45" /><br></td>
-				<td></td>
+				<td> </td>
 			</tr>
 			<tr>
 				<td colspan="6"><table class="main-table">
@@ -125,9 +113,9 @@ $year1 = str_split ( $_year1 + 543 );
 				<td style="text-align: left;">
 					<table class="main-sub-table-1">
 						<tr id="one">
-							<td align="center"><?php echo $target[0];?></td>
-							<td align="center"><?php echo $target[1];?></td>
-							<td align="center"><?php echo $target[2];?></td>
+							<td align="center"><?php echo $days_target[0];?></td>
+							<td align="center"><?php echo $days_target[1];?></td>
+							<td align="center"><?php echo $days_target[2];?></td>
 						</tr>
 					</table>
 				</td>
@@ -152,27 +140,7 @@ $year1 = str_split ( $_year1 + 543 );
 				</font></td>
 			</tr>
 			<!-- xxxxx -->
-			<tr>
-				<td style="text-align: right;"><font color="green">ปรับปรุง ณ
-						วันที่&nbsp;&nbsp;&nbsp;<br>TO DATE<br>&nbsp;&nbsp;&nbsp;
-				</font></td>
-
-				<td colspan="2">
-
-					<table class="main-sub-table">
-						<tr id="one">
-							<td align="center"><?php echo $day1[0];?></td>
-							<td align="center"><?php echo $day1[1];?></td>
-							<td align="center"><?php echo CommonUtil::getShortThaiMonth($_month1);?></td>
-							<td align="center"><?php echo $year1[2];?></td>
-							<td align="center"><?php echo $year1[3];?></td>
-						</tr>
-					</table>
-				</td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
+<tr><td colspan="6"><br></td></tr>
 		</table>
 		<br>
 		<div class="create-account">

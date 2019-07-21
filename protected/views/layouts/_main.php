@@ -63,8 +63,7 @@ License: You must have a valid license purchased only from themeforest(the above
 	href="<?php echo ConfigUtil::getAppName();?>/assets/global/plugins/icheck/skins/all.css"
 	rel="stylesheet" type="text/css" />
 	
-<link href="<?php echo ConfigUtil::getAppName();?>/assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css" rel="stylesheet" type="text/css" />
-<link href="<?php echo ConfigUtil::getAppName();?>/assets/global/plugins/bootstrap-modal/css/bootstrap-modal.css" rel="stylesheet" type="text/css" />
+
 
 <!-- END PAGE LEVEL PLUGINS -->
 <!-- BEGIN THEME GLOBAL STYLES -->
@@ -94,7 +93,10 @@ License: You must have a valid license purchased only from themeforest(the above
 	<link
 	href="<?php echo ConfigUtil::getAppName();?>/css/jquery.datetimepicker.css"
 	rel="stylesheet" type="text/css" />
-<!--  <link href="<?//php echo ConfigUtil::getAppName();?>/css/SpecialDateSheet.css" rel="stylesheet" type="text/css" /> -->
+
+
+<link rel="stylesheet" type="text/css" href="http://www.shieldui.com/shared/components/latest/css/light-bootstrap/all.min.css" />
+
 
 <!-- END THEME LAYOUT STYLES -->
 <!-- <link rel="shortcut icon" href="favicon.ico" /> -->
@@ -222,10 +224,10 @@ License: You must have a valid license purchased only from themeforest(the above
 			<div class="page-content">
 				<div class="page-bar">
 					<ul class="page-breadcrumb">
-<?php echo MenuUtil::getNavigator($_SERVER['REQUEST_URI']);?>
+<?php echo  (UserLoginUtils::getUserRole() == 6)? '': MenuUtil::getNavigator($_SERVER['REQUEST_URI']);?>
 </ul>
 					<div class="page-toolbar">
-<?php echo ConfigUtil::getApplicationUpdateVersion();?>
+<?php echo (UserLoginUtils::getUserRole() == 6)? '': ConfigUtil::getApplicationUpdateVersion();?>
 </div>
 				</div>
 				<!-- END PAGE BAR -->
@@ -372,6 +374,13 @@ License: You must have a valid license purchased only from themeforest(the above
 
 	<script src="<?php echo ConfigUtil::getAppName();?>/js/jquery.datetimepicker.full.js"
 		type="text/javascript"></script>
+
+
+
+<!-- Latest compiled JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-treeview/1.2.0/bootstrap-treeview.min.js"></script>
+
+<script type="text/javascript" src="http://www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
 
 
 
