@@ -19,6 +19,7 @@
 						<thead>
 							<tr>
 								<th>ลำดับ</th>
+								<th>ผู้พบเห็นเหตุการณ์</th>
 								<th>คณะ/ส่วนงาน</th>
 								<th>ลักษณะของเหตุการณ์</th>
 								<th>วัน/เดือน/ปี ที่เกิดเหตุ </th>
@@ -33,7 +34,8 @@
 	foreach ( $dataProvider->data as $data ) {
 		?>
 				<tr>
-								<td class="center"><?php echo $counter?></td>
+								<td class="center"><?php echo $counter?></td>								
+								<td class="center"><?php echo $data->accident_event_withness_first?></td>
 								<td class="center"><?php echo $data->department->name?></td>
 								<td class="center"><?php echo $data->accident_cause?></td>
 								<td class="center"><?php echo $data->report_date?></td>

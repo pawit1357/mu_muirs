@@ -18,11 +18,12 @@ class SafetyRecordHistory extends CActiveRecord
         return array();
     }
 
-    public function rules()
-    {
-        return array(
-            array(
-                'id,department_id,last_accident_occurred_date,days_target,the_best_record,status','safe'
+    
+    public function rules() {
+        return array (
+            array (
+                'id,department_id,amount,create_date,last_accident_occurred_date',
+                'safe'
             )
         );
     }

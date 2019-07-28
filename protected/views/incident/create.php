@@ -1,6 +1,6 @@
 <?php
-$criteria = new CDbCriteria();
-$departments = MDepartment::model()->findAll();
+$deptParent = MDepartment::model()->findAll(array("condition"=>"faculty_id = -1",'order'=>'seq'));
+$deptChild = MDepartment::model()->findAll(array("condition"=>"faculty_id <> -1",'order'=>'seq'));
 
 ?>
 <form id="Form1" method="post" enctype="multipart/form-data"
@@ -78,9 +78,29 @@ $departments = MDepartment::model()->findAll();
 											<select class="form-control select2" name="Incident[owner_department_id]"
 												id="owner_department_id">
 												<option value="-1">-- (ไม่มีสังกัด) --</option>
-			<?php foreach($departments as $item) {?>
-			<option value="<?php echo $item->id?>"><?php echo (($item->faculty_id < 0)? '' : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- '). $item->name?></option>
-			<?php }?>
+<?php
+foreach ($deptParent as $parent) {
+    $isGroup = false;
+    foreach ($deptChild as $child) {
+        if(intval($parent['id']) == intval($child['faculty_id'])){
+            $isGroup = true;
+        }
+    }
+    if($isGroup){
+        echo '<optgroup style="color:#008;font-style:normal;font-weight:normal;" label="'.$parent['name'].'">';
+        echo '</optgroup>';
+    }else{
+        echo '<option style="color:#'.(intval($parent['faculty_id']) == -1? '008':'000').';font-style:normal;font-weight:normal;" value="'.$parent['id'].'">'.htmlspecialchars($parent['name']).'</option>';
+    }
+    
+    foreach ($deptChild as $child) {
+        if(intval($parent['id']) == intval($child['faculty_id'])){
+            echo '<option style="color:#000;font-style:normal;font-weight:normal;" value="'.$child['id'].'">&nbsp;&nbsp;&nbsp;-&nbsp;'.htmlspecialchars($child['name']).'</option>';
+        }
+    }
+}
+    
+?>
 			</select>
 
 										</div>
@@ -94,7 +114,7 @@ $departments = MDepartment::model()->findAll();
 										<label class="control-label col-md-4">วันที่แจ้ง
 											:<span class="required">*</span>
 										</label>
-										<div class="col-md-4">
+										<div class="col-md-2">
 											<div class="input-group date date-picker"
 												data-date-format="dd-mm-yyyy">
 												<input type="text"
@@ -136,7 +156,7 @@ $departments = MDepartment::model()->findAll();
 
 										<label class="control-label col-md-4">ลักษณะของเหตุการณ์ : </label>
 										<div class="col-md-8">
-											<span> (เกิดขึ้นอย่างไร ที่ไหน เมื่อไหร่ ผู้เกี่ยวข้อง
+											<span style="font-size: xx-small;color: red;"> (เกิดขึ้นอย่างไร ที่ไหน เมื่อไหร่ ผู้เกี่ยวข้อง
 												จำนวนผู้ได้รับผลกระทบ)</span>
 
 										</div>
@@ -156,7 +176,7 @@ $departments = MDepartment::model()->findAll();
 										<label class="control-label col-md-4">คาดว่าสาเหตุที่เกิด คือ
 											: </label>
 										<div class="col-md-8">
-											<span> (ถ้าทราบ) </span>
+											<span style="font-size: xx-small;color: red;"> (ถ้าทราบ) </span>
 
 										</div>
 										<div class="col-md-4">
@@ -206,12 +226,12 @@ $departments = MDepartment::model()->findAll();
 													<span class="btn default btn-file"> <span
 														class="fileinput-new"> Select image </span> <span
 														class="fileinput-exists"> Change </span> <input
-														type="file" name="img1[]">
+														type="file" name="img1[]" onchange="validateFileInput(this);">
 													</span> <a href="javascript:;"
 														class="btn red fileinput-exists" data-dismiss="fileinput">
 														Remove </a>
 												</div>
-												<span class="required"> ไฟล์ไม่เกิน 1MB</span>
+											<span style="font-size: xx-small;color: red;">(โปรดแนบไฟล์ jpg หรือ pdf ที่มีขนาดไม่เกิน  <?php echo ConfigUtil::getDefaultMaxUploadFileSize()?>MB)</span>
 											</div>
 
 											<div class="clearfix margin-top-10"></div>
@@ -250,13 +270,45 @@ $departments = MDepartment::model()->findAll();
 		</div>
 	</div>
 
+	<input type="hidden" id="maxUploadFileSize" value="<?php echo ConfigUtil::getDefaultMaxUploadFileSize()?>">
+
 
 	<script
 		src="<?php echo ConfigUtil::getAppName();?>/assets/global/plugins/jquery.min.js"
 		type="text/javascript"></script>
 
 	<script>
+	var _validFileExtensions = [".jpg", ".jpeg",".png"];    
+	function validateFileInput(oInput) {
 
+		$_maxUploadFileSize = document.getElementById("maxUploadFileSize").value;
+		
+	    if (oInput.type == "file") {
+	        var sFileName = oInput.value;
+	        var sFileSize = oInput.files[0].size / 1024 / 1024;//MB
+	         if (sFileName.length > 0) {
+	            var blnValid = false;
+	            for (var j = 0; j < _validFileExtensions.length; j++) {
+	                var sCurExtension = _validFileExtensions[j];
+	                if (sFileName.substr(sFileName.length - sCurExtension.length, sCurExtension.length).toLowerCase() == sCurExtension.toLowerCase()) {
+	                    blnValid = true;
+	                    break;
+	                }
+	            }
+// 	            console.log('size:'+$_maxUploadFileSize);
+	            if(sFileSize > $_maxUploadFileSize ){
+	                alert("โปรดแนบไฟล์ที่มีขนาดไม่เกิน "+$_maxUploadFileSize+"MB" );
+	                oInput.value = "";
+	                return false;
+	            }else if (!blnValid) {
+	                alert("โปรดแนบไฟล์ jpg หรือ png" );
+	                oInput.value = "";
+	                return false;
+	            }
+	        }
+	    }
+	    return true;
+	}
 
     
     jQuery(document).ready(function () {

@@ -331,7 +331,9 @@ foreach ($deptParent as $parent) {
 									<div class="form-group last">
 										<label class="control-label col-md-4">แนบรูปภาพ (ถ้ามี) : </label>
 										<div class="col-md-4">
-											<span style="font-size: xx-small;color: red;">(โปรดแนบไฟล์ jpg หรือ pdf ที่มีขนาดไม่เกิน <?php echo ConfigUtil::getDefaultMaxUploadFileSize()?>MB)</span>
+											<span style="font-size: xx-small;color: red;">(โปรดแนบไฟล์ jpg หรือ pdf ที่มีขนาดไม่เกิน <?php echo ConfigUtil::getDefaultMaxUploadFileSize()?>MB)
+										<?php echo  !isset($imgs->path_img1)? '': '<a href="'.(ConfigUtil::getUrlHostName().$imgs->path_img1).'" target="_blank">Download</a>'?>
+											</span>
 											<div class="row fileupload-buttonbar">
 												<div class="col-lg-7">
 													<!-- The fileinput-button span is used to style the file input field as button -->
@@ -394,7 +396,10 @@ foreach ($deptParent as $parent) {
 									<div class="form-group last">
 										<label class="control-label col-md-4">แนบรูปภาพ (ถ้ามี) : </label>
 										<div class="col-md-4">
-										<span style="font-size: xx-small;color: red;">(โปรดแนบไฟล์ jpg หรือ pdf ที่มีขนาดไม่เกิน <?php echo ConfigUtil::getDefaultMaxUploadFileSize()?>MB)</span>
+										<span style="font-size: xx-small;color: red;">(โปรดแนบไฟล์ jpg หรือ pdf ที่มีขนาดไม่เกิน <?php echo ConfigUtil::getDefaultMaxUploadFileSize()?>MB)
+										<?php echo  !isset($imgs->path_img1)? '': '<a href="'.(ConfigUtil::getUrlHostName().$imgs->path_img1).'" target="_blank">Download</a>'?>	
+										
+										</span>
 											<div class="row fileupload-buttonbar">
 												<div class="col-lg-7">
 													<!-- The fileinput-button span is used to style the file input field as button -->

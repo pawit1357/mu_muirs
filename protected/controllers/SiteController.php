@@ -62,7 +62,7 @@ class SiteController extends CController
             $model = new UsersLogin();
             $model->attributes = $_POST['UsersLogin'];
             $model->password = md5($model->password);
-            $model->role_id = 5;
+            $model->role_id =3;//staff
             $model->email = $model->username;
             $model->is_force_change_password = 0;
             $model->create_by = UserLoginUtils::getUsersLoginId();

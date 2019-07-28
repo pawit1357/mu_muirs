@@ -106,10 +106,18 @@ class UserLoginUtils {
 	public static function getDepartmentInfo(){
 		if (self::isLogin ()) {
 			$UsersLogin = self::getUserInfo ();
-			return "<i class=\"fa fa-building\"></i><font color=\"orange\"> ".$UsersLogin->department->name."</font>";
+			return "<i class=\"fa fa-building\"></i><font color=\"blue\"> ".$UsersLogin->department->name."</font>";
 		} else {
 			return '';
 		}
+	}
+	public static function getDepartmentId(){
+	    if (self::isLogin ()) {
+	        $UsersLogin = self::getUserInfo ();
+	        return $UsersLogin->department->id;
+	    } else {
+	        return '';
+	    }
 	}
 	public static function getDepartmentInfoName(){
 	    if (self::isLogin ()) {

@@ -9,16 +9,15 @@ class SafetyRecord extends CActiveRecord {
 	public function relations() {
 		return array ();
 	}
-	public function rules() {
-		return array (
-				array (
-						'department_id,
-						start_record_date,
-						target',
-						'safe' 
-				) 
-		);
+	public function rules()
+	{
+	    return array(
+	        array(
+	            'id,department_id,last_accident_occurred_date,days_target,status,year,create_date,update_date,status','safe'
+	        )
+	    );
 	}
+	
 	public function attributeLabels() {
 		return array ()
 

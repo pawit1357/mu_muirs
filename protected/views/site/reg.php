@@ -1,5 +1,7 @@
 <?php
-$departments = MDepartment::model ()->findAll ();
+$deptParent = MDepartment::model()->findAll(array("condition"=>"faculty_id = -1",'order'=>'seq'));
+$deptChild = MDepartment::model()->findAll(array("condition"=>"faculty_id <> -1",'order'=>'seq'));
+
 $titles = MTitle::model ()->findAll ();
 ?>
 <div class="content" style="width: 510px !important">
@@ -29,8 +31,7 @@ $titles = MTitle::model ()->findAll ();
 			<input class="form-control placeholder-no-fix" type="text"
 				id="last_name" placeholder="นามสกุล" name="UsersLogin[last_name]" />
 		</div>
-		<span class="hint">Input your username (กรอกอีเมล์
-			กรุณาใช้อีเล์ของมหิดลฯ)</span>
+		<span class="hint">Input your username (กรุณากรอกอีเมล์ของมหาวิทยาลัยมหิดลเท่านั้น)</span>
 
 		<div class="form-group">
 			<!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
@@ -59,10 +60,30 @@ $titles = MTitle::model ()->findAll ();
 			<label class="control-label visible-ie8 visible-ie9">ส่วนงาน</label>
 			<select name="UsersLogin[department_id]" id="department_id"
 				class="form-control">
-				<option value="">-- Facuty/Insitture/Centre --</option>
-             <?php foreach($departments as $item) {?>
-			<option value="<?php echo $item->id?>"><?php echo sprintf('%02d', $item->id).'-'. $item->name?></option>
-			<?php }?>
+<option value="">-- (ไม่มีสังกัด) --</option>
+<?php
+foreach ($deptParent as $parent) {
+    $isGroup = false;
+    foreach ($deptChild as $child) {
+        if(intval($parent['id']) == intval($child['faculty_id'])){
+            $isGroup = true;
+        }
+    }
+    if($isGroup){
+        echo '<optgroup style="color:#008;font-style:normal;font-weight:normal;" label="'.$parent['name'].'">';
+        echo '</optgroup>';
+    }else{
+        echo '<option style="color:#'.(intval($parent['faculty_id']) == -1? '008':'000').';font-style:normal;font-weight:normal;" value="'.$parent['id'].'">'.htmlspecialchars($parent['name']).'</option>';
+    }
+    
+    foreach ($deptChild as $child) {
+        if(intval($parent['id']) == intval($child['faculty_id'])){
+            echo '<option style="color:#000;font-style:normal;font-weight:normal;" value="'.$child['id'].'">&nbsp;&nbsp;&nbsp;-&nbsp;'.htmlspecialchars($child['name']).'</option>';
+        }
+    }
+}
+    
+?>
                     </select>
 		</div>
 		<span class="hint">Contact Info</span>
@@ -102,7 +123,7 @@ $titles = MTitle::model ()->findAll ();
 //     	 $("#last_name").attr('maxlength','20');
 //     	 $("#mobile_phone").attr('maxlength','20');
 
-    	 
+
 
     	 
         	$( "#Form1" ).submit(function( event ) {
@@ -123,12 +144,22 @@ $titles = MTitle::model ()->findAll ();
             		$("#last_name").focus();
             		return false;
               	}
-            	if($("#email").val().length == 0){
-            		alert("ยังไม่ได้ป้อน อีเมล์");
+
+              	
+              	 var email = $('#email').val();
+                	
+            	if(email.length == 0){
+            		alert("ยังไม่ได้ป้อน ชื่อผูใช้");
             		$("#email").focus();
             		return false;
               	}
-
+                var freeRegex = /^[\w-\.]+@([mahidol.ac.th+\.])+[\w-]{2,4}$/;
+                if(!email.match(freeRegex)) 
+                {
+                   alert("กรุณากรอกอีเมล์ของมหาวิทยาลัยมหิดลเท่านั้น")
+                   return false;
+                }
+         	        
             	if($("#department_id").val() == ""){
 					alert("ยังไม่ได้เลือก ส่วนงาน");
             		$("#department_id").focus();
@@ -153,8 +184,7 @@ $titles = MTitle::model ()->findAll ();
               	
 
                		this.submit();
-  
-            	
+               		alert("สมัครเรียบร้อยแล้ว");
             	
         	});
 

@@ -606,6 +606,8 @@ foreach ($deptParent as $parent) {
 			</div>
 		</div>
 	</div>
+	</div>
+	
 	<input id="hostUrl" type="hidden" value="<?php echo ConfigUtil::getUrlHostName();?>">
 	<input type="hidden" id="maxUploadFileSize" value="<?php echo ConfigUtil::getDefaultMaxUploadFileSize()?>">
 
@@ -665,7 +667,7 @@ foreach ($deptParent as $parent) {
 	                    break;
 	                }
 	            }
-	            console.log('size:'+$_maxUploadFileSize);
+// 	            console.log('size:'+$_maxUploadFileSize);
 	            if(sFileSize > $_maxUploadFileSize ){
 	                alert("โปรดแนบไฟล์ที่มีขนาดไม่เกิน "+$_maxUploadFileSize+"MB" );
 	                oInput.value = "";
@@ -785,7 +787,7 @@ foreach ($deptParent as $parent) {
      
         $(".allowNum").keypress(function (e) {
             if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
-               alert('ป้อนข้อมูลได้เฉพาะตัวเลข');
+//                alert('ป้อนข้อมูลได้เฉพาะตัวเลข');
                return false;
            }
           });

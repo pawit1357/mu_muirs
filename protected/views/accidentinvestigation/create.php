@@ -1,6 +1,6 @@
 <?php
-$criteria = new CDbCriteria();
-$departments = MDepartment::model()->findAll();
+$deptParent = MDepartment::model()->findAll(array("condition"=>"faculty_id = -1",'order'=>'seq'));
+$deptChild = MDepartment::model()->findAll(array("condition"=>"faculty_id <> -1",'order'=>'seq'));
 
 ?>
 <form id="Form1" method="post" enctype="multipart/form-data"
@@ -89,7 +89,7 @@ $departments = MDepartment::model()->findAll();
 							<div class="row">
 								<div class="col-md-10">
 									<div class="form-group">
-										<label class="control-label col-md-4">ประเภทความเสียหาย </label>
+										<label class="control-label col-md-4">ประเภทความเสียหาย : </label>
 										<div class="col-md-8">
     										<div class="mt-radio-list">
     											<input type="radio" checked="checked" id="person_lost_type" class="mt-radio"
@@ -110,7 +110,7 @@ $departments = MDepartment::model()->findAll();
 							<div class="row">
 								<div class="col-md-10">
 									<div class="form-group">
-										<label class="control-label col-md-4">เพศ:<span
+										<label class="control-label col-md-4">เพศ :<span
 											class="required">*</span>
 										</label>
 										<div class="col-md-4">
@@ -130,7 +130,7 @@ $departments = MDepartment::model()->findAll();
 							<div class="row">
 								<div class="col-md-10">
 									<div class="form-group">
-										<label class="control-label col-md-4">ชื่อ-นามสุกล:<span
+										<label class="control-label col-md-4">ชื่อ-นามสุกล :<span
 											class="required">*</span>
 										</label>
 										<div class="col-md-4">
@@ -145,7 +145,7 @@ $departments = MDepartment::model()->findAll();
 							<div class="row">
 								<div class="col-md-10">
 									<div class="form-group">
-										<label class="control-label col-md-4">อายุ:<span
+										<label class="control-label col-md-4">อายุ :<span
 											class="required">*</span>
 										</label>
 										<div class="col-md-4">
@@ -162,7 +162,7 @@ $departments = MDepartment::model()->findAll();
 							<div class="row">
 								<div class="col-md-10">
 									<div class="form-group">
-										<label class="control-label col-md-4">ตำแหน่ง/ชั้นปี:<span
+										<label class="control-label col-md-4">ตำแหน่ง/ชั้นปี :<span
 											class="required"></span>
 										</label>
 										<div class="col-md-4">
@@ -178,16 +178,36 @@ $departments = MDepartment::model()->findAll();
 							<div class="row">
 								<div class="col-md-10">
 									<div class="form-group">
-										<label class="control-label col-md-4">คณะ/ส่วนงาน:<span
+										<label class="control-label col-md-4">คณะ/ส่วนงาน :<span
 											class="required"></span></label>
 										<div class="col-md-6">
 											<select class="form-control select2"
 												name=""
 												id="person_department_id">
 												<option value="-1">-- (ไม่มีสังกัด) --</option>
-			<?php foreach($departments as $item) {?>
-			<option value="<?php echo $item->id?>"><?php echo (($item->faculty_id < 0)? '' : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- '). $item->name?></option>
-			<?php }?>
+<?php
+foreach ($deptParent as $parent) {
+    $isGroup = false;
+    foreach ($deptChild as $child) {
+        if(intval($parent['id']) == intval($child['faculty_id'])){
+            $isGroup = true;
+        }
+    }
+    if($isGroup){
+        echo '<optgroup style="color:#008;font-style:normal;font-weight:normal;" label="'.$parent['name'].'">';
+        echo '</optgroup>';
+    }else{
+        echo '<option style="color:#'.(intval($parent['faculty_id']) == -1? '008':'000').';font-style:normal;font-weight:normal;" value="'.$parent['id'].'">'.htmlspecialchars($parent['name']).'</option>';
+    }
+    
+    foreach ($deptChild as $child) {
+        if(intval($parent['id']) == intval($child['faculty_id'])){
+            echo '<option style="color:#000;font-style:normal;font-weight:normal;" value="'.$child['id'].'">&nbsp;&nbsp;&nbsp;-&nbsp;'.htmlspecialchars($child['name']).'</option>';
+        }
+    }
+}
+    
+?>
 			</select>
 
 										</div>
@@ -198,7 +218,7 @@ $departments = MDepartment::model()->findAll();
 							<div class="row">
 								<div class="col-md-10">
 									<div class="form-group">
-										<label class="control-label col-md-4">หน้าที่:<span
+										<label class="control-label col-md-4">หน้าที่ :<span
 											class="required">*</span>
 										</label>
 										<div class="col-md-4">
@@ -213,7 +233,7 @@ $departments = MDepartment::model()->findAll();
 							<div class="row">
 								<div class="col-md-10">
 									<div class="form-group">
-										<label class="control-label col-md-4">ระยะเวลาปฏิบัติงาน:<span
+										<label class="control-label col-md-4">ระยะเวลาปฏิบัติงาน :<span
 											class="required">*</span>
 										</label>
 										<div class="col-md-4">
@@ -230,7 +250,7 @@ $departments = MDepartment::model()->findAll();
 								<div class="col-md-10">
 									<div class="form-group">
 										<label class="control-label col-md-4">(กรณีที่บาดเจ็บ)
-											อวัยวะที่บาดเจ็บ:<span class="required"></span>
+											อวัยวะที่บาดเจ็บ :<span class="required"></span>
 										</label>
 										<div class="col-md-4">
 											<input type="text" value="" id="person_dammage_body"
@@ -244,7 +264,7 @@ $departments = MDepartment::model()->findAll();
 							<div class="row">
 								<div class="col-md-10">
 									<div class="form-group">
-										<label class="control-label col-md-4">ลักษณะการบาดเจ็บ:<span
+										<label class="control-label col-md-4">ลักษณะการบาดเจ็บ :<span
 											class="required"></span>
 										</label>
 										<div class="col-md-4">
@@ -323,7 +343,7 @@ $departments = MDepartment::model()->findAll();
 							<div class="row">
 								<div class="col-md-10">
 									<div class="form-group">
-										<label class="control-label col-md-4">วัน/เดือน/ปี ที่เกิดเหตุ
+										<label class="control-label col-md-4">วัน/เดือน/ปี ที่เกิดเหตุ 
 											:<span class="required">*</span>
 										</label>
 										<div class="col-md-4">
@@ -364,7 +384,7 @@ $departments = MDepartment::model()->findAll();
 							<div class="row">
 								<div class="col-md-10">
 									<div class="form-group">
-										<label class="control-label col-md-4">ภารกิจในขณะเกิดเหตุ:<span
+										<label class="control-label col-md-4">ภารกิจในขณะเกิดเหตุ :<span
 											class="required">*</span>
 										</label>
 										<div class="col-md-4">
@@ -379,7 +399,7 @@ $departments = MDepartment::model()->findAll();
 							<div class="row">
 								<div class="col-md-10">
 									<div class="form-group">
-										<label class="control-label col-md-4">จำนวนผู้ปฏิบัติงานในช่วงเวลาที่เกิดเหตุ
+										<label class="control-label col-md-4">จำนวนผู้ปฏิบัติงานในช่วงเวลาที่เกิดเหตุ 
 											:<span class="required">*</span>
 										</label>
 										<div class="col-md-4">
@@ -433,7 +453,7 @@ $departments = MDepartment::model()->findAll();
 							<div class="row">
 								<div class="col-md-10">
 									<div class="form-group">
-										<label class="control-label col-md-4">รายละเอียดการรักษา:<span
+										<label class="control-label col-md-4">รายละเอียดการรักษา :<span
 											class="required">*</span>
 										</label>
 										<div class="col-md-4">
@@ -448,7 +468,7 @@ $departments = MDepartment::model()->findAll();
 							<div class="row">
 								<div class="col-md-10">
 									<div class="form-group">
-										<label class="control-label col-md-4">จำนวนวันที่หยุดงานจริง:<span
+										<label class="control-label col-md-4">จำนวนวันที่หยุดงานจริง :<span
 											class="required">*</span>
 										</label>
 										<div class="col-md-4">
@@ -462,7 +482,7 @@ $departments = MDepartment::model()->findAll();
 							<div class="row">
 								<div class="col-md-10">
 									<div class="form-group">
-										<label class="control-label col-md-4">พยานผู้พบเห็นเหตุการณ์:<span
+										<label class="control-label col-md-4">พยานผู้พบเห็นเหตุการณ์ :<span
 											class="required">*</span>
 										</label>
 										<div class="col-md-4">
@@ -479,7 +499,7 @@ $departments = MDepartment::model()->findAll();
 								<div class="col-md-10">
 									<div class="form-group">
 
-										<label class="control-label col-md-4">ลักษณะเหตุการณ์เกิดขึ้นได้อย่างไร
+										<label class="control-label col-md-4">ลักษณะเหตุการณ์เกิดขึ้นได้อย่างไร 
 											: </label>
 										<div class="col-md-4">
 											<textarea rows="5" cols="70" id="accident_event_happen"
@@ -496,13 +516,15 @@ $departments = MDepartment::model()->findAll();
 							<div class="row">
 								<div class="col-md-10">
 									<div class="form-group last">
-										<label class="control-label col-md-4">แนบรูปภาพ (ถ้ามี)</label>
+										<label class="control-label col-md-4">แนบรูปภาพ (ถ้ามี) :</label>
 										<div class="col-md-4">
+										<span style="font-size: xx-small;color: red;">(โปรดแนบไฟล์ jpg หรือ pdf ที่มีขนาดไม่เกิน  <?php echo ConfigUtil::getDefaultMaxUploadFileSize()?>MB)</span>
+										
 											<div class="row fileupload-buttonbar">
 												<div class="col-lg-7">
 													<!-- The fileinput-button span is used to style the file input field as button -->
 													<span class="btn green fileinput-button"> <input
-														type="file" name="img1[]" multiple="multiple">
+														type="file" name="img1[]" multiple="multiple"  onchange="validateFileInput(this);">
 													</span>
 													<!-- The global file processing state -->
 													<span class="fileupload-process"> </span>
@@ -528,7 +550,7 @@ $departments = MDepartment::model()->findAll();
 							<div class="row">
 								<div class="col-md-10">
 									<div class="form-group">
-										<label class="control-label col-md-4">ประเภทของการเกิดอุบัติเหตุ
+										<label class="control-label col-md-4">ประเภทของการเกิดอุบัติเหตุ 
 											:<span class="required">*</span>
 										</label>
 										<div class="col-md-8">
@@ -556,7 +578,7 @@ $departments = MDepartment::model()->findAll();
 							<div class="row">
 								<div class="col-md-10">
 									<div class="form-group">
-										<label class="control-label col-md-4">ส่วนงานของท่านเคยเกิดเหตุการณ์ลักษณะใกล้เคียงครั้งนี้
+										<label class="control-label col-md-4">ส่วนงานของท่านเคยเกิดเหตุการณ์ลักษณะใกล้เคียงครั้งนี้ 
 											:<span class="required">*</span>
 										</label>
 										<div class="col-md-8">
@@ -638,7 +660,7 @@ $departments = MDepartment::model()->findAll();
 														name="AccidentInvestigation[accidental_damage_type]"
 														value="1" />เสียชีวิต จำนวน</td>
 													<td><input type="text" value="" id="accidental_damage1" class='allowNum'
-														style="border: none; border-bottom-style: dotted; width: 150px;"
+														style="border: none; border-bottom-style: dotted; width: 150px;text-align: right;"
 														name="AccidentInvestigation[accidental_damage1]" /></td>
 													<td>ราย</td>
 												</tr>
@@ -648,7 +670,7 @@ $departments = MDepartment::model()->findAll();
 														name="AccidentInvestigation[accidental_damage_type]"
 														value="2" />สูญเสียอวัยวะ/ทุพพลภาพ จำนวน</td>
 													<td><input type="text" value="" id="accidental_damage2" class='allowNum'
-														style="border: none; border-bottom-style: dotted; width: 150px;"
+														style="border: none; border-bottom-style: dotted; width: 150px;text-align: right;"
 														name="AccidentInvestigation[accidental_damage2]" /></td>
 													<td>ราย</td>
 												</tr>
@@ -658,7 +680,7 @@ $departments = MDepartment::model()->findAll();
 														name="AccidentInvestigation[accidental_damage_type]"
 														value="3" />บาดเจ็บ/เจ็บป่วย จำนวน</td>
 													<td><input type="text" value="" id="accidental_damage3" class='allowNum'
-														style="border: none; border-bottom-style: dotted; width: 150px;"
+														style="border: none; border-bottom-style: dotted; width: 150px;text-align: right;"
 														name="AccidentInvestigation[accidental_damage3]" /></td>
 													<td>ราย</td>
 												</tr>
@@ -667,8 +689,8 @@ $departments = MDepartment::model()->findAll();
 													<td><input type="radio" id="accidental_damage_type" class="rdDamageTypeCls"
 														name="AccidentInvestigation[accidental_damage_type]"
 														value="4" />ทรัพย์สินเสียหาย จำนวน</td>
-													<td><input type="text" value="" id="accidental_damage4" class='allowNum'
-														style="border: none; border-bottom-style: dotted; width: 150px;"
+													<td><input type="text" value="" id="accidental_damage4" class='allowNum2'
+														style="border: none; border-bottom-style: dotted; width: 150px;text-align: right;"
 														name="AccidentInvestigation[accidental_damage4]" /></td>
 													<td>บาท</td>
 												</tr>
@@ -688,7 +710,7 @@ $departments = MDepartment::model()->findAll();
 														value="5" />มีการหยุดการปฏิบัติงาน
 														จำนวนวันที่หยุดการปฏิบัติงาน</td>
 													<td><input type="text" value="" id="accidental_damage5" class='allowNum'
-														style="border: none; border-bottom-style: dotted; width: 150px;"
+														style="border: none; border-bottom-style: dotted; width: 150px;text-align: right;"
 														name="AccidentInvestigation[accidental_damage5]" /></td>
 													<td>วัน</td>
 												</tr>
@@ -723,7 +745,7 @@ $departments = MDepartment::model()->findAll();
 								<div class="col-md-10">
 									<div class="form-group">
 
-										<label class="control-label col-md-4">การแก้ไขเบื้องต้นที่ได้กระทำไปแล้ว
+										<label class="control-label col-md-4">การแก้ไขเบื้องต้นที่ได้กระทำไปแล้ว 
 											: </label>
 										<div class="col-md-4">
 											<textarea rows="5" cols="70" id="accident_solve"
@@ -737,14 +759,15 @@ $departments = MDepartment::model()->findAll();
 							<div class="row">
 								<div class="col-md-10">
 									<div class="form-group last">
-										<label class="control-label col-md-4">แนบรูปภาพ (ถ้ามี)</label>
+										<label class="control-label col-md-4">แนบรูปภาพ (ถ้ามี) :</label>
 										<div class="col-md-4">
+										<span style="font-size: xx-small;color: red;">(โปรดแนบไฟล์ jpg หรือ pdf ที่มีขนาดไม่เกิน  <?php echo ConfigUtil::getDefaultMaxUploadFileSize()?>MB)</span>
 
 											<div class="row fileupload-buttonbar">
 												<div class="col-lg-7">
 													<!-- The fileinput-button span is used to style the file input field as button -->
 													<span class="btn green fileinput-button"> <input
-														type="file" name="img2[]" multiple="multiple">
+														type="file" name="img2[]" multiple="multiple"  onchange="validateFileInput(this);">
 													</span>
 													<!-- The global file processing state -->
 													<span class="fileupload-process"> </span>
@@ -784,13 +807,15 @@ $departments = MDepartment::model()->findAll();
 							<div class="row">
 								<div class="col-md-10">
 									<div class="form-group last">
-										<label class="control-label col-md-4">แนบรูปภาพ (ถ้ามี)</label>
+										<label class="control-label col-md-4">แนบรูปภาพ (ถ้ามี) :</label>
 										<div class="col-md-4">
+										<span style="font-size: xx-small;color: red;">(โปรดแนบไฟล์ jpg หรือ pdf ที่มีขนาดไม่เกิน  <?php echo ConfigUtil::getDefaultMaxUploadFileSize()?>MB)</span>
+
 											<div class="row fileupload-buttonbar">
 												<div class="col-lg-7">
 													<!-- The fileinput-button span is used to style the file input field as button -->
 													<span class="btn green fileinput-button"> <input
-														type="file" name="img3[]" multiple="multiple">
+														type="file" name="img3[]" multiple="multiple"  onchange="validateFileInput(this);">
 													</span>
 													<!-- The global file processing state -->
 													<span class="fileupload-process"> </span>
@@ -847,6 +872,7 @@ $departments = MDepartment::model()->findAll();
 			</div>
 		</div>
 	</div>
+	<input type="hidden" id="maxUploadFileSize" value="<?php echo ConfigUtil::getDefaultMaxUploadFileSize()?>">
 
 
 
@@ -857,6 +883,71 @@ $departments = MDepartment::model()->findAll();
 
 	<script>
 
+	function sanitizeNumericInput(input) {
+
+	    // a negative sign comes before any digit
+	    var is_negative = /^[^0-9]*\-/.test(input)
+
+	    // remove anything that is not a digit or decimal point
+	    var digits = input.replace(/[^0-9\.]/g, '');
+
+	    // find the first decimal point
+	    var decimal_point = digits.indexOf('.');
+
+	    // no decimal point, don't worry about inserting one
+	    if(decimal_point == -1) decimal_point = digits.length;
+
+	    // remove all other decimal points and create a numeric string
+	    var clean = (is_negative?'-':'') + digits.substr(0, decimal_point) + '.' + digits.substr(decimal_point).replace(/\./g, '');
+
+	    // attempt to turn this into a number data-type
+	    var number = parseFloat(clean);
+
+	    // no digits (not a number) return '0.00'
+	    if(isNaN(number)) return '0.00';
+
+	    // round to two decimal places
+	    number = (Math.round(number*100) / 100);
+
+	    // force two digits after the decimal point, convert to string and return it
+    	var parts = number.toFixed(2).toString().replace("," ,"").split(".");
+    	parts[0] = parts[0].replace("," ,"").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+    	return parts.join(".");
+	}
+	
+	var _validFileExtensions = [".jpg", ".jpeg",".pdf"];    
+	function validateFileInput(oInput) {
+
+		$_maxUploadFileSize = document.getElementById("maxUploadFileSize").value;
+		
+	    if (oInput.type == "file") {
+	        var sFileName = oInput.value;
+	        var sFileSize = oInput.files[0].size / 1024 / 1024;//MB
+	         if (sFileName.length > 0) {
+	            var blnValid = false;
+	            for (var j = 0; j < _validFileExtensions.length; j++) {
+	                var sCurExtension = _validFileExtensions[j];
+	                if (sFileName.substr(sFileName.length - sCurExtension.length, sCurExtension.length).toLowerCase() == sCurExtension.toLowerCase()) {
+	                    blnValid = true;
+	                    break;
+	                }
+	            }
+// 	            console.log('size:'+$_maxUploadFileSize);
+	            if(sFileSize > $_maxUploadFileSize ){
+	                alert("โปรดแนบไฟล์ที่มีขนาดไม่เกิน "+$_maxUploadFileSize+"MB" );
+	                oInput.value = "";
+	                return false;
+	            }else if (!blnValid) {
+	                alert("โปรดแนบไฟล์ jpg หรือ pdf" );
+	                oInput.value = "";
+	                return false;
+	            }
+	        }
+	    }
+	    return true;
+	}
+	
 
     
     jQuery(document).ready(function () {
@@ -894,13 +985,30 @@ $departments = MDepartment::model()->findAll();
             }       
         });
 
+
         $(".allowNum").keypress(function (e) {
             if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
-               alert('ป้อนข้อมูลได้เฉพาะตัวเลข');
+//                alert('ป้อนข้อมูลได้เฉพาะตัวเลข');
                return false;
            }
           });
 
+        $('#accidental_damage4').bind('change', function(){
+            this.value = sanitizeNumericInput(this.value);
+        });
+        
+        $(".allowNum2").keypress(function (evt, element) {
+            var charCode = (evt.which) ? evt.which : event.keyCode
+
+                    if (
+                        (charCode != 45 || $(element).val().indexOf('-') != -1) &&      // “-” CHECK MINUS, AND ONLY ONE.
+                        (charCode != 46 || $(element).val().indexOf('.') != -1) &&      // “.” CHECK DOT, AND ONLY ONE.
+                        (charCode < 48 || charCode > 57))
+                        return false;
+
+                    return true;
+                    
+          });
         
         $('#btnAdd').click(function (event) {
             	var txt_person_type = $('#person_type').val();

@@ -57,7 +57,6 @@ class IncidentController extends CController
                 $index = 0;
                 foreach ( $file_ary as $file ) {
                     if ($file ['size'] > 0) {
-                        CommonUtil::upload ( $file );
                         $model->img1 = CommonUtil::upload ( $file );
                     }
                     $index ++;
@@ -130,7 +129,6 @@ class IncidentController extends CController
                 $index = 0;
                 foreach ( $file_ary as $file ) {
                     if ($file ['size'] > 0) {
-                        CommonUtil::upload ( $file );
                         $model->img1 = CommonUtil::upload ( $file );
                     }
                     $index ++;

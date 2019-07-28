@@ -224,6 +224,8 @@ License: You must have a valid license purchased only from themeforest(the above
 			<div class="page-content">
 				<div class="page-bar">
 					<ul class="page-breadcrumb">
+					<?php echo "<h4>".UserLoginUtils::getDepartmentInfo()."</h4>"?>
+					
 <?php echo  (UserLoginUtils::getUserRole() == 6)? '': MenuUtil::getNavigator($_SERVER['REQUEST_URI']);?>
 </ul>
 					<div class="page-toolbar">

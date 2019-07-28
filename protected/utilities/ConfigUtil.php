@@ -20,7 +20,7 @@ class ConfigUtil {
 	
 
 	private static $defaultPageSize = 200;
-	private static $defaultMaxUploadFileSize = 5;//MB
+	private static $defaultMaxUploadFileSize = 1;//MB
 	
 	public static function getDbName() {
 		$str = Yii::app()->db->connectionString;

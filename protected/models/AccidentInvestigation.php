@@ -13,10 +13,15 @@ class AccidentInvestigation extends CActiveRecord {
 						'MDepartment',
 						'person_department_id'
 				),
-				'onwerdepartment' => array(
+                'onwerdepartment' => array(
 						self::BELONGS_TO,
 						'MDepartment',
 						'owner_department_id'
+				),
+                'accidentInvestigationImage' => array(
+				    self::BELONGS_TO,
+				    'AccidentInvestigationImage',
+				    'id'
 				),
 		);
 	}

@@ -97,28 +97,19 @@ class AccidentInvestigationController extends CController
                 $model->save();
                 $index ++;
             }
-            // Notify//
-            $model = new Notify();
-            $model->report_type = 1; // 1:Acicent&Investigate,2:Incident,3:Accident
-            $model->title = 'Acicent&Investigate';
-            $model->remark = '';
-            $model->isRead = false;
-            $model->create_date = date("Y-m-d H:i:s");
-            $model->save();
-            // End-Notify//
+            
+
+            $acc_img = new AccidentInvestigationImage();
+            $acc_img->accident_investigation_id = $model->id;
             
             $img1 = $_FILES['img1'];
-            
             if (isset($img1)) {
                 $file_ary = CommonUtil::reArrayFiles($img1);
                 
                 $index = 0;
                 foreach ($file_ary as $file) {
                     if ($file['size'] > 0) {
-                        $acc_img = new AccidentInvestigationImage();
-                        $acc_img->accident_investigation_id = $model->id;
                         $acc_img->path_img1 = CommonUtil::upload($file);
-                        $acc_img->save();
                     }
                     $index ++;
                 }
@@ -131,10 +122,7 @@ class AccidentInvestigationController extends CController
                 $index = 0;
                 foreach ($file_ary as $file) {
                     if ($file['size'] > 0) {
-                        $acc_img = new AccidentInvestigationImage();
-                        $acc_img->accident_investigation_id = $model->id;
                         $acc_img->path_img2 = CommonUtil::upload($file);
-                        $acc_img->save();
                     }
                     $index ++;
                 }
@@ -147,14 +135,24 @@ class AccidentInvestigationController extends CController
                 $index = 0;
                 foreach ($file_ary as $file) {
                     if ($file['size'] > 0) {
-                        $acc_img = new AccidentInvestigationImage();
-                        $acc_img->accident_investigation_id = $model->id;
                         $acc_img->path_img3 = CommonUtil::upload($file);
-                        $acc_img->save();
+
                     }
                     $index ++;
                 }
             }
+            $acc_img->save();
+            
+            
+            // Notify//
+            $model = new Notify();
+            $model->report_type = 1; // 1:Acicent&Investigate,2:Incident,3:Accident
+            $model->title = 'Acicent&Investigate';
+            $model->remark = '';
+            $model->isRead = false;
+            $model->create_date = date("Y-m-d H:i:s");
+            $model->save();
+            // End-Notify//
             
             // echo "SAVE";
             $transaction->commit();
@@ -223,21 +221,25 @@ class AccidentInvestigationController extends CController
                 $accident_type = "";
             }
             $model->accident_type = rtrim($accident_type, ",");
+            $model->update();
+            
 
-            $model->save();
+            $acc_img = AccidentInvestigationImage::model()->findbyPk($model->id);
+
+            
+            if(!isset($acc_img)){
+                $acc_img = new AccidentInvestigationImage();
+                $acc_img->accident_investigation_id = $model->id;
+            }
             
             $img1 = $_FILES['img1'];
-            
             if (isset($img1)) {
                 $file_ary = CommonUtil::reArrayFiles($img1);
                 
                 $index = 0;
                 foreach ($file_ary as $file) {
                     if ($file['size'] > 0) {
-                        $acc_img = new AccidentInvestigationImage();
-                        $acc_img->accident_investigation_id = $model->id;
                         $acc_img->path_img1 = CommonUtil::upload($file);
-                        $acc_img->save();
                     }
                     $index ++;
                 }
@@ -250,10 +252,7 @@ class AccidentInvestigationController extends CController
                 $index = 0;
                 foreach ($file_ary as $file) {
                     if ($file['size'] > 0) {
-                        $acc_img = new AccidentInvestigationImage();
-                        $acc_img->accident_investigation_id = $model->id;
                         $acc_img->path_img2 = CommonUtil::upload($file);
-                        $acc_img->save();
                     }
                     $index ++;
                 }
@@ -266,14 +265,20 @@ class AccidentInvestigationController extends CController
                 $index = 0;
                 foreach ($file_ary as $file) {
                     if ($file['size'] > 0) {
-                        $acc_img = new AccidentInvestigationImage();
-                        $acc_img->accident_investigation_id = $model->id;
                         $acc_img->path_img3 = CommonUtil::upload($file);
-                        $acc_img->save();
+                        
                     }
                     $index ++;
                 }
             }
+            if(!isset($acc_img)){
+
+                $acc_img->update();
+            }else{  
+
+                $acc_img->save();
+            }
+            
             
             $transaction->commit();
             
