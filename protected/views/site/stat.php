@@ -72,7 +72,7 @@ if(isset($duplicateData)){
                                     	<td>&nbsp;</td>
                                     	<td><img src="<?php echo ConfigUtil::getAppName();?>/images/logo3.png" alt="logo"  height="45" align="left" /></td>
                                     	<td>&nbsp;</td>
-                                    	<td style="text-align: center;width: 300px;">ป้ายสถิติความปลอดภัย มหาวิทยาลัยมหิดล<br>SAFETY FIRST</td>
+                                    	<td style="text-align: center;width: 300px;">ป้ายสถิติความปลอดภัย มหาวิทยาลัยมหิดล<br>SAFETY FIRST MU</td>
                                     	<td>&nbsp;</td>
                                     	<td><img src="<?php echo ConfigUtil::getAppName();?>/images/logo4.png" alt="logo"  height="45" align="right" /></td>
                                     	<td>&nbsp;</td>

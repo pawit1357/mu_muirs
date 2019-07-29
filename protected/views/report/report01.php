@@ -1,17 +1,21 @@
 <?php
-$criteria = new CDbCriteria ();
-switch (UserLoginUtils::getUserRoleName ()) {
-	case UserLoginUtils::ADMIN :
-	case UserLoginUtils::EXCUTIVE :
-		break;
-	case UserLoginUtils::STAFF :
-	case UserLoginUtils::USER :
-		$dept_id = isset ( UserLoginUtils::getRegisterInfo ()->dep_department_id ) ? UserLoginUtils::getRegisterInfo ()->dep_department_id : 0;
-		$criteria->condition = " t.id = " . $dept_id;
-		break;
-}
+$deptParent = MDepartment::model()->findAll(array("condition"=>"faculty_id = -1",'order'=>'seq'));
+$deptChild = MDepartment::model()->findAll(array("condition"=>"faculty_id <> -1",'order'=>'seq'));
 
-$departments = MDepartment::model ()->findAll ( $criteria );
+
+// $criteria = new CDbCriteria ();
+// switch (UserLoginUtils::getUserRoleName ()) {
+// 	case UserLoginUtils::ADMIN :
+// 	case UserLoginUtils::EXCUTIVE :
+// 		break;
+// 	case UserLoginUtils::STAFF :
+// 	case UserLoginUtils::USER :
+// 		$dept_id = isset ( UserLoginUtils::getRegisterInfo ()->dep_department_id ) ? UserLoginUtils::getRegisterInfo ()->dep_department_id : 0;
+// 		$criteria->condition = " t.id = " . $dept_id;
+// 		break;
+// }
+
+// $departments = MDepartment::model ()->findAll ( $criteria );
 
 ?>
 <form id="Form1" method="post" enctype="multipart/form-data"
@@ -35,22 +39,80 @@ $departments = MDepartment::model ()->findAll ( $criteria );
 							<label class="control-label col-md-3">สังกัดหน่วยงาน:<span
 								class="required">*</span></label>
 							<div class="col-md-6">
-								<select class="form-control select2"
-									name="LabRegister[dep_department_id]" id="dep_department_id">
-									<option value="0">-- โปรดเลือก --</option>
-			<?php foreach($departments as $item) {?>
-			<option value="<?php echo $item->id?>"><?php echo $item->name?></option>
-			<?php }?>
-								</select>
+<select class="form-control" name="Accident[department_id]" id="department_id" onchange="onchangeDepartment(this)">
+<option value="-1">-- (ทั้งหมด) --</option>
+<?php
+foreach ($deptParent as $parent) {
+    $isGroup = false;
+    foreach ($deptChild as $child) {
+        if(intval($parent['id']) == intval($child['faculty_id'])){
+            $isGroup = true;
+        }
+    }
+    if($isGroup){
+        echo '<optgroup style="color:#008;font-style:normal;font-weight:normal;" label="'.$parent['name'].'">';
+        echo '</optgroup>';
+    }else{
+        echo '<option style="color:#'.(intval($parent['faculty_id']) == -1? '008':'000').';font-style:normal;font-weight:normal;" value="'.$parent['id'].'" '. ($parent['id'] == $data->department_id? 'selected="selected"':'') .'>'.htmlspecialchars($parent['name']).'</option>';
+    }
+    
+    foreach ($deptChild as $child) {
+        if(intval($parent['id']) == intval($child['faculty_id'])){
+            echo '<option style="color:#000;font-style:normal;font-weight:normal;" value="'.$child['id'].'" '. ($child['id'] == $data->department_id? 'selected="selected"':'') .'>&nbsp;&nbsp;&nbsp;-&nbsp;'.htmlspecialchars($child['name']).'</option>';
+        }
+    }
+}
+?>
+</select>
 							</div>
 							<div id="divReq-department_id"></div>
 						</div>
 					</div>
 				</div>
-				<!-- 				<div class="well"> -->
-
-				<!-- 				xxxx -->
-				<!-- 				</div> -->
+				<div class="row">
+					<div class="col-md-9">
+						<div class="form-group">
+							<label class="control-label col-md-3">วันที่เกิดเหตุ (เริ่มต้น):
+							<span class="required">*</span></label>
+							<div class="col-md-6">
+									<div class="input-group date date-picker"
+										data-date-format="dd-mm-yyyy">
+										<input type="text"
+											value="<?php echo ($data->report_date_from !='')? $data->report_date_from: CommonUtil::getCurDate();?>"
+											id="report_date_from" class="form-control"
+											name="Accident[report_date_from]" /> <span
+											class="input-group-btn">
+											<button class="btn default" type="button">
+												<i class="fa fa-calendar"></i>
+											</button>
+										</span>
+									</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-9">
+						<div class="form-group">
+							<label class="control-label col-md-3">
+							วันที่เกิดเหตุ (สิ้นสุด):
+							<span
+								class="required">*</span></label>
+							<div class="col-md-6">
+											<div class="input-group date date-picker"
+												data-date-format="dd-mm-yyyy">
+												<input type="text"
+													value="<?php echo ($data->report_date_from !='')? $data->report_date_to:  CommonUtil::getCurDate();?>"
+													id="report_date_to" class="form-control"
+													name="Accident[report_date_to]" /> <span
+													class="input-group-btn">
+													<button class="btn default" type="button">
+														<i class="fa fa-calendar"></i>
+													</button>
+												</span>
+											</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 			<!-- END FORM-->
 			<div class="form-actions">
@@ -77,41 +139,40 @@ $departments = MDepartment::model ()->findAll ( $criteria );
 				<br>
 				<br>
 				<br>
-				<table class="table table-striped table-hover table-bordered"
-					id="gvResult">
-					<thead>
-						<tr>
-							<th>ลำดับ</th>
-							<th>คณะ</th>
-							<th>สังกัดหน่วยงาน</th>
-							<th>อาคาร</th>
-							<th>รหัสห้องปฏิบัติการ</th>
-							<th class="no-sort"></th>
-						</tr>
-					</thead>
-
-					<tbody>
+					<table class="table table-striped table-hover table-bordered"
+						id="gvResult">
+						<thead>
+							<tr>
+								<th>ลำดับ</th>
+								<th>ผู้รายงาน</th>
+								<th>เบอร์โทรศัพท์</th>
+								<th>คณะ/ส่วนงาน</th>
+								<th>ลักษณะเหตุการณ์</th>
+								<th>สถานที่เกิดเหตุ</th>
+								<th>วัน/เดือน/ปี ที่เกิดเหตุ </th>
+							</tr>
+						</thead>
+						<tbody>
 	<?php
-	$order = 1;
+	$counter = 1;
 	foreach ( $dataProvider->data as $data ) {
 		?>
 				<tr>
-							<td class="center"><?php echo $order?></td>
-							<td class="center"><?php echo $data->faculty->name?></td>
-							<td class="center"><?php echo $data->department->name?></td>
-							<td class="center"><?php echo $data->build->name?></td>
-							<td class="center"><?php echo $data->lab_code?></td>
-							<td class="center"><a title="Edit" class="fa fa-edit"
-								href="<?php echo Yii::app()->CreateUrl('SurveyOcc/View/dept_id/'.$data->dep_department_id)?>"></a>
-							</td>
-						</tr>
+								<td class="center"><?php echo $counter?></td>
+								<td class="center"><?php echo $data->name?></td>
+								<td class="center"><?php echo $data->phone_number?></td>
+								<td class="center"><?php echo $data->department->name?></td>
+								<td class="center"><?php echo $data->accident_event?></td>
+								<td class="center"><?php echo $data->accident_location?></td>
+								<td class="center"><?php echo $data->case_date?></td>
+							</tr>
 			<?php
-		$order ++;
+			$counter++;
 	}
 	?>	
 
 						</tbody>
-				</table>
+					</table>
 			</div>
 		</div>
 	</div>
@@ -123,7 +184,69 @@ $departments = MDepartment::model ()->findAll ( $criteria );
 
 	<script>
     jQuery(document).ready(function () {
-        
+
+		$.datetimepicker.setLocale('th'); // ต้องกำหนดเสมอถ้าใช้ภาษาไทย และ เป็นปี พ.ศ.
+   	 	// กรณีใช้แบบ input
+       $("#report_date_from").datetimepicker({
+           timepicker:false,
+           format:'d/m/Y',  // กำหนดรูปแบบวันที่ ที่ใช้ เป็น 00-00-0000            
+           lang:'th',  // ต้องกำหนดเสมอถ้าใช้ภาษาไทย และ เป็นปี พ.ศ.
+           onSelectDate:function(dp,$input){
+               var yearT=new Date(dp).getFullYear()-0;  
+               var yearTH=yearT+543;
+               var fulldate=$input.val();
+               var fulldateTH=fulldate.replace(yearT,yearTH);
+               $input.val(fulldateTH);
+           },
+       });   
+       $("#report_date_to").datetimepicker({
+           timepicker:false,
+           format:'d/m/Y',  // กำหนดรูปแบบวันที่ ที่ใช้ เป็น 00-00-0000            
+           lang:'th',  // ต้องกำหนดเสมอถ้าใช้ภาษาไทย และ เป็นปี พ.ศ.
+           onSelectDate:function(dp,$input){
+               var yearT=new Date(dp).getFullYear()-0;  
+               var yearTH=yearT+543;
+               var fulldate=$input.val();
+               var fulldateTH=fulldate.replace(yearT,yearTH);
+               $input.val(fulldateTH);
+           },
+       }); 
+       $("#report_date_from").on("mouseenter mouseleave",function(e){
+           var dateValue=$(this).val();
+           if(dateValue!=""){
+                   var arr_date=dateValue.split("/"); // ถ้าใช้ตัวแบ่งรูปแบบอื่น ให้เปลี่ยนเป็นตามรูปแบบนั้น
+                   // ในที่นี้อยู่ในรูปแบบ 00-00-0000 เป็น d-m-Y  แบ่งด่วย - ดังนั้น ตัวแปรที่เป็นปี จะอยู่ใน array
+                   //  ตัวที่สอง arr_date[2] โดยเริ่มนับจาก 0 
+                   if(e.type=="mouseenter"){
+                       var yearT=arr_date[2]-543;
+                   }       
+                   if(e.type=="mouseleave"){
+                       var yearT=parseInt(arr_date[2])+543;
+                   }   
+                   dateValue=dateValue.replace(arr_date[2],yearT);
+                   $(this).val(dateValue);                                                 
+           }       
+       });
+       $("#report_date_to").on("mouseenter mouseleave",function(e){
+           var dateValue=$(this).val();
+           if(dateValue!=""){
+                   var arr_date=dateValue.split("/"); // ถ้าใช้ตัวแบ่งรูปแบบอื่น ให้เปลี่ยนเป็นตามรูปแบบนั้น
+                   // ในที่นี้อยู่ในรูปแบบ 00-00-0000 เป็น d-m-Y  แบ่งด่วย - ดังนั้น ตัวแปรที่เป็นปี จะอยู่ใน array
+                   //  ตัวที่สอง arr_date[2] โดยเริ่มนับจาก 0 
+                   if(e.type=="mouseenter"){
+                       var yearT=arr_date[2]-543;
+                   }       
+                   if(e.type=="mouseleave"){
+                       var yearT=parseInt(arr_date[2])+543;
+                   }   
+                   dateValue=dateValue.replace(arr_date[2],yearT);
+                   $(this).val(dateValue);                                                 
+           }       
+       });
+
+
+
+       
     	var table = $('#gvResult');
 
     	var oTable = table.dataTable({

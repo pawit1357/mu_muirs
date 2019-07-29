@@ -56,7 +56,7 @@
 <?php if(UserLoginUtils::canDelete( $_SERVER['REQUEST_URI'])){?>
 <a title="Delete" onclick="return confirm('ต้องการลบข้อมูลใช่หรือไม่?')" class="fa fa-trash" href="<?php echo Yii::app()->CreateUrl('Accident/Delete/id/'.$data->id)?>"></a>
 <?php }?>	
-<a title="Print Form" class="fa fa-print"	href="<?php echo Yii::app()->CreateUrl('Accident/Print/id/'.$data->id)?>"></a>			
+<!-- <a title="Print Form" class="fa fa-print"	href="<?php echo Yii::app()->CreateUrl('Accident/Print/id/'.$data->id)?>"></a>	 -->		
 									
 								</td>
 							</tr>

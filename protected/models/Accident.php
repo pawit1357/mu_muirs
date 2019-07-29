@@ -1,8 +1,13 @@
 <?php
 class Accident extends CActiveRecord {
+    
+    public $report_date_to;
+    public $report_date_from;
+    
 	public static function model($className = __CLASS__) {
 		return parent::model ( $className );
 	}
+	
 	public function tableName() {
 		return 'tb_accident';
 	}
@@ -43,7 +48,7 @@ class Accident extends CActiveRecord {
                         dammage_type_4_value, 
                         dammage_type_5_value,
                         create_by, 
-                        create_date',
+                        create_date,report_date_to,report_date_from',
                         'safe' 
 				)
 		);

@@ -4,38 +4,38 @@ class ReportController extends CController {
 	public $layout = '_main';
 	private $_model;
 	
-	/* OCC */
+	/*  */
 	public function actionReport01() {
 		// Authen Login
 		if (! UserLoginUtils::isLogin ()) {
 			$this->redirect ( Yii::app ()->createUrl ( 'Site/login' ) );
 		}
 		
-// 		$criteria = new CDbCriteria ();
-// 		if (isset ( $_POST ['LabRegister'] )) {
-			
-// 			$regist = new LabRegister ();
-// 			$regist->attributes = $_POST ['LabRegister'];
-			
-// 			$criteria = new CDbCriteria ();
-// 			$criteria->compare ( 'dep_department_id', $regist->dep_department_id, true );
-// 			$dataProvider = new CActiveDataProvider ( "LabRegister", array (
-// 					'criteria' => $criteria 
-// 			) );
-			
-// 			$this->render ( '//report/report01', array (
-// 					'dataProvider' => $dataProvider 
-// 			) );
-// 		} else {
-// 			$dataProvider = new CActiveDataProvider ( "LabRegister", array (
-// 					'criteria' => $criteria 
-// 			) );
-			
-// 			$this->render ( '//report/report01', array (
-// 					'dataProvider' => $dataProvider 
-// 			) );
-// 		}
+		$criteria = new CDbCriteria ();
+		if (isset ( $_POST ['Accident'] )) {
+		    
+		    $accident = new Accident ();
+		    $accident->attributes = $_POST ['Accident'];
+		    
+		    $startDate = CommonUtil::getDate($accident->report_date_from);
+		    $endDate = CommonUtil::getDate($accident->report_date_to);
+		    
+		    if($accident->department_id <> -1){
+		        $criteria->compare ( 'department_id', $accident->department_id, true );
+		    }
+		    if(isset($startDate) && isset($endDate)){
+		        $criteria->addBetweenCondition('case_date', $startDate, $endDate, 'AND');
+		    }
+
+			$dataProvider = new CActiveDataProvider ( "Accident", array ('criteria' => $criteria) );
+			$this->render ( '//report/report01', array ('dataProvider' => $dataProvider,'data' => $accident,'startDate'=>$startDate,'endDate'=>$endDate) );
+		    			
+		}else{
+			$dataProvider = new CActiveDataProvider ( "Accident", array ('criteria' => $criteria) );
+			$this->render ( '//report/report01', array ('dataProvider' => $dataProvider) );
+		}
 	}
+	
 	/* Chem */
 	public function actionReport02() {
 		// Authen Login
