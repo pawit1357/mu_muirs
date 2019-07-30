@@ -1,0 +1,5 @@
+1. install php word.
+- open command line
+- goto folder \protected\extensions\ 
+- run composer require phpoffice/phpword
+- add require_once dirname(__FILE__).'/protected/extensions/vendor/autoload.php'; to index.php

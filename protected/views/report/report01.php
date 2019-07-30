@@ -28,7 +28,8 @@ $deptChild = MDepartment::model()->findAll(array("condition"=>"faculty_id <> -1"
 					<?php echo  MenuUtil::getMenuName($_SERVER['REQUEST_URI'])?>
 				<span class="caption-helper">(ระบุเงื่อนไขสำหรับการค้นหา)</span>
 			</div>
-			<div class="actions"></div>
+			<div class="actions">
+			</div>
 		</div>
 		<div class="portlet-body form">
 			<div class="form-body">
@@ -133,12 +134,21 @@ foreach ($deptParent as $parent) {
 	</div>
 
 	<div class="portlet light">
+		<div class="portlet-title">
+			<div class="caption">
+			<i class="fa fa-desktop"></i>
+				<span class="caption-subject bold font-yellow-casablanca uppercase">ผลการค้นหา</span>
+			</div>
+			<div class="actions">
+
+				
+<a href="<?php echo Yii::app()->CreateUrl('Report/Report01Pdf/department_id/'.$data->department_id.'/report_date_from/'.CommonUtil::getDate($data->report_date_from).'/report_date_to/'.CommonUtil::getDate($data->report_date_to))?>" class="btn btn-primary btn-lg" role="button">Download (PDF)</a>
+
+			</div>
+		</div>
 		<div class="portlet-body form">
 			<div class="form-body">
 				<!-- BEGIN FORM-->
-				<br>
-				<br>
-				<br>
 					<table class="table table-striped table-hover table-bordered"
 						id="gvResult">
 						<thead>
@@ -250,11 +260,11 @@ foreach ($deptParent as $parent) {
     	var table = $('#gvResult');
 
     	var oTable = table.dataTable({
-	        dom: 'Bfrtip',
-	        buttons: [
+// 	        dom: 'Bfrtip',
+// 	        buttons: [
 // 	             'copy', 'csv', 'excel', 'pdf', 'print'
-	        	'excel',  'print'
-	        ],
+// 	        	'excel',  'print'
+// 	        ],
     	    // Internationalisation. For more info refer to http://datatables.net/manual/i18n
     	    "language": {
     	        "aria": {

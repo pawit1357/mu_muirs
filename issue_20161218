@@ -2,3 +2,6 @@ Add column
 ---------------
 ALTER TABLE `tb_answers` 
 ADD COLUMN `survey_type` VARCHAR(45) NULL AFTER `query_type`;
+
+
+

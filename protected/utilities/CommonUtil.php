@@ -18,6 +18,19 @@ class CommonUtil {
 		); 
 		 return $q_m[$m];
 	}
+	public static function DateThai($strDate)
+	{
+	    $strYear = date("Y",strtotime($strDate))+543;
+	    $strMonth= date("n",strtotime($strDate));
+	    $strDay= date("j",strtotime($strDate));
+// 	    $strHour= date("H",strtotime($strDate));
+// 	    $strMinute= date("i",strtotime($strDate));
+// 	    $strSeconds= date("s",strtotime($strDate));
+	    $strMonthCut = Array("","ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค.");
+	    $strMonthThai=$strMonthCut[$strMonth];
+	    return "$strDay $strMonthThai $strYear"; //, $strHour:$strMinute";
+	}
+	
 	public static function convertModelToArray($models) {
 		if (is_array ( $models ))
 			$arrayMode = TRUE;
@@ -191,6 +204,20 @@ class CommonUtil {
 		
 		return $file_ary;
 	}
+	public static function makeRandomString($max=6) {
+	    $i = 0; //Reset the counter.
+	    $possible_keys = "0123456789";
+	    $keys_length = strlen($possible_keys);
+	    $str = ""; //Let's declare the string, to add later.
+	    while($i<$max) {
+	        $rand = mt_rand(1,$keys_length-1);
+	        $str.= $possible_keys[$rand];
+	        $i++;
+	    }
+	    return $str;
+	}
+	
+	
 	/* #MASTER# */
 	const CHECKBOX_TYPE = "1";
 	const TEXT_TYPE = "2";
