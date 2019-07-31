@@ -18,7 +18,7 @@ class MDepartment extends CActiveRecord {
 	public function rules() {
 		return array (
 				array (
-						'id,name,faculty_id,order',
+						'id,name,faculty_id,seq',
 						'safe' 
 				) 
 		);
@@ -41,7 +41,7 @@ class MDepartment extends CActiveRecord {
 		return new CActiveDataProvider ( get_class ( $this ), array (
 				'criteria' => $criteria,
 				'sort' => array (
-						'defaultOrder' => 't.order asc' 
+						'defaultOrder' => 'seq asc' 
 				),
 				'pagination' => array (
 						'pageSize' => 50 
@@ -59,7 +59,7 @@ class MDepartment extends CActiveRecord {
 	
 	public static function findById($id) {
 		$criteria = new CDbCriteria ();
-		$criteria->condition = " parent_id = -1";
+		$criteria->condition = " faculty_id = -1";
 		$departments = self::model ()->findAll ($criteria);
 		return $departments[0];
 	}

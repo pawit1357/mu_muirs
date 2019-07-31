@@ -1,17 +1,21 @@
 <?php
-$criteria = new CDbCriteria ();
-switch (UserLoginUtils::getUserRoleName ()) {
-	case UserLoginUtils::ADMIN :
-	case UserLoginUtils::EXCUTIVE :
-		break;
-	case UserLoginUtils::STAFF :
-	case UserLoginUtils::USER :
-		$dept_id = isset ( UserLoginUtils::getRegisterInfo ()->dep_department_id ) ? UserLoginUtils::getRegisterInfo ()->dep_department_id : 0;
-		$criteria->condition = " t.id = " . $dept_id;
-		break;
-}
+$deptParent = MDepartment::model()->findAll(array("condition"=>"faculty_id = -1",'order'=>'seq'));
+$deptChild = MDepartment::model()->findAll(array("condition"=>"faculty_id <> -1",'order'=>'seq'));
 
-$departments = MDepartment::model ()->findAll ( $criteria );
+
+// $criteria = new CDbCriteria ();
+// switch (UserLoginUtils::getUserRoleName ()) {
+// 	case UserLoginUtils::ADMIN :
+// 	case UserLoginUtils::EXCUTIVE :
+// 		break;
+// 	case UserLoginUtils::STAFF :
+// 	case UserLoginUtils::USER :
+// 		$dept_id = isset ( UserLoginUtils::getRegisterInfo ()->dep_owner_department_id ) ? UserLoginUtils::getRegisterInfo ()->dep_owner_department_id : 0;
+// 		$criteria->condition = " t.id = " . $dept_id;
+// 		break;
+// }
+
+// $departments = MDepartment::model ()->findAll ( $criteria );
 
 ?>
 <form id="Form1" method="post" enctype="multipart/form-data"
@@ -24,7 +28,8 @@ $departments = MDepartment::model ()->findAll ( $criteria );
 					<?php echo  MenuUtil::getMenuName($_SERVER['REQUEST_URI'])?>
 				<span class="caption-helper">(ระบุเงื่อนไขสำหรับการค้นหา)</span>
 			</div>
-			<div class="actions"></div>
+			<div class="actions">
+			</div>
 		</div>
 		<div class="portlet-body form">
 			<div class="form-body">
@@ -35,15 +40,79 @@ $departments = MDepartment::model ()->findAll ( $criteria );
 							<label class="control-label col-md-3">สังกัดหน่วยงาน:<span
 								class="required">*</span></label>
 							<div class="col-md-6">
-								<select class="form-control select2"
-									name="LabRegister[dep_department_id]" id="dep_department_id">
-									<option value="0">-- โปรดเลือก --</option>
-			<?php foreach($departments as $item) {?>
-			<option value="<?php echo $item->id?>"><?php echo $item->name?></option>
-			<?php }?>
-								</select>
+<select class="form-control" name="Incident[owner_department_id]" id="owner_department_id" onchange="onchangeDepartment(this)">
+<option value="-1">-- (ทั้งหมด) --</option>
+<?php
+foreach ($deptParent as $parent) {
+    $isGroup = false;
+    foreach ($deptChild as $child) {
+        if(intval($parent['id']) == intval($child['faculty_id'])){
+            $isGroup = true;
+        }
+    }
+    if($isGroup){
+        echo '<optgroup style="color:#008;font-style:normal;font-weight:normal;" label="'.$parent['name'].'">';
+        echo '</optgroup>';
+    }else{
+        echo '<option style="color:#'.(intval($parent['faculty_id']) == -1? '008':'000').';font-style:normal;font-weight:normal;" value="'.$parent['id'].'" '. ($parent['id'] == $data->owner_department_id? 'selected="selected"':'') .'>'.htmlspecialchars($parent['name']).'</option>';
+    }
+    
+    foreach ($deptChild as $child) {
+        if(intval($parent['id']) == intval($child['faculty_id'])){
+            echo '<option style="color:#000;font-style:normal;font-weight:normal;" value="'.$child['id'].'" '. ($child['id'] == $data->owner_department_id? 'selected="selected"':'') .'>&nbsp;&nbsp;&nbsp;-&nbsp;'.htmlspecialchars($child['name']).'</option>';
+        }
+    }
+}
+?>
+</select>
 							</div>
-							<div id="divReq-department_id"></div>
+							<div id="divReq-owner_department_id"></div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-9">
+						<div class="form-group">
+							<label class="control-label col-md-3">วันที่เกิดเหตุ (เริ่มต้น):
+							<span class="required">*</span></label>
+							<div class="col-md-6">
+									<div class="input-group date date-picker"
+										data-date-format="dd-mm-yyyy">
+										<input type="text"
+											value="<?php echo ($data->report_date_from !='')? $data->report_date_from: CommonUtil::getCurDate();?>"
+											id="report_date_from" class="form-control"
+											name="Incident[report_date_from]" /> <span
+											class="input-group-btn">
+											<button class="btn default" type="button">
+												<i class="fa fa-calendar"></i>
+											</button>
+										</span>
+									</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-9">
+						<div class="form-group">
+							<label class="control-label col-md-3">
+							วันที่เกิดเหตุ (สิ้นสุด):
+							<span
+								class="required">*</span></label>
+							<div class="col-md-6">
+							
+											<div class="input-group date date-picker"
+												data-date-format="dd-mm-yyyy">
+												
+												<input type="text"
+													value="<?php echo ($data->report_date_from !='')? $data->report_date_to:  CommonUtil::getCurDate();?>"
+													id="report_date_to" class="form-control"
+													name="Incident[report_date_to]" /> <span
+													class="input-group-btn">
+													<button class="btn default" type="button">
+														<i class="fa fa-calendar"></i>
+													</button>
+												</span>
+											</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -69,75 +138,79 @@ $departments = MDepartment::model ()->findAll ( $criteria );
 	<div class="portlet light">
 		<div class="portlet-title">
 			<div class="caption">
-				<span class="caption-subject bold font-yellow-casablanca uppercase">
-				</span>
-<!-- 				 <span class="caption-helper">แสดงผลลัพธ์จากการค้นหา</span> -->
+			<i class="fa fa-desktop"></i>
+				<span class="caption-subject bold font-yellow-casablanca uppercase">ผลการค้นหา</span>
 			</div>
 			<div class="actions">
-				<a class="btn btn-circle btn-icon-only btn-default"
-					href="<?php echo Yii::app()->CreateUrl('Report/Report03Pdf')?>"> <i class="fa fa-file-pdf-o"></i>
-				</a>
-				<a class="btn btn-circle btn-icon-only btn-default"
-					href="<?php echo Yii::app()->CreateUrl('Report/Report03Excel')?>"> <i class="fa fa-file-excel-o"></i>
-				</a>
+
+				
+<a href="<?php echo Yii::app()->CreateUrl('Report/Report03Pdf/owner_department_id/'.$data->owner_department_id.'/report_date_from/'.(($data->report_date_from =='')?  CommonUtil::getDate(CommonUtil::getCurDate()) : CommonUtil::getDate($data->report_date_from)).'/report_date_to/'.(($data->report_date_to =='')? CommonUtil::getDate(CommonUtil::getCurDate()) :  CommonUtil::getDate($data->report_date_to)))?>" class="btn btn-primary btn-lg" role="button">Download (PDF)</a>
+
 			</div>
 		</div>
 		<div class="portlet-body form">
 			<div class="form-body">
 				<!-- BEGIN FORM-->
-
-				<!-- 			<h4>Heading text goes here...</h4> -->
-				<table class="table table-striped table-hover table-bordered"
-					id="gvResult">
-					<thead>
-						<tr>
-							<th>ลำดับ</th>
-							<th>คณะ</th>
-							<th>สังกัดหน่วยงาน</th>
-							<th>อาคาร</th>
-							<th>ลักาณะการดำเนินการ</th>
-							<th>ประเภทห้องปฏิบัติการ</th>
-							<th>รหัสห้องปฏิบัติการ</th>
-<!-- 							<th class="no-sort"></th> -->
-						</tr>
-					</thead>
-					<tbody>
+					<table class="table table-striped table-hover table-bordered"
+						id="gvResult">
+						<thead>
+							<tr>
+								<th>ลำดับ</th>
+								<th>ผู้พบเห็นเหตุการณ์</th>
+								<th>คณะ/ส่วนงาน</th>
+								<th>ลักษณะของเหตุการณ์</th>
+								<th>วัน/เดือน/ปี ที่เกิดเหตุ </th>
+							</tr>
+						</thead>
+						<tbody>
 	<?php
-	$order = 1;
+	$counter = 1;
 	foreach ( $dataProvider->data as $data ) {
 		?>
 				<tr>
-							<td class="center"><?php echo $order?></td>
-							<td class="center"><?php echo $data->faculty->name?></td>
-							<td class="center"><?php echo $data->department->name?></td>
-							<td class="center"><?php echo $data->build->name?></td>
-							<td class="center"><?php echo $data->lab_operating_characteristics->name?></td>
-							<td class="center"><?php echo $data->lab_type->name?></td>
-							<td class="center"><?php echo $data->lab_code?></td>
-
-<!-- 							<td class="center"></td> -->
-						</tr>
+								<td class="center"><?php echo $counter?></td>
+								<td class="center"><?php echo $data->accident_event_withness_first?></td>
+								<td class="center"><?php echo $data->department->name?></td>
+								<td class="center"><?php echo $data->accident_cause?></td>
+								<td class="center"><?php echo $data->report_date?></td>
+							</tr>
 			<?php
-		$order ++;
+			$counter++;
 	}
 	?>	
 
 						</tbody>
-				</table>
+					</table>
 			</div>
 		</div>
+		
+		
 	</div>
 	<script
 		src="<?php echo ConfigUtil::getAppName();?>/assets/global/plugins/jquery.min.js"
 		type="text/javascript"></script>
 
+
+
 	<script>
     jQuery(document).ready(function () {
         
+
+    	$('#report_date_from').datepicker({language:'th-th',format:'dd/mm/yyyy'})
+    	$('#report_date_to').datepicker({language:'th-th',format:'dd/mm/yyyy'})
+    	
+    	 
+
+
+       
     	var table = $('#gvResult');
 
     	var oTable = table.dataTable({
-
+// 	        dom: 'Bfrtip',
+// 	        buttons: [
+// 	             'copy', 'csv', 'excel', 'pdf', 'print'
+// 	        	'excel',  'print'
+// 	        ],
     	    // Internationalisation. For more info refer to http://datatables.net/manual/i18n
     	    "language": {
     	        "aria": {
@@ -152,6 +225,7 @@ $departments = MDepartment::model ()->findAll ( $criteria );
     	        "search": "ใส่คำที่ต้องการค้นหา:",
     	        "zeroRecords": "ไม่พบรายการที่ค้นหา"
     	    },
+
     	    responsive: true,
     	    "searching": false,
     	    //"ordering": false, disable column ordering 

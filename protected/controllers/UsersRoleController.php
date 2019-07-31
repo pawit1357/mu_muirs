@@ -20,7 +20,7 @@ class UsersRoleController extends CController {
 		}
 		
 		$model = new UsersRole ();
-		$this->render ( '//usersrole/main', array (
+		$this->render ( '//permission/usersrole/main', array (
 				'data' => $model 
 		) );
 	}
@@ -108,7 +108,7 @@ class UsersRoleController extends CController {
 			$this->redirect ( Yii::app ()->createUrl ( 'UsersRole' ) );
 		} else {
 			$model = new UsersRole ();
-			$this->render ( '//usersrole/create', array (
+			$this->render ( '//permission/usersrole/create', array (
 					'data' => $model 
 			) );
 		}
@@ -207,7 +207,7 @@ class UsersRoleController extends CController {
 			
 			$this->redirect ( Yii::app ()->createUrl ( 'UsersRole' ) );
 		} else {
-			$this->render ( '//usersrole/update', array (
+			$this->render ( '//permission/usersrole/update', array (
 					'data' => $model 
 			) );
 		}

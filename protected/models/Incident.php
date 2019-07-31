@@ -1,5 +1,9 @@
 <?php
 class Incident extends CActiveRecord {
+    
+    public $report_date_to;
+    public $report_date_from;
+    
 	public static function model($className = __CLASS__) {
 		return parent::model ( $className );
 	}
@@ -29,7 +33,7 @@ class Incident extends CActiveRecord {
                         create_by,
                         update_date,
                         update_by,
-                        id,owner_department_id','safe' 
+                        id,owner_department_id,report_date_to,report_date_from','safe' 
 				) 
 		);
 	}

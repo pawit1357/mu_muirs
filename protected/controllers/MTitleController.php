@@ -11,7 +11,7 @@ class MTitleController extends CController {
 			$this->redirect ( Yii::app ()->createUrl ( 'DashBoard/Permission' ) );
 		}
 		$model = new MTitle ();
-		$this->render ( '//mtitle/main', array (
+		$this->render ( '//masters/mtitle/main', array (
 				'data' => $model 
 		) );
 	}
@@ -39,7 +39,7 @@ class MTitleController extends CController {
 			$this->redirect ( Yii::app ()->createUrl ( 'MTitle' ) );
 		} else {
 			// Render
-			$this->render ( '//mtitle/create' );
+			$this->render ( '//masters/mtitle/create' );
 		}
 	}
 	public function actionDelete() {
@@ -73,7 +73,7 @@ class MTitleController extends CController {
 			
 			$this->redirect ( Yii::app ()->createUrl ( 'MTitle' ) );
 		}
-		$this->render ( '//mtitle/update', array (
+		$this->render ( '//masters/mtitle/update', array (
 				'data' => $model 
 		) );
 	}

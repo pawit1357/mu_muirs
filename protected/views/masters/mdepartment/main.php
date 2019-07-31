@@ -35,7 +35,7 @@
 
 								<td class="center"><?php echo $counter?></td>
 								<td class="center"><?php echo $data->name?></td>
-								<td class="center"><?php echo ($data->parent_id == -1)? "": MDepartment::findById($data->parent_id)->name;?></td>
+								<td class="center"><?php echo ($data->faculty_id == -1)? "": MDepartment::findById($data->faculty_id)->name;?></td>
 								<td class="center">	
 <?php if(UserLoginUtils::canUpdate( $_SERVER['REQUEST_URI'])){?>
 <a title="Edit" class="fa fa-edit"
@@ -44,7 +44,7 @@
 <?php if(UserLoginUtils::canDelete( $_SERVER['REQUEST_URI'])){?>
 <a title="Delete" onclick="return confirm('ต้องการลบข้อมูลใช่หรือไม่?')"
 									class="fa fa-trash"
-									href="<?php echo Yii::app()->CreateUrl('MDepartment/Delete/id/'.$data->parent_id)?>"></a>
+									href="<?php echo Yii::app()->CreateUrl('MDepartment/Delete/id/'.$data->id)?>"></a>
 <?php }?>	
 								</td>
 							</tr>

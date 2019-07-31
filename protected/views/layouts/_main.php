@@ -90,14 +90,13 @@ License: You must have a valid license purchased only from themeforest(the above
 <link
 	href="<?php echo ConfigUtil::getAppName();?>/css/jquery-ui-1.11.4.custom.css"
 	rel="stylesheet" type="text/css" />
-	<link
-	href="<?php echo ConfigUtil::getAppName();?>/css/jquery.datetimepicker.css"
-	rel="stylesheet" type="text/css" />
 
 
-<link rel="stylesheet" type="text/css" href="http://www.shieldui.com/shared/components/latest/css/light-bootstrap/all.min.css" />
 
 
+
+	<link href="<?php echo ConfigUtil::getAppName();?>/css/datepicker.css" rel="stylesheet" type="text/css" />
+	
 <!-- END THEME LAYOUT STYLES -->
 <!-- <link rel="shortcut icon" href="favicon.ico" /> -->
 <!-- END HEAD -->
@@ -374,15 +373,15 @@ License: You must have a valid license purchased only from themeforest(the above
 	<script src="<?php echo ConfigUtil::getAppName();?>/js/moment.js"
 		type="text/javascript"></script>
 
-	<script src="<?php echo ConfigUtil::getAppName();?>/js/jquery.datetimepicker.full.js"
+
+<!-- Cal-Thai -->
+	<script src="<?php echo ConfigUtil::getAppName();?>/js/bootstrap-datepicker.js"
 		type="text/javascript"></script>
+		
+	<script src="<?php echo ConfigUtil::getAppName();?>/js/locales/bootstrap-datepicker.th.js"
+		type="text/javascript"></script>
+		
 
-
-
-<!-- Latest compiled JavaScript -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-treeview/1.2.0/bootstrap-treeview.min.js"></script>
-
-<script type="text/javascript" src="http://www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
 
 
 

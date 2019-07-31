@@ -17,7 +17,7 @@ class AccidentController extends CController
             $this->redirect(Yii::app()->createUrl('DashBoard/Permission'));
         }
         $model = new Accident();
-        $this->render('//accident/main', array(
+        $this->render('//operations/accident/main', array(
             'data' => $model
         ));
     }
@@ -134,14 +134,14 @@ class AccidentController extends CController
                 // echo "SAVE";
                 $transaction->commit();
 
-                $this->render('//accident/result');
+                $this->render('//operations/accident/result');
             } catch (Exception $e) {
                 echo $e;
                 $transaction->rollback();
             }
         } else {
             // Render
-            $this->render('//accident/create');
+            $this->render('//operations/accident/create');
         }
     }
 
@@ -157,7 +157,7 @@ class AccidentController extends CController
         $model = $this->loadModel();
         $model->delete();
 
-        $this->redirect(Yii::app()->createUrl('accident/'));
+        $this->redirect(Yii::app()->createUrl('Accident/'));
     }
 
     public function actionUpdate()
@@ -240,7 +240,7 @@ class AccidentController extends CController
             }
         } else {
 
-            $this->render('//accident/update', array(
+            $this->render('//operations/accident/update', array(
                 'data' => $model,'imgs' =>$modelImg
             ));
         }

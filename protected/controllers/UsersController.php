@@ -19,7 +19,7 @@ class UsersController extends CController {
 			$this->redirect ( Yii::app ()->createUrl ( 'DashBoard/Permission' ) );
 		}
 		$model = new UsersLogin ();
-		$this->render ( '//users/main', array (
+		$this->render ( '//permission/users/main', array (
 				'data' => $model 
 		) );
 	}
@@ -52,7 +52,7 @@ class UsersController extends CController {
 			$this->redirect ( Yii::app ()->createUrl ( 'Users' ) );
 		} else {
 			// Render
-			$this->render ( '//users/create' );
+			$this->render ( '//permission/users/create' );
 		}
 	}
 	public function actionDelete() {
@@ -87,7 +87,7 @@ class UsersController extends CController {
 			
 			$this->redirect ( Yii::app ()->createUrl ( 'Users' ) );
 		}
-		$this->render ( '//users/update', array (
+		$this->render ( '//permission/users/update', array (
 				'data' => $model 
 		) );
 	}
@@ -125,7 +125,7 @@ class UsersController extends CController {
 		} else {
 			
 			$model = $this->loadModel ();
-			$this->render ( '//users/myProfile', array (
+			$this->render ( '//permission/users/myProfile', array (
 					'data' => $model 
 			) );
 		}
@@ -138,7 +138,7 @@ class UsersController extends CController {
 		if (! UserLoginUtils::authorizePage ( $_SERVER ['REQUEST_URI'] )) {
 			$this->redirect ( Yii::app ()->createUrl ( 'DashBoard/Permission' ) );
 		}
-		$this->render ( '//users/result' );
+		$this->render ( '//permission/users/result' );
 	}
 	public function actionForceChangePassword() {
 		$model = $this->loadModel ();

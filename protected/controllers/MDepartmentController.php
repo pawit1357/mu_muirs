@@ -13,7 +13,7 @@ class MDepartmentController extends CController {
 		}
 
 		$model = new MDepartment();
-		$this->render ( '//mdepartment/main', array (
+		$this->render ( '//masters/mdepartment/main', array (
 				'data' => $model
 		) );
 		
@@ -43,7 +43,7 @@ class MDepartmentController extends CController {
 			$this->redirect ( Yii::app ()->createUrl ( 'MDepartment' ) );
 		} else {
 			// Render
-			$this->render ( '//mdepartment/create' );
+			$this->render ( '//masters/mdepartment/create' );
 		}
 	}
 	public function actionDelete() {
@@ -77,7 +77,7 @@ class MDepartmentController extends CController {
 			
 			$this->redirect ( Yii::app ()->createUrl ( 'MDepartment' ) );
 		}
-		$this->render ( '//mdepartment/update', array (
+		$this->render ( '//masters/mdepartment/update', array (
 				'data' => $model 
 		) );
 	}

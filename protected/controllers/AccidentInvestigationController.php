@@ -19,7 +19,7 @@ class AccidentInvestigationController extends CController
         
         // Render
         $model = new AccidentInvestigation();
-        $this->render('//accidentinvestigation/main', array(
+        $this->render('//operations/accidentinvestigation/main', array(
             'data' => $model
         ));
     }
@@ -158,10 +158,10 @@ class AccidentInvestigationController extends CController
             $transaction->commit();
             
             // $transaction->rollback ();
-            $this->render('//accidentinvestigation/result');
+            $this->render('//operations/accidentinvestigation/result');
         } else {
             // Render
-            $this->render('//accidentinvestigation/create');
+            $this->render('//operations/accidentinvestigation/create');
         }
     }
 
@@ -284,7 +284,7 @@ class AccidentInvestigationController extends CController
             
             $this->redirect(Yii::app()->createUrl('AccidentInvestigation'));
         } else {
-            $this->render('//accidentinvestigation/update', array(
+            $this->render('//operations/accidentinvestigation/update', array(
                 'data' => $model
             ));
         }

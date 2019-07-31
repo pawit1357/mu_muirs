@@ -98,10 +98,12 @@ foreach ($deptParent as $parent) {
 							<span
 								class="required">*</span></label>
 							<div class="col-md-6">
+							
 											<div class="input-group date date-picker"
 												data-date-format="dd-mm-yyyy">
+												
 												<input type="text"
-													value="<?php echo ($data->report_date_from !='')? $data->report_date_to:  CommonUtil::getCurDate();?>"
+													value="<?php echo ($data->report_date_to !='')? $data->report_date_to:  CommonUtil::getCurDate();?>"
 													id="report_date_to" class="form-control"
 													name="Accident[report_date_to]" /> <span
 													class="input-group-btn">
@@ -142,7 +144,7 @@ foreach ($deptParent as $parent) {
 			<div class="actions">
 
 				
-<a href="<?php echo Yii::app()->CreateUrl('Report/Report01Pdf/department_id/'.$data->department_id.'/report_date_from/'.CommonUtil::getDate($data->report_date_from).'/report_date_to/'.CommonUtil::getDate($data->report_date_to))?>" class="btn btn-primary btn-lg" role="button">Download (PDF)</a>
+<a href="<?php echo Yii::app()->CreateUrl('Report/Report01Pdf/department_id/'.$data->department_id.'/report_date_from/'.(($data->report_date_from =='')?  CommonUtil::getDate(CommonUtil::getCurDate()) : CommonUtil::getDate($data->report_date_from)).'/report_date_to/'.(($data->report_date_to =='')? CommonUtil::getDate(CommonUtil::getCurDate()) :  CommonUtil::getDate($data->report_date_to)))?>" class="btn btn-primary btn-lg" role="button">Download (PDF)</a>
 
 			</div>
 		</div>
@@ -185,6 +187,8 @@ foreach ($deptParent as $parent) {
 					</table>
 			</div>
 		</div>
+		
+		
 	</div>
 	<script
 		src="<?php echo ConfigUtil::getAppName();?>/assets/global/plugins/jquery.min.js"
@@ -194,66 +198,12 @@ foreach ($deptParent as $parent) {
 
 	<script>
     jQuery(document).ready(function () {
+        
 
-		$.datetimepicker.setLocale('th'); // ต้องกำหนดเสมอถ้าใช้ภาษาไทย และ เป็นปี พ.ศ.
-   	 	// กรณีใช้แบบ input
-       $("#report_date_from").datetimepicker({
-           timepicker:false,
-           format:'d/m/Y',  // กำหนดรูปแบบวันที่ ที่ใช้ เป็น 00-00-0000            
-           lang:'th',  // ต้องกำหนดเสมอถ้าใช้ภาษาไทย และ เป็นปี พ.ศ.
-           onSelectDate:function(dp,$input){
-               var yearT=new Date(dp).getFullYear()-0;  
-               var yearTH=yearT+543;
-               var fulldate=$input.val();
-               var fulldateTH=fulldate.replace(yearT,yearTH);
-               $input.val(fulldateTH);
-           },
-       });   
-       $("#report_date_to").datetimepicker({
-           timepicker:false,
-           format:'d/m/Y',  // กำหนดรูปแบบวันที่ ที่ใช้ เป็น 00-00-0000            
-           lang:'th',  // ต้องกำหนดเสมอถ้าใช้ภาษาไทย และ เป็นปี พ.ศ.
-           onSelectDate:function(dp,$input){
-               var yearT=new Date(dp).getFullYear()-0;  
-               var yearTH=yearT+543;
-               var fulldate=$input.val();
-               var fulldateTH=fulldate.replace(yearT,yearTH);
-               $input.val(fulldateTH);
-           },
-       }); 
-       $("#report_date_from").on("mouseenter mouseleave",function(e){
-           var dateValue=$(this).val();
-           if(dateValue!=""){
-                   var arr_date=dateValue.split("/"); // ถ้าใช้ตัวแบ่งรูปแบบอื่น ให้เปลี่ยนเป็นตามรูปแบบนั้น
-                   // ในที่นี้อยู่ในรูปแบบ 00-00-0000 เป็น d-m-Y  แบ่งด่วย - ดังนั้น ตัวแปรที่เป็นปี จะอยู่ใน array
-                   //  ตัวที่สอง arr_date[2] โดยเริ่มนับจาก 0 
-                   if(e.type=="mouseenter"){
-                       var yearT=arr_date[2]-543;
-                   }       
-                   if(e.type=="mouseleave"){
-                       var yearT=parseInt(arr_date[2])+543;
-                   }   
-                   dateValue=dateValue.replace(arr_date[2],yearT);
-                   $(this).val(dateValue);                                                 
-           }       
-       });
-       $("#report_date_to").on("mouseenter mouseleave",function(e){
-           var dateValue=$(this).val();
-           if(dateValue!=""){
-                   var arr_date=dateValue.split("/"); // ถ้าใช้ตัวแบ่งรูปแบบอื่น ให้เปลี่ยนเป็นตามรูปแบบนั้น
-                   // ในที่นี้อยู่ในรูปแบบ 00-00-0000 เป็น d-m-Y  แบ่งด่วย - ดังนั้น ตัวแปรที่เป็นปี จะอยู่ใน array
-                   //  ตัวที่สอง arr_date[2] โดยเริ่มนับจาก 0 
-                   if(e.type=="mouseenter"){
-                       var yearT=arr_date[2]-543;
-                   }       
-                   if(e.type=="mouseleave"){
-                       var yearT=parseInt(arr_date[2])+543;
-                   }   
-                   dateValue=dateValue.replace(arr_date[2],yearT);
-                   $(this).val(dateValue);                                                 
-           }       
-       });
-
+    	$('#report_date_from').datepicker({language:'th-th',format:'dd/mm/yyyy'})
+    	$('#report_date_to').datepicker({language:'th-th',format:'dd/mm/yyyy'})
+    	
+    	 
 
 
        

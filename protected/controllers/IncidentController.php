@@ -17,11 +17,11 @@ class IncidentController extends CController
             $this->redirect(Yii::app()->createUrl('DashBoard/Permission'));
         }
         if(UserLoginUtils::getUserRole() == 6){
-            $this->render('//incident/create');
+            $this->render('//operations/incident/create');
         }else{
             // Render
             $model = new Incident();
-            $this->render('//incident/main', array(
+            $this->render('//operations/incident/main', array(
                 'data' => $model
             ));
         }
@@ -80,10 +80,10 @@ class IncidentController extends CController
             
             // $transaction->rollback ();
             // $this->redirect ( Yii::app ()->createUrl ( 'Incident' ) );
-            $this->render ( '//incident/result' );
+            $this->render ( '//operations/incident/result' );
         } else {
             // Render
-            $this->render('//incident/create');
+            $this->render('//operations/incident/create');
         }
     }
 
@@ -144,7 +144,7 @@ class IncidentController extends CController
             
             $this->redirect(Yii::app()->createUrl('Incident'));
         }
-        $this->render('//incident/update', array(
+        $this->render('//operations/incident/update', array(
             'data' => $model
         ));
     }

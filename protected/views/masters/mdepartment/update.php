@@ -1,6 +1,6 @@
 <?php
 $criteria = new CDbCriteria ();
-$criteria->condition = " parent_id = -1";
+$criteria->condition = " faculty_id = -1";
 $departments = MDepartment::model ()->findAll ($criteria);
 ?>
 <form id="Form1" method="post" enctype="multipart/form-data"
@@ -39,11 +39,11 @@ $departments = MDepartment::model ()->findAll ($criteria);
 							<div class="col-md-6">
 
 								<select class="form-control select2"
-									name="MDepartment[parent_id]" id="parent_id">
+									name="MDepartment[faculty_id]" id="faculty_id">
 									<option value="-1">-- (ไม่มีสังกัด) --</option>
 			<?php foreach($departments as $item) {?>
 			<option value="<?php echo $item->id?>"
-										<?php echo $item->id == $data->parent_id ? 'selected="selected"' : ''?>><?php echo sprintf('%02d', $item->id).'-'. $item->name?></option>
+										<?php echo $item->id == $data->faculty_id ? 'selected="selected"' : ''?>><?php echo sprintf('%02d', $item->id).'-'. $item->name?></option>
 			<?php }?>
 			</select>
 
