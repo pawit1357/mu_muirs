@@ -217,6 +217,13 @@ class CommonUtil {
 	    return $str;
 	}
 	
+	public static function to_utf16($text) {
+	    $out="";
+	    $text=mb_convert_encoding($text,'UTF-16','UTF-8');
+	    for ($i=0;$i<mb_strlen($text,'UTF-16');$i++)
+	        $out.= bin2hex(mb_substr($text,$i,1,'UTF-16'));
+	        return strtoupper($out);
+	}
 	
 	/* #MASTER# */
 	const CHECKBOX_TYPE = "1";

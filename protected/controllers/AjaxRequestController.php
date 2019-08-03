@@ -119,4 +119,7 @@ class AjaxRequestController extends CController
         return $row1;
     }
     
+    
+    
+    
 }

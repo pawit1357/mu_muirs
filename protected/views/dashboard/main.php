@@ -62,41 +62,6 @@ if(isset($duplicateData)){
 
 }
 // - ************* - ////
-
-
-
-// $sql = 'SELECT department_id,sum(dammage_type_1_value) as dt1,sum(dammage_type_2_value) as dt2,sum(dammage_type_3_value) as dt3,sum(dammage_type_4_value) as dt4,sum(dammage_type_5_value) as dt5
-//  FROM tb_accident where department_id <>-1 and department_id=' . UserLoginUtils::getUserInfo()->department_id . ' group by department_id';
-// $list = Yii::app()->db->createCommand($sql)->queryAll();
-
-// $dts1 = array();
-// $dts2 = array();
-// $dts3 = array();
-// $dts4 = array();
-// $dts5 = array();
-
-// foreach ($list as $item) {
-//     array_push($dts1, array(
-//         "y" => (int) $item['dt1'],
-//         "label" => 'Department'
-//     ));
-//     array_push($dts2, array(
-//         "y" => (int) $item['dt2'],
-//         "label" => 'Department'
-//     ));
-//     array_push($dts3, array(
-//         "y" => (int) $item['dt3'],
-//         "label" => 'Department'
-//     ));
-//     array_push($dts4, array(
-//         "y" => (int) $item['dt4'],
-//         "label" => 'Department'
-//     ));
-//     array_push($dts5, array(
-//         "y" => (int) $item['dt5'],
-//         "label" => 'Department'
-//     ));
-// }
 ?>
 
 <style>
@@ -381,261 +346,87 @@ if(isset($duplicateData)){
                    	<?php }?>
                     </div>
                     
-
+                    <div class="row">
+						<div class="col-lg-6 col-xs-12 col-sm-12">
+                            <div class="portlet light bordered">
+                                <div class="portlet-title"><i class="fa fa-desktop" aria-hidden="true"></i> ป้ายสถิติความปลอดภัย <?php echo UserLoginUtils::getDepartmentInfoName();?>
+                                    <div class="actions"></div>
+                                </div>
+                                <div class="portlet-body">
+									<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- XXXXXX -->
 			</div>
 		</div>
-	
-	
-	<div class="portlet light">
-		<div class="portlet-title">
-			<div class="caption">
-				<span class="caption-subject bold uppercase font-dark">
-					 </span> <span class="caption-helper"></span>
-			</div>
-			<div class="actions">
-				<a class="btn btn-circle btn-icon-only btn-default" href="#"> <i
-					class="icon-cloud-upload"></i>
-				</a>
-			</div>
-		</div>
-
-
-		
-		
-		
-		
-		<div class="portlet light ">
-			<div class="portlet-title">
-				<div class="caption">
-					<span class="caption-subject bold uppercase font-dark">ACCIDENT
-						REPORT</span> <span class="caption-helper">กราฟแสดงจำนวนความเสียหายจากการเกิดอุบัติเหตุภายในมหาวิทยาลัยมหิดลของคณะ/สถาบัน/หน่วยงานต่างๆ</span>
-				</div>
-				<div class="actions">
-					<a class="btn btn-circle btn-icon-only btn-default" href="#"> <i
-						class="icon-cloud-upload"></i>
-					</a>
-				</div>
-			</div>
-			<div class="portlet-body">
-				<div id="chartContainer1" style="height: 300px; width: 100%;"></div>
-
-			</div>
-		</div>
-		<div class="portlet light ">
-			<div class="portlet-title">
-				<div class="caption">
-					<span class="caption-subject bold uppercase font-dark">ACCIDENT
-						REPORT</span> <span class="caption-helper">กราฟแสดงจำนวนครั้งของการเกิดอุบัติเหตุ
-						จำแนกตามประเภทการเกิดอุบัติเหตุของวิทยาเขตศาลายา</span>
-				</div>
-				<div class="actions">
-					<a class="btn btn-circle btn-icon-only btn-default" href="#"> <i
-						class="icon-cloud-upload"></i>
-					</a>
-				</div>
-			</div>
-			<div class="portlet-body">
-				<div id="chartContainer2" style="height: 300px; width: 100%;"></div>
-			</div>
-		</div>
-		<div class="portlet light ">
-			<div class="portlet-title">
-				<div class="caption">
-					<span class="caption-subject bold uppercase font-dark">ACCIDENT
-						REPORT</span> <span class="caption-helper">กราฟแสดงจำนวนครั้งของการเกิดอุบัติเหตุ
-						จำแนกตามประเภทการเกิดอุบัติเหตุของวิทยาเขตศาลายา</span>
-				</div>
-				<div class="actions">
-					<a class="btn btn-circle btn-icon-only btn-default" href="#"> <i
-						class="icon-cloud-upload"></i>
-					</a>
-				</div>
-			</div>
-			<div class="portlet-body">
-				<div id="chartContainer3" style="height: 300px; width: 100%;"></div>
-			</div>
-		</div>
-		<div class="portlet light ">
-			<div class="portlet-title">
-				<div class="caption">
-					<span class="caption-subject bold uppercase font-dark">ACCIDENT
-						REPORT</span> <span class="caption-helper">กราฟแสดงมูลค่าความเสียหาย
-						จำแนกตามประเภทการเกิดอุบัติเหตุของวิทยาเขตศาลายา</span>
-				</div>
-				<div class="actions">
-					<a class="btn btn-circle btn-icon-only btn-default" href="#"> <i
-						class="icon-cloud-upload"></i>
-					</a>
-				</div>
-			</div>
-			<div class="portlet-body">
-				<div id="chartContainer4" style="height: 300px; width: 100%;"></div>
-			</div>
-		</div>
-	</div>
-
+		<input type="hidden" id="hHost" value="<?php echo ConfigUtil::getUrlHostName()?>"/>
 </form>
 
 <script
 	src="<?php echo ConfigUtil::getAppName();?>/assets/global/plugins/jquery.min.js"
 	type="text/javascript"></script>
-<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+	
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
 
 <script>
+var chart;
+var pointStart = Date.UTC(2014,0,1);
+
 jQuery(document).ready(function () {
 	
+	var host = $('#hHost').val();
+
+	$.ajax({
+		     url: host+"index.php/AjaxReport/GetCRpt01",
+		     type: "GET",
+		     dataType: "json",
+		     success: function (json) {
+			     rpt01(json);
+		   		
+		     },
+		     error: function (xhr, ajaxOptions, thrownError) {
+				alert('ERROR');
+		     }
+		});
+
+
 });
-window.onload = function () {
+
+
+function rpt01 (data) {
 	
-	
-	
-	
-	
-var chart = new CanvasJS.Chart("chartContainer1", {
-	title: {
-		text: ""
-	},
-	axisY: {
-		title: "Value"
-	},
-	exportEnabled: true,
-	data: [{
-		type: "column",
-		showInLegend: true, 
-		legendText: "เสียชีวิต",
-		dataPoints: <?php echo json_encode($dts1, $JSON_NUMERIC_CHECK); ?>
-	},{
-		type: "column",
-		showInLegend: true, 
-		legendText: "สูญเสียอวัยวะ/ทุพพลภาพ",
-		dataPoints: <?php echo json_encode($dts2, $JSON_NUMERIC_CHECK); ?>
-	},{
-		type: "column",
-		showInLegend: true, 
-		legendText: "บาดเจ็บ/เจ็บป่วย",
-		dataPoints: <?php echo json_encode($dts3, $JSON_NUMERIC_CHECK); ?>
-	},{
-		type: "column",
-		showInLegend: true, 
-		legendText: "ทรัพย์สินเสียหาย",
-		dataPoints: <?php echo json_encode($dts4, $JSON_NUMERIC_CHECK); ?>
-	},{
-		type: "column",
-		showInLegend: true, 
-		legendText: "มีการหยุดการปฏิบัติงาน ",
-		dataPoints: <?php echo json_encode($dts5, $JSON_NUMERIC_CHECK); ?>
-	}
-	
+	console.log(data);
 
-	
-	]
-});
-chart.render();
- //
-var chart = new CanvasJS.Chart("chartContainer2", {
-	title: {
-		text: "Result DISC"
-	},
-	axisY: {
-		title: "Value"
-	},
-	data: [{
-		type: "line",
-		showInLegend: true, 
-		legendText: "Most",
-		dataPoints: <?php echo json_encode($posM, $JSON_NUMERIC_CHECK); ?>
-	},{
-		type: "line",
-		showInLegend: true, 
-		legendText: "Least",
-		dataPoints: <?php echo json_encode($posL, $JSON_NUMERIC_CHECK); ?>
-	},{
-		type: "line",
-		showInLegend: true, 
-		legendText: "Actual",
-		dataPoints: <?php echo json_encode($posA, $JSON_NUMERIC_CHECK); ?>
-	}
-	
-
-	
-	]
-});
-chart.render();
-//
-var chart = new CanvasJS.Chart("chartContainer3", {
-	title: {
-		text: "Result DISC"
-	},
-	axisY: {
-		title: "Value"
-	},
-	data: [{
-		type: "line",
-		showInLegend: true, 
-		legendText: "Most",
-		dataPoints: <?php echo json_encode($posM, $JSON_NUMERIC_CHECK); ?>
-	},{
-		type: "line",
-		showInLegend: true, 
-		legendText: "Least",
-		dataPoints: <?php echo json_encode($posL, $JSON_NUMERIC_CHECK); ?>
-	},{
-		type: "line",
-		showInLegend: true, 
-		legendText: "Actual",
-		dataPoints: <?php echo json_encode($posA, $JSON_NUMERIC_CHECK); ?>
-	}
-	
-
-	
-	]
-});
-chart.render();
-//
-var chart = new CanvasJS.Chart("chartContainer4", {
-	title: {
-		text: "Result DISC"
-	},
-	axisY: {
-		title: "Value"
-	},
-	data: [{
-		type: "line",
-		showInLegend: true, 
-		legendText: "Most",
-		dataPoints: <?php echo json_encode($posM, $JSON_NUMERIC_CHECK); ?>
-	},{
-		type: "line",
-		showInLegend: true, 
-		legendText: "Least",
-		dataPoints: <?php echo json_encode($posL, $JSON_NUMERIC_CHECK); ?>
-	},{
-		type: "line",
-		showInLegend: true, 
-		legendText: "Actual",
-		dataPoints: <?php echo json_encode($posA, $JSON_NUMERIC_CHECK); ?>
-	}
-	
-
-	
-	]
-});
-chart.render();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	Highcharts.chart('container', {
+        title: {
+            text: 'Point interval unit is one month'
+        },
+    
+        xAxis: {
+            type: 'datetime'
+        },
+    
+        plotOptions: {
+            series: {
+                pointStart: Date.UTC(2019, 0, 1),
+                pointIntervalUnit: 'month'
+            }
+        },
+    
+        series: data
+//             [{
+//             data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+//         }, {
+//             data: [144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4, 29.9, 71.5, 106.4, 129.2]
+//         }]
+	});
 }
+
+
 
 </script>
 
