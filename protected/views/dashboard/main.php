@@ -402,9 +402,15 @@ function rpt01 (data) {
 	console.log(data);
 
 	Highcharts.chart('container', {
-        title: {
-            text: 'Point interval unit is one month'
-        },
+		chart: {
+	        type: 'column'
+	    },
+	    title: {
+	        text: 'Monthly Average Rainfall'
+	    },
+	    subtitle: {
+	        text: 'Source: WorldClimate.com'
+	    },
     
         xAxis: {
             type: 'datetime'
