@@ -2,7 +2,7 @@
 	<div class="col-lg-3 col-md-6">
 		<div class="portlet light">
 			<div class="card-icon">
-				<a href="<?php echo ConfigUtil::getAppName();?>/index.php/Accident/Create">
+				<a href="<?php echo ConfigUtil::getAppName();?>/index.php/NormalPerson/Create">
 					<i class="icon-fire font-red-sunglo theme-font"></i>
 				</a>
 			</div>
@@ -17,7 +17,7 @@
 	<div class="col-lg-3 col-md-6">
 		<div class="portlet light">
 			<div class="card-icon">
-				<a href="<?php echo ConfigUtil::getAppName();?>/index.php/Incident/Create">
+				<a href="<?php echo ConfigUtil::getAppName();?>/index.php/NormalPerson/CreateIncident">
 
 					<i class="icon-energy font-green-haze theme-font"></i>
 				</a>
@@ -42,7 +42,7 @@
 				<span> Main Menu </span>
 			</div>
 			<div class="card-desc">
-				<span><br></span>
+				<span>ย้อนกลับ</span>
 			</div>
 		</div>
 	</div>

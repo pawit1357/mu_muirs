@@ -186,9 +186,9 @@ class MenuUtil {
 		return $nav;
 	}
 	public static function getMenuName($currentPage) {
-		if (! UserLoginUtils::isLogin ()) {
-			$this->redirect ( Yii::app ()->createUrl ( 'Site/login' ) );
-		}
+// 		if (! UserLoginUtils::isLogin ()) {
+// 			$this->redirect ( Yii::app ()->createUrl ( 'Site/login' ) );
+// 		}
 		$currentPage = str_replace ( ConfigUtil::getAppName (), "", $currentPage );
 		$link = explode ( "/", $currentPage );
 		$action = '';

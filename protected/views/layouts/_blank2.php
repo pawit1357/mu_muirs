@@ -56,6 +56,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <link href="<?php echo ConfigUtil::getAppName();?>/css/jquery-ui-1.11.4.custom.css" rel="stylesheet" type="text/css" />
 <link href="<?php echo ConfigUtil::getAppName();?>/css/about.min.css" rel="stylesheet" type="text/css" />
 
+	<link href="<?php echo ConfigUtil::getAppName();?>/css/datepicker.css" rel="stylesheet" type="text/css" />
 <!--  <link href="<?//php echo ConfigUtil::getAppName();?>/css/SpecialDateSheet.css" rel="stylesheet" type="text/css" /> -->
 
 <!-- END THEME LAYOUT STYLES -->
@@ -148,6 +149,120 @@ License: You must have a valid license purchased only from themeforest(the above
 <!-- END FOOTER -->
 
 <script src="<?php echo ConfigUtil::getAppName();?>/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+
+	<script
+		src="<?php echo ConfigUtil::getAppName();?>/assets/global/plugins/bootstrap/js/bootstrap.min.js"
+		type="text/javascript"></script>
+	<script
+		src="<?php echo ConfigUtil::getAppName();?>/assets/global/plugins/js.cookie.min.js"
+		type="text/javascript"></script>
+	<script
+		src="<?php echo ConfigUtil::getAppName();?>/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js"
+		type="text/javascript"></script>
+	<script
+		src="<?php echo ConfigUtil::getAppName();?>/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js"
+		type="text/javascript"></script>
+	<script
+		src="<?php echo ConfigUtil::getAppName();?>/assets/global/plugins/jquery.blockui.min.js"
+		type="text/javascript"></script>
+	<script
+		src="<?php echo ConfigUtil::getAppName();?>/assets/global/plugins/uniform/jquery.uniform.min.js"
+		type="text/javascript"></script>
+			<script
+		src="<?php echo ConfigUtil::getAppName();?>/assets/global/plugins/jquery.blockui.min.js"
+		type="text/javascript"></script>
+		
+	<script
+	
+		src="<?php echo ConfigUtil::getAppName();?>/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js"
+		type="text/javascript"></script>
+	<!-- END CORE PLUGINS -->
+	<!-- BEGIN PAGE LEVEL PLUGINS -->
+	<script
+		src="<?php echo ConfigUtil::getAppName();?>/assets/global/plugins/moment.min.js"
+		type="text/javascript"></script>
+	<script
+		src="<?php echo ConfigUtil::getAppName();?>/assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js"
+		type="text/javascript"></script>
+	<script
+		src="<?php echo ConfigUtil::getAppName();?>/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"
+		type="text/javascript"></script>
+
+	<script
+		src="<?php echo ConfigUtil::getAppName();?>/assets/global/plugins/select2/js/select2.full.min.js"
+		type="text/javascript"></script>
+	<script
+		src="<?php echo ConfigUtil::getAppName();?>/assets/global/plugins/jquery-validation/js/jquery.validate.min.js"
+		type="text/javascript"></script>
+		
+	<script
+		src="<?php echo ConfigUtil::getAppName();?>/assets/global/plugins/jquery-validation/js/additional-methods.min.js"
+		type="text/javascript"></script>
+	<script
+		src="<?php echo ConfigUtil::getAppName();?>/assets/global/plugins/bootstrap-touchspin/bootstrap.touchspin.js"
+		type="text/javascript"></script>
+	<script
+		src="<?php echo ConfigUtil::getAppName();?>/assets/global/plugins/datatables/datatables.min.js"
+		type="text/javascript"></script>
+	<script
+		src="<?php echo ConfigUtil::getAppName();?>/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js"
+		type="text/javascript"></script>
+
+
+	<!-- END PAGE LEVEL PLUGINS -->
+	<!-- BEGIN THEME GLOBAL SCRIPTS -->
+	<script
+		src="<?php echo ConfigUtil::getAppName();?>/assets/global/scripts/app.min.js"
+		type="text/javascript"></script>
+
+	<!-- END THEME GLOBAL SCRIPTS -->
+	<!-- BEGIN PAGE LEVEL SCRIPTS -->
+	<script
+		src="<?php echo ConfigUtil::getAppName();?>/js/components-select2.min.js"
+		type="text/javascript"></script>
+
+	<script
+		src="<?php echo ConfigUtil::getAppName();?>/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js"
+		type="text/javascript"></script>
+	<script
+		src="<?php echo ConfigUtil::getAppName();?>/assets/global/plugins/icheck/icheck.min.js"
+		type="text/javascript"></script>
+
+	<script src="<?php echo ConfigUtil::getAppName();?>/js/mycustom.js"
+		type="text/javascript"></script>
+
+	<!-- END PAGE LEVEL SCRIPTS -->
+	<!-- BEGIN THEME LAYOUT SCRIPTS -->
+	<script
+		src="<?php echo ConfigUtil::getAppName();?>/assets/layouts/layout/scripts/layout.min.js"
+		type="text/javascript"></script>
+	<script
+		src="<?php echo ConfigUtil::getAppName();?>/assets/layouts/global/scripts/quick-sidebar.min.js"
+		type="text/javascript"></script>
+		
+		
+	<!-- END THEME LAYOUT SCRIPTS -->
+
+	<script
+		src="<?php echo ConfigUtil::getAppName();?>/js/jquery-ui-1.11.4.custom.js"
+		type="text/javascript"></script>
+		
+	<script src="<?php echo ConfigUtil::getAppName();?>/js/moment.js"
+		type="text/javascript"></script>
+
+
+<!-- Cal-Thai -->
+	<script src="<?php echo ConfigUtil::getAppName();?>/js/bootstrap-datepicker.js"
+		type="text/javascript"></script>
+		
+	<script src="<?php echo ConfigUtil::getAppName();?>/js/locales/bootstrap-datepicker.th.js"
+		type="text/javascript"></script>
+		
+
+
+
+		
+		
 <script>
 jQuery(document).ready(function () {
 

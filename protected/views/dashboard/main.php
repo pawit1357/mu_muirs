@@ -349,7 +349,7 @@ if(isset($duplicateData)){
                     <div class="row">
 						<div class="col-lg-6 col-xs-12 col-sm-12">
                             <div class="portlet light bordered">
-                                <div class="portlet-title"><i class="fa fa-desktop" aria-hidden="true"></i> ป้ายสถิติความปลอดภัย <?php echo UserLoginUtils::getDepartmentInfoName();?>
+                                <div class="portlet-title"><i class="fa fa-desktop" aria-hidden="true"></i> กราฟรายงาน จาก ประเภทของการเกิดอุบัติเหตุ
                                     <div class="actions"></div>
                                 </div>
                                 <div class="portlet-body">
@@ -373,8 +373,6 @@ if(isset($duplicateData)){
 <script src="https://code.highcharts.com/modules/export-data.js"></script>
 
 <script>
-var chart;
-var pointStart = Date.UTC(2014,0,1);
 
 jQuery(document).ready(function () {
 	
@@ -406,11 +404,11 @@ function rpt01 (data) {
 	        type: 'column'
 	    },
 	    title: {
-	        text: 'Monthly Average Rainfall'
+	        text: 'กราฟรายงาน จาก ประเภทของการเกิดอุบัติเหตุ'
 	    },
-	    subtitle: {
-	        text: 'Source: WorldClimate.com'
-	    },
+// 	    subtitle: {
+// 	        text: 'Source: www.mahidol.ac.th'
+// 	    },
     
         xAxis: {
             type: 'datetime'
