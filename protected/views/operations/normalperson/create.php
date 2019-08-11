@@ -607,7 +607,15 @@ foreach ($deptParent as $parent) {
 		</div>
 	</div>
 	</div>
-	
+	<div class="well">
+  <div id="datetimepicker1" class="input-append date">
+    <input data-format="dd/MM/yyyy hh:mm:ss" type="text"></input>
+    <span class="add-on">
+      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+      </i>
+    </span>
+  </div>
+</div>
 	<input id="hostUrl" type="hidden" value="<?php echo ConfigUtil::getUrlHostName();?>">
 	<input type="hidden" id="maxUploadFileSize" value="<?php echo ConfigUtil::getDefaultMaxUploadFileSize()?>">
 
@@ -694,6 +702,12 @@ foreach ($deptParent as $parent) {
 
     jQuery(document).ready(function () {
 
+
+    	   $('#datetimepicker1').datetimepicker({
+    		      language: 'pt-BR'
+    		    });
+
+		    
 //     	$.ajax({
 //     	     url: $('#hostUrl').val()+"index.php/AjaxRequest/GetDepartment",
 //     	     type: "GET",

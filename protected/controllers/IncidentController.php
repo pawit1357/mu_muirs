@@ -48,22 +48,76 @@ class IncidentController extends CController
             $model->report_date = CommonUtil::getDate ( $model->report_date );
             $model->create_date = date ( "Y-m-d H:i:s" );
             $model->create_by = UserLoginUtils::getUsersLoginId ();
+
+            $model->save ();
             
-            $img1 = $_FILES ['img1'];
+            // Save image.
+            $acc_img = new IncidentImage();
+            $acc_img->incident_id = $model->id;
             
-            if (isset ( $img1 )) {
-                $file_ary = CommonUtil::reArrayFiles ( $img1 );
-                
+            if (isset($_POST['IncidentImage'])) {
+                $acc_img->attributes = $_POST['IncidentImage'];
+            }
+            
+            $img1 = $_FILES['img1'];
+            if (isset($img1)) {
+                $file_ary = CommonUtil::reArrayFiles($img1);
                 $index = 0;
-                foreach ( $file_ary as $file ) {
-                    if ($file ['size'] > 0) {
-                        $model->img1 = CommonUtil::upload ( $file );
+                foreach ($file_ary as $file) {
+                    if ($file['size'] > 0) {
+                        $acc_img->path_img1 = CommonUtil::upload($file);
                     }
                     $index ++;
                 }
             }
+            $img2 = $_FILES['img2'];
+            if (isset($img2)) {
+                $file_ary = CommonUtil::reArrayFiles($img2);
+                $index = 0;
+                foreach ($file_ary as $file) {
+                    if ($file['size'] > 0) {
+                        $acc_img->path_img2 = CommonUtil::upload($file);
+                    }
+                    $index ++;
+                }
+            }
+            $img3 = $_FILES['img3'];
+            if (isset($img3)) {
+                $file_ary = CommonUtil::reArrayFiles($img3);
+                $index = 0;
+                foreach ($file_ary as $file) {
+                    if ($file['size'] > 0) {
+                        $acc_img->path_img3 = CommonUtil::upload($file);
+                    }
+                    $index ++;
+                }
+            }
+            $img4 = $_FILES['img4'];
+            if (isset($img4)) {
+                $file_ary = CommonUtil::reArrayFiles($img4);
+                $index = 0;
+                foreach ($file_ary as $file) {
+                    if ($file['size'] > 0) {
+                        $acc_img->path_img4 = CommonUtil::upload($file);
+                    }
+                    $index ++;
+                }
+            }
+            $img5 = $_FILES['img5'];
+            if (isset($img5)) {
+                $file_ary = CommonUtil::reArrayFiles($img5);
+                $index = 0;
+                foreach ($file_ary as $file) {
+                    if ($file['size'] > 0) {
+                        $acc_img->path_img5 = CommonUtil::upload($file);
+                    }
+                    $index ++;
+                }
+            }
+            $acc_img->save();
             
-            $model->save ();
+            
+            
             
             // Notify//
             $model = new Notify();
@@ -111,7 +165,10 @@ class IncidentController extends CController
         if (! UserLoginUtils::authorizePage($_SERVER['REQUEST_URI'])) {
             $this->redirect(Yii::app()->createUrl('DashBoard/Permission'));
         }
+        
         $model = $this->loadModel();
+        $modelImg = IncidentImage::model()->find(array("condition"=>"incident_id =".$model->id));
+        
         if (isset($_POST['Incident'])) {
             $transaction = Yii::app()->db->beginTransaction();
             $model->attributes = $_POST['Incident'];
@@ -120,24 +177,75 @@ class IncidentController extends CController
             $model->update_date = date ( "Y-m-d H:i:s" );
             $model->update_by = UserLoginUtils::getUsersLoginId ();
             
+            $model->update();
             
-            $img1 = $_FILES ['img1'];
             
-            if (isset ( $img1 )) {
-                $file_ary = CommonUtil::reArrayFiles ( $img1 );
-                
+            // Save image.
+            $acc_img = new IncidentImage();
+            $acc_img = IncidentImage::model()->find(array("condition"=>"incident_id =".$model->id));
+            
+            if (isset($_POST['IncidentImage'])) {
+                $acc_img->attributes = $_POST['IncidentImage'];
+            }
+            
+            
+            $img1 = $_FILES['img1'];
+            if (isset($img1)) {
+                $file_ary = CommonUtil::reArrayFiles($img1);
                 $index = 0;
-                foreach ( $file_ary as $file ) {
-                    if ($file ['size'] > 0) {
-                        $model->img1 = CommonUtil::upload ( $file );
+                foreach ($file_ary as $file) {
+                    if ($file['size'] > 0) {
+                        $acc_img->path_img1 = CommonUtil::upload($file);
                     }
                     $index ++;
                 }
             }
-            
-            $model->update();
-            
-          
+            $img2 = $_FILES['img2'];
+            if (isset($img2)) {
+                $file_ary = CommonUtil::reArrayFiles($img2);
+                $index = 0;
+                foreach ($file_ary as $file) {
+                    if ($file['size'] > 0) {
+                        $acc_img->path_img2 = CommonUtil::upload($file);
+                    }
+                    $index ++;
+                }
+            }
+            $img3 = $_FILES['img3'];
+            if (isset($img3)) {
+                $file_ary = CommonUtil::reArrayFiles($img3);
+                $index = 0;
+                foreach ($file_ary as $file) {
+                    if ($file['size'] > 0) {
+                        $acc_img->path_img3 = CommonUtil::upload($file);
+                    }
+                    $index ++;
+                }
+            }
+            $img4 = $_FILES['img4'];
+            if (isset($img4)) {
+                $file_ary = CommonUtil::reArrayFiles($img4);
+                $index = 0;
+                foreach ($file_ary as $file) {
+                    if ($file['size'] > 0) {
+                        $acc_img->path_img4 = CommonUtil::upload($file);
+                    }
+                    $index ++;
+                }
+            }
+            $img5 = $_FILES['img5'];
+            if (isset($img5)) {
+                $file_ary = CommonUtil::reArrayFiles($img5);
+                $index = 0;
+                foreach ($file_ary as $file) {
+                    if ($file['size'] > 0) {
+                        $acc_img->path_img5 = CommonUtil::upload($file);
+                    }
+                    $index ++;
+                }
+            }
+           
+            $acc_img->update();
             
             
             $transaction->commit();
@@ -145,7 +253,7 @@ class IncidentController extends CController
             $this->redirect(Yii::app()->createUrl('Incident'));
         }
         $this->render('//operations/incident/update', array(
-            'data' => $model
+            'data' => $model,'imgs' =>$modelImg
         ));
     }
 

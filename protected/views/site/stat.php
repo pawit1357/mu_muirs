@@ -1,7 +1,18 @@
 <?php
+
+    $model = new Accident();
+    if (isset($_POST['Accident'])) {
+        $model->attributes = $_POST['Accident'];
+
+    }
+    
 // - SAFETY RECORD - ////
 $criteria = new CDbCriteria();
-$criteria->condition = " status=1";
+$criteria->condition = "status=1 ".(($model->department_id == -1)? "" : " and department_id = ".$model->department_id);
+
+// echo "SQL: status=1 ".(($model->department_id == -1)? "":" and department_id = ".$model->department_id);
+
+
 $safetyRecord = SafetyRecord::model()->find($criteria);
 
 $we_have_operated ="0";
@@ -15,7 +26,9 @@ $amt = 0;
 $day ="0";
 $year ="0";
 
-$duplicateData = Yii::app()->db->createCommand("SELECT max(amount) amt FROM tb_safety_record_history where YEAR(create_date) = year(now()) group by department_id order by max(amount) desc limit 1")->queryAll();
+$duplicateData = Yii::app()->db->createCommand("SELECT max(amount) amt FROM tb_safety_record_history 
+where YEAR(create_date) = year(now()) ".(($model->department_id == -1)? "" : " and department_id = ".$model->department_id)."
+group by department_id order by max(amount) desc limit 1")->queryAll();
 if(isset($duplicateData)){
     foreach($duplicateData as $offer) {
         $amt = $offer['amt'];
@@ -63,7 +76,12 @@ if(isset($duplicateData)){
 </style>
 <div class="content" style="width: 510px !important">
 	<form id="Form1" method="post">
-
+<select class="form-control" name="Accident[department_id]" id="department_id" onchange="onchangeDepartment(this)">
+<option value="-1">-- มหาวิทยาลัยมหิดล --</option>
+<?php
+echo CommonUtil::getDepartment($model->department_id);
+?>
+</select>
 		<br>
                            <table style="border: 2px solid green;color: green;">
                                     <!-- HEADER -->
@@ -169,6 +187,22 @@ if(isset($duplicateData)){
 <!-- 				<a href="javascript:;" id="register-btn" class="uppercase">ลงทะเบียนใช้งาน</a> -->
 			</p>
 		</div>
+		
+	<script src="<?php echo ConfigUtil::getAppName();?>/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+	<script>
+    function onchangeDepartment(sel){
+    	document.getElementById("Form1").submit();
+    }
+	</script>
 	</form>
 </div>
 
+
+	
+	
+	
+	
+	
+	
+	
+	

@@ -1,6 +1,6 @@
 <?php
 // - SAFETY RECORD - ////
-if(UserLoginUtils::getUserRole() == 3){//only staff
+// if(UserLoginUtils::getUserRole() == 3){//only staff
     $we_have_operated1 ="0";
     $days_target1 ="365";
     $day1 ="0";
@@ -30,7 +30,7 @@ if(UserLoginUtils::getUserRole() == 3){//only staff
         }
         $the_best_record1 = str_split(sprintf('%03d', $amt1));
     }
-}
+// }
 // - ************* - //
 // - SAFETY RECORD(mahidol) - ////
 $we_have_operated ="0";
@@ -225,7 +225,7 @@ if(isset($duplicateData)){
                             </div>
                         </div>
                         <!-- RPT2 -->
-                        <?php if(UserLoginUtils::getUserRole() == 3){?>
+                        <?php if(true){?>
                         <div class="col-lg-6 col-xs-12 col-sm-12">
                             <div class="portlet light bordered">
                                 <div class="portlet-title"><i class="fa fa-desktop" aria-hidden="true"></i> ป้ายสถิติความปลอดภัย <?php echo UserLoginUtils::getDepartmentInfoName();?>

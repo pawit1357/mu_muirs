@@ -19,6 +19,7 @@
 						<thead>
 							<tr>
 								<th>#</th>
+								<th>สถานะ</th>
 								<th>สิทธิ์การใช้งาน</th>
 								<th>รหัสผู้ใช้</th>
 								<th>คำนำหน้า</th>
@@ -39,6 +40,7 @@
 		?>
 				<tr>
 								<td class="center"><?php echo  $counter;?></td>
+								<td class="center"><?php echo (($data->status=="I")? '<font size="3" color="red">รออนุมัติ</font>':'อนุมัติแล้ว') ?></td>
 								<td class="center"><?php echo $data->users_role->ROLE_NAME?></td>
 								<td class="center"><?php echo $data->username?></td>
 								<td class="center"><?php echo $data->title->name?></td>

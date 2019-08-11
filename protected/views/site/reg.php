@@ -54,7 +54,7 @@ $titles = MTitle::model ()->findAll ();
 				placeholder="Confirm Password" />
 		</div>
 
-		<span class="hint">Facuty/Insitture/Centre</span>
+		<span class="hint">Facuty/Institute/Centre</span>
 
 		<div class="form-group">
 			<label class="control-label visible-ie8 visible-ie9">ส่วนงาน</label>

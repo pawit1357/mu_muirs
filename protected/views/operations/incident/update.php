@@ -1,8 +1,4 @@
-<?php
-$deptParent = MDepartment::model()->findAll(array("condition"=>"faculty_id = -1",'order'=>'seq'));
-$deptChild = MDepartment::model()->findAll(array("condition"=>"faculty_id <> -1",'order'=>'seq'));
 
-?>
 <form id="Form1" method="post" enctype="multipart/form-data"
 	class="form-horizontal">
 
@@ -34,7 +30,7 @@ $deptChild = MDepartment::model()->findAll(array("condition"=>"faculty_id <> -1"
 					<ul>
 						<li>1. บุคลากรเดินสะดุดสายไฟที่วางอยู่บนพื้นเสียหลัก
 							<ul>
-								<li>ล้มกระแทกพื้น หัวเข้าถลอก <img
+								<li>ล้มกระแทกพื้น หัวเข่าถลอก <img
 									src="<?php echo ConfigUtil::getAppName()?>/images/ac01.jpg"></li>
 								<li>เกือบล้มแต่ทรงตัวไว้ได้ จึงไม่ได้รับบาดเจ็บ <img
 									src="<?php echo ConfigUtil::getAppName()?>/images/ac02.jpg"></li>
@@ -75,31 +71,11 @@ $deptChild = MDepartment::model()->findAll(array("condition"=>"faculty_id <> -1"
 										<label class="control-label col-md-4">คณะ/ส่วนงาน:<span
 											class="required">*</span></label>
 										<div class="col-md-6">
-											<select class="form-control select2" name="Incident[owner_department_id]"
+											<select class="form-control" name="Incident[owner_department_id]"
 												id="owner_department_id">
 												<option value="-1">-- (ไม่มีสังกัด) --</option>
 <?php
-foreach ($deptParent as $parent) {
-    $isGroup = false;
-    foreach ($deptChild as $child) {
-        if(intval($parent['id']) == intval($child['faculty_id'])){
-            $isGroup = true;
-        }
-    }
-    if($isGroup){
-        echo '<optgroup style="color:#008;font-style:normal;font-weight:normal;" label="'.$parent['name'].'">';
-        echo '</optgroup>';
-    }else{
-        echo '<option style="color:#'.(intval($parent['faculty_id']) == -1? '008':'000').';font-style:normal;font-weight:normal;" value="'.$parent['id'].'" '. ($parent['id'] == $data->owner_department_id? 'selected="selected"':'') .'>'.htmlspecialchars($parent['name']).'</option>';
-    }
-    
-    foreach ($deptChild as $child) {
-        if(intval($parent['id']) == intval($child['faculty_id'])){
-            echo '<option style="color:#000;font-style:normal;font-weight:normal;" value="'.$child['id'].'" '. ($child['id'] == $data->owner_department_id? 'selected="selected"':'') .'>&nbsp;&nbsp;&nbsp;-&nbsp;'.htmlspecialchars($child['name']).'</option>';
-        }
-    }
-}
-    
+echo CommonUtil::getDepartment($data->owner_department_id);
 ?>
 			</select>
 
@@ -173,7 +149,7 @@ foreach ($deptParent as $parent) {
 								<div class="col-md-10">
 									<div class="form-group">
 
-										<label class="control-label col-md-4">คาดว่าสาเหตุที่เกิด คือ
+										<label class="control-label col-md-4">คาดว่าเกิดจากสาเหตุ คือ
 											: </label>
 										<div class="col-md-8">
 											<span style="font-size: xx-small;color: red;"> (ถ้าทราบ) </span>
@@ -212,28 +188,131 @@ foreach ($deptParent as $parent) {
 									<div class="form-group last">
 										<label class="control-label col-md-4">แนบรูปภาพ (ถ้ามี)</label>
 										<div class="col-md-4">
+										<table style="width: 750px">
+										<tr>
+    										<td><input type="text" value="<?php echo $imgs->img1_description;?>" id="img1_desc" class="form-control" name="IncidentImage[img1_description]" /></td>
+    										<td><input type="text" value="<?php echo $imgs->img2_description;?>" id="img2_desc" class="form-control" name="IncidentImage[img2_description]" /></td>
+    										<td><input type="text" value="<?php echo $imgs->img3_description;?>" id="img3_desc" class="form-control" name="IncidentImage[img3_description]" /></td>
+    										<td><input type="text" value="<?php echo $imgs->img4_description;?>" id="img4_desc" class="form-control" name="IncidentImage[img4_description]" /></td>
+    										<td><input type="text" value="<?php echo $imgs->img5_description;?>" id="img5_desc" class="form-control" name="IncidentImage[img5_description]" /></td>
+										</tr>
+
+										<tr>
+										<td width="150px">
 											<div class="fileinput fileinput-new"
 												data-provides="fileinput">
 												<div class="fileinput-new thumbnail"
-													style="width: 200px; height: 150px;">
+													style="width: 150px; height: 100px;">
 													<img
-														src="/muirs<?php echo $data->img1?>"
+														src="/muirs<?php echo $imgs->path_img1?>"
 														alt="" />
 												</div>
 												<div class="fileinput-preview fileinput-exists thumbnail"
-													style="max-width: 200px; max-height: 150px;"></div>
+													style="max-width: 150px; max-height: 100px;"></div>
 												<div>
 													<span class="btn default btn-file"> <span
-														class="fileinput-new"> Select image </span> <span
-														class="fileinput-exists"> Change </span> <input
+														class="fileinput-new"> เลือก </span> <span
+														class="fileinput-exists">เปลี่ยน </span> <input
 														type="file" name="img1[]" onchange="validateFileInput(this);">
 													</span> <a href="javascript:;"
 														class="btn red fileinput-exists" data-dismiss="fileinput">
-														Remove </a>
+														ลบ </a>
 												</div>
-												<span style="font-size: xx-small;color: red;">(โปรดแนบไฟล์ jpg หรือ pdf ที่มีขนาดไม่เกิน  <?php echo ConfigUtil::getDefaultMaxUploadFileSize()?>MB)
-											<?php echo  !isset($data->img1)? '': '<a href="'.(ConfigUtil::getUrlHostName().$data->img1).'" target="_blank">Download</a>'?>	
-											</span>
+											</div>
+										</td>
+										<td width="150px">
+											<div class="fileinput fileinput-new"
+												data-provides="fileinput">
+												<div class="fileinput-new thumbnail"
+													style="width: 150px; height: 100px;">
+													<img
+														src="/muirs<?php echo $imgs->path_img2?>"
+														alt="" />
+												</div>
+												<div class="fileinput-preview fileinput-exists thumbnail"
+													style="max-width: 150px; max-height: 100px;"></div>
+												<div>
+													<span class="btn default btn-file"> <span
+														class="fileinput-new"> เลือก </span> <span
+														class="fileinput-exists">เปลี่ยน </span> <input
+														type="file" name="img2[]" onchange="validateFileInput(this);">
+													</span> <a href="javascript:;"
+														class="btn red fileinput-exists" data-dismiss="fileinput">
+														ลบ </a>
+												</div>
+											</div>
+										</td>
+										<td width="150px">
+											<div class="fileinput fileinput-new"
+												data-provides="fileinput">
+												<div class="fileinput-new thumbnail"
+													style="width: 150px; height: 100px;">
+													<img
+														src="/muirs<?php echo $imgs->path_img3?>"
+														alt="" />
+												</div>
+												<div class="fileinput-preview fileinput-exists thumbnail"
+													style="max-width: 150px; max-height: 100px;"></div>
+												<div>
+													<span class="btn default btn-file"> <span
+														class="fileinput-new"> เลือก </span> <span
+														class="fileinput-exists">เปลี่ยน </span> <input
+														type="file" name="img3[]" onchange="validateFileInput(this);">
+													</span> <a href="javascript:;"
+														class="btn red fileinput-exists" data-dismiss="fileinput">
+														ลบ </a>
+												</div>
+											</div>
+										</td>
+										<td width="150px">
+											<div class="fileinput fileinput-new"
+												data-provides="fileinput">
+												<div class="fileinput-new thumbnail"
+													style="width: 150px; height: 100px;">
+													<img
+														src="/muirs<?php echo $imgs->path_img4?>"
+														alt="" />
+												</div>
+												<div class="fileinput-preview fileinput-exists thumbnail"
+													style="max-width: 150px; max-height: 100px;"></div>
+												<div>
+													<span class="btn default btn-file"> <span
+														class="fileinput-new"> เลือก </span> <span
+														class="fileinput-exists">เปลี่ยน </span> <input
+														type="file" name="img4[]" onchange="validateFileInput(this);">
+													</span> <a href="javascript:;"
+														class="btn red fileinput-exists" data-dismiss="fileinput">
+														ลบ </a>
+												</div>
+											</div>
+										</td>
+										<td width="150px">
+											<div class="fileinput fileinput-new"
+												data-provides="fileinput">
+												<div class="fileinput-new thumbnail"
+													style="width: 150px; height: 100px;">
+													<img
+														src="/muirs<?php echo $imgs->path_img5?>"
+														alt="" />
+												</div>
+												<div class="fileinput-preview fileinput-exists thumbnail"
+													style="max-width: 150px; max-height: 100px;"></div>
+												<div>
+													<span class="btn default btn-file"> <span
+														class="fileinput-new"> เลือก </span> <span
+														class="fileinput-exists">เปลี่ยน </span> <input
+														type="file" name="img5[]" onchange="validateFileInput(this);">
+													</span> <a href="javascript:;"
+														class="btn red fileinput-exists" data-dismiss="fileinput">
+														ลบ </a>
+												</div>
+											</div>
+										</td>
+										</tr>
+										</table>
+
+											<span style="font-size: xx-small;color: red;">(โปรดแนบไฟล์ jpg หรือ png ที่มีขนาดไม่เกิน  <?php echo ConfigUtil::getDefaultMaxUploadFileSize()?>MB)</span>
+
 											</div>
 
 											<div class="clearfix margin-top-10"></div>

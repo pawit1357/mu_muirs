@@ -45,6 +45,9 @@ class UserLoginUtils {
 					$_SESSION ['MENU_IN_ROLE'] = serialize ( $Menus );
 				}
 			}
+			//initial global value
+			$_SESSION['SESSION_DEPARTMENT'] = MDepartment::model()->findAll();
+
 			
 			// -------------------
 			return true;

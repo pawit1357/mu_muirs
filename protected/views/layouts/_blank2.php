@@ -58,6 +58,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
 	<link href="<?php echo ConfigUtil::getAppName();?>/css/datepicker.css" rel="stylesheet" type="text/css" />
 <!--  <link href="<?//php echo ConfigUtil::getAppName();?>/css/SpecialDateSheet.css" rel="stylesheet" type="text/css" /> -->
+	<link href="<?php echo ConfigUtil::getAppName();?>/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css" />
 
 <!-- END THEME LAYOUT STYLES -->
 <!-- <link rel="shortcut icon" href="favicon.ico" /> -->
@@ -259,7 +260,8 @@ License: You must have a valid license purchased only from themeforest(the above
 		type="text/javascript"></script>
 		
 
-
+	<script src="<?php echo ConfigUtil::getAppName();?>/js/locales/bootstrap-datetimepicker.min.js"
+		type="text/javascript"></script>
 
 		
 		

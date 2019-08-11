@@ -21,34 +21,37 @@ class Accident extends CActiveRecord {
 	public function rules() {
 		return array (
 				array (
-					   'id,
-                        owner_department_id,
+					   '
+                        id,
                         name,
                         position_or_level,
                         department_id,
-                        belong_to,
                         phone_number,
-                        email, 
-                        report_date,
-                        case_date,
+                        email,
+                        report_date date 
+                        case_date date 
                         case_date_time,
                         name2,
                         belong_to,
-                        img1,
-                        img2,
                         accident_location,
                         accident_chronology,
                         accident_event,
                         accident_cause,
                         accident_solve,
-                        dammage_type, 
+                        dammage_type,
                         dammage_type_1_value,
                         dammage_type_2_value,
                         dammage_type_3_value,
-                        dammage_type_4_value, 
+                        dammage_type_4_value,
                         dammage_type_5_value,
-                        create_by, 
-                        create_date,report_date_to,report_date_from',
+                        dammage_type_6_value,
+                        dammage_type_4_other,
+                        owner_department_id,
+                        create_by,
+                        create_date,
+                        update_date,
+                        update_by
+                        ',
                         'safe' 
 				)
 		);
@@ -70,7 +73,7 @@ class Accident extends CActiveRecord {
 		return new CActiveDataProvider ( get_class ( $this ), array (
 				'criteria' => $criteria,
 				'sort' => array (
-						'defaultOrder' => 't.id asc' 
+						'defaultOrder' => 't.create_date desc' 
 				),
 				'pagination' => array (
 						'pageSize' => 1500 

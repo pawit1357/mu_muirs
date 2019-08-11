@@ -54,7 +54,7 @@ class Incident extends CActiveRecord {
 		return new CActiveDataProvider ( get_class ( $this ), array (
 				'criteria' => $criteria,
 				'sort' => array (
-						'defaultOrder' => 't.id asc' 
+						'defaultOrder' => 't.create_date desc' 
 				),
 				'pagination' => array (
 				    'pageSize' => 1500

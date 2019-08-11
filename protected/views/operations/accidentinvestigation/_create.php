@@ -19,40 +19,7 @@ $deptChild = MDepartment::model()->findAll(array("condition"=>"faculty_id <> -1"
 		<div class="portlet-body form">
 			<div class="form-body">
 				<!-- BEGIN FORM-->
-				
 				<div class="panel-group accordion" id="accordion1">
-
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<h4 class="panel-title">
-								<a class="accordion-toggle" data-toggle="collapse"
-									data-parent="#accordion1" href="#collapse_1"> <i
-									class="fa fa-newspaper-o"></i> 
-								</a>
-							</h4>
-						</div>
-						<div id="collapse_1" class="panel-collapse in">
-							<br>
-
-							<div class="row">
-								<div class="col-md-10">
-									<div class="form-group">
-										<label class="control-label col-md-4">รายละเอียดของผู้ประสบเหตุ
-											:<span class="required">*</span>
-										</label>
-
-										<div class="col-md-8">
-											<input id="person_name" type="text" value="" class="form-control"
-												name="">
-										</div>
-										<div id="divReq-person_type"></div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-
-
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<h4 class="panel-title">

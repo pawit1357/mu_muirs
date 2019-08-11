@@ -1,10 +1,4 @@
-<?php
 
-
-$deptParent = MDepartment::model()->findAll(array("condition"=>"faculty_id = -1",'order'=>'seq'));
-$deptChild = MDepartment::model()->findAll(array("condition"=>"faculty_id <> -1",'order'=>'seq'));
-
-?>
 <form id="Form1" method="post" enctype="multipart/form-data"
 	class="form-horizontal">
 
@@ -87,27 +81,7 @@ $deptChild = MDepartment::model()->findAll(array("condition"=>"faculty_id <> -1"
 <select class="form-control" name="Accident[department_id]" id="department_id" onchange="onchangeDepartment(this)">
 <option value="-1">-- (ไม่มีสังกัด) --</option>
 <?php
-foreach ($deptParent as $parent) {
-    $isGroup = false;
-    foreach ($deptChild as $child) {
-        if(intval($parent['id']) == intval($child['faculty_id'])){
-            $isGroup = true;
-        }
-    }
-    if($isGroup){
-        echo '<optgroup style="color:#008;font-style:normal;font-weight:normal;" label="'.$parent['name'].'">';
-        echo '</optgroup>';
-    }else{
-        echo '<option style="color:#'.(intval($parent['faculty_id']) == -1? '008':'000').';font-style:normal;font-weight:normal;" value="'.$parent['id'].'">'.htmlspecialchars($parent['name']).'</option>';
-    }
-    
-    foreach ($deptChild as $child) {
-        if(intval($parent['id']) == intval($child['faculty_id'])){
-            echo '<option style="color:#000;font-style:normal;font-weight:normal;" value="'.$child['id'].'">&nbsp;&nbsp;&nbsp;-&nbsp;'.htmlspecialchars($child['name']).'</option>';
-        }
-    }
-}
-    
+echo CommonUtil::getDepartment('');
 ?>
 </select>
 
@@ -178,7 +152,7 @@ foreach ($deptParent as $parent) {
 							<div class="row">
 								<div class="col-md-10">
 									<div class="form-group">
-										<label class="control-label col-md-4">ผู้พบเห็นเหตุการณ์คนแรก
+										<label class="control-label col-md-4">ผู้พบเห็นเหตุการณ์
 											ชื่อ-สกุล :<span class="required"></span>
 										</label>
 										<div class="col-md-4">
@@ -192,8 +166,8 @@ foreach ($deptParent as $parent) {
 							<div class="row">
 								<div class="col-md-10">
 									<div class="form-group">
-										<label class="control-label col-md-4">สังกัด :<span
-											class="required">*</span>
+										<label class="control-label col-md-4">สังกัดผู้พบเห็นเหตุการณ์ :<span
+											class="required"></span>
 										</label>
 										<div class="col-md-4">
 											<input type="text" value="" id="belong_to"
@@ -237,60 +211,17 @@ foreach ($deptParent as $parent) {
 												</span>
 												
 											</div>
+
 										</div>
 										
 										<div class="col-md-2">
-										
-										<select  class="form-control select2" name="Accident[case_date_time]" id="case_date_time">
-  <option value="00:00:00">00:00</option>      
-        <option value="00:30:00">00:30</option>      
-        <option value="01:00:00">01:00</option>     
-        <option value="01:30:00">01:30</option>      
-        <option value="02:00:00">02:00</option>      
-        <option value="02:30:00">02:30</option>      
-        <option value="03:00:00">03:00</option>      
-        <option value="03:30:00">03:30</option>      
-        <option value="04:00:00">04:00</option>      
-        <option value="04:30:00">04:30</option>      
-        <option value="05:00:00">05:00</option>      
-        <option value="05:30:00">05:30</option>      
-        <option value="06:00:00">06:00</option>      
-        <option value="06:30:00">06:30</option>     
-        <option value="07:00:00">07:00</option>      
-        <option value="07:30:00">07:30</option>      
-        <option value="08:00:00">08:00</option>      
-        <option value="08:30:00">08:30</option>      
-        <option value="09:00:00">09:00</option>      
-        <option value="09:30:00">09:30</option>      
-        <option value="10:00:00">10:00</option>      
-        <option value="10:30:00">10:30</option>      
-        <option value="11:00:00">11:00</option>      
-        <option value="11:30:00">11:30</option>      
-        <option value="12:00:00">12:00</option>      
-        <option value="12:30:00">12:30</option>      
-        <option value="13:00:00">13:00</option>      
-        <option value="13:30:00">13:30</option>      
-        <option value="14:00:00">14:00</option>      
-        <option value="14:30:00">14:30</option>      
-        <option value="15:00:00">15:00</option>      
-        <option value="15:30:00">15:30</option>      
-        <option value="16:00:00">16:00</option>      
-        <option value="16:30:00">16:30</option>      
-        <option value="17:00:00">17:00</option>      
-        <option value="17:30:00">17:30</option>      
-        <option value="18:00:00">18:00</option>      
-        <option value="18:30:00">18:30</option>      
-        <option value="19:00:00">19:00</option>      
-        <option value="19:30:00">19:30</option>      
-        <option value="20:00:00">20:00</option>      
-        <option value="20:30:00">20:30</option>      
-        <option value="21:00:00">21:00</option>      
-        <option value="21:30:00">21:30</option>      
-        <option value="22:00:00">22:00</option>      
-        <option value="22:30:00">22:30</option>      
-        <option value="23:00:00">23:00</option>      
-        <option value="23:30:00">23:30</option>
-</select>
+										        <div class='input-group date' >
+                                                  <input type='text' class="form-control" id='case_date_time'  name="Accident[case_date_time]" />
+                                                  <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-time"></span>
+                                                  </span>
+                                                </div>
+        
 										</div>
 										
 										<div id="divReq-case_date">
@@ -353,35 +284,135 @@ foreach ($deptParent as $parent) {
 							<div class="row">
 								<div class="col-md-10">
 									<div class="form-group last">
-										<label class="control-label col-md-4">แนบรูปภาพ (ถ้ามี) :</label>
+										<label class="control-label col-md-4">คำอธิบาย <br>แนบรูปภาพ (ถ้ามี) :</label>
 										<div class="col-md-4">
-											<span style="font-size: xx-small;color: red;">(โปรดแนบไฟล์ jpg หรือ pdf ที่มีขนาดไม่เกิน  <?php echo ConfigUtil::getDefaultMaxUploadFileSize()?>MB)</span>
-											<div class="input-group">
+									<table style="width: 750px">
+										<tr>
+    										<td><input type="text" value="" id="img1_desc" class="form-control" name="AccidentImage[img1_description]" /></td>
+    										<td><input type="text" value="" id="img2_desc" class="form-control" name="AccidentImage[img2_description]" /></td>
+    										<td><input type="text" value="" id="img3_desc" class="form-control" name="AccidentImage[img3_description]" /></td>
+    										<td><input type="text" value="" id="img4_desc" class="form-control" name="AccidentImage[img4_description]" /></td>
+    										<td><input type="text" value="" id="img5_desc" class="form-control" name="AccidentImage[img5_description]" /></td>
+										</tr>
 
-											<div class="row fileupload-buttonbar">
-												<div class="col-lg-7">
-													<!-- The fileinput-button span is used to style the file input field as button -->
-													<span class="btn green fileinput-button"> <input
-														type="file" name="img1[]" multiple="multiple"  onchange="validateFileInput(this);">
-													</span>
-													<!-- The global file processing state -->
-													<span class="fileupload-process"> </span>
+										<tr>
+										<td width="150px">
+											<div class="fileinput fileinput-new"
+												data-provides="fileinput">
+												<div class="fileinput-new thumbnail"
+													style="width: 150px; height: 100px;">
+													<img
+														src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image"
+														alt="" />
 												</div>
-												
-												<!-- The global progress information -->
-												<div class="col-lg-5 fileupload-progress fade">
-													<!-- The global progress bar -->
-													<div class="progress progress-striped active"
-														role="progressbar" aria-valuemin="0" aria-valuemax="100">
-														<div class="progress-bar progress-bar-success"
-															style="width: 0%;"></div>
-													</div>
-													<!-- The extended global progress information -->
-													<div class="progress-extended">&nbsp;</div>
+												<div class="fileinput-preview fileinput-exists thumbnail"
+													style="max-width: 150px; max-height: 100px;"></div>
+												<div>
+													<span class="btn default btn-file"> <span
+														class="fileinput-new"> เลือก </span> <span
+														class="fileinput-exists">เปลี่ยน </span> <input
+														type="file" name="img1[]" onchange="validateFileInput(this);">
+													</span> <a href="javascript:;"
+														class="btn red fileinput-exists" data-dismiss="fileinput">
+														ลบ </a>
 												</div>
-												
-												
 											</div>
+										</td>
+										<td width="150px">
+											<div class="fileinput fileinput-new"
+												data-provides="fileinput">
+												<div class="fileinput-new thumbnail"
+													style="width: 150px; height: 100px;">
+													<img
+														src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image"
+														alt="" />
+												</div>
+												<div class="fileinput-preview fileinput-exists thumbnail"
+													style="max-width: 150px; max-height: 100px;"></div>
+												<div>
+													<span class="btn default btn-file"> <span
+														class="fileinput-new"> เลือก </span> <span
+														class="fileinput-exists">เปลี่ยน </span> <input
+														type="file" name="img2[]" onchange="validateFileInput(this);">
+													</span> <a href="javascript:;"
+														class="btn red fileinput-exists" data-dismiss="fileinput">
+														ลบ </a>
+												</div>
+											</div>
+										</td>
+										<td width="150px">
+											<div class="fileinput fileinput-new"
+												data-provides="fileinput">
+												<div class="fileinput-new thumbnail"
+													style="width: 150px; height: 100px;">
+													<img
+														src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image"
+														alt="" />
+												</div>
+												<div class="fileinput-preview fileinput-exists thumbnail"
+													style="max-width: 150px; max-height: 100px;"></div>
+												<div>
+													<span class="btn default btn-file"> <span
+														class="fileinput-new"> เลือก </span> <span
+														class="fileinput-exists">เปลี่ยน </span> <input
+														type="file" name="img3[]" onchange="validateFileInput(this);">
+													</span> <a href="javascript:;"
+														class="btn red fileinput-exists" data-dismiss="fileinput">
+														ลบ </a>
+												</div>
+											</div>
+										</td>
+										<td width="150px">
+											<div class="fileinput fileinput-new"
+												data-provides="fileinput">
+												<div class="fileinput-new thumbnail"
+													style="width: 150px; height: 100px;">
+													<img
+														src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image"
+														alt="" />
+												</div>
+												<div class="fileinput-preview fileinput-exists thumbnail"
+													style="max-width: 150px; max-height: 100px;"></div>
+												<div>
+													<span class="btn default btn-file"> <span
+														class="fileinput-new"> เลือก </span> <span
+														class="fileinput-exists">เปลี่ยน </span> <input
+														type="file" name="img4[]" onchange="validateFileInput(this);">
+													</span> <a href="javascript:;"
+														class="btn red fileinput-exists" data-dismiss="fileinput">
+														ลบ </a>
+												</div>
+											</div>
+										</td>
+										<td width="150px">
+											<div class="fileinput fileinput-new"
+												data-provides="fileinput">
+												<div class="fileinput-new thumbnail"
+													style="width: 150px; height: 100px;">
+													<img
+														src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image"
+														alt="" />
+												</div>
+												<div class="fileinput-preview fileinput-exists thumbnail"
+													style="max-width: 150px; max-height: 100px;"></div>
+												<div>
+													<span class="btn default btn-file"> <span
+														class="fileinput-new"> เลือก </span> <span
+														class="fileinput-exists">เปลี่ยน </span> <input
+														type="file" name="img5[]" onchange="validateFileInput(this);">
+													</span> <a href="javascript:;"
+														class="btn red fileinput-exists" data-dismiss="fileinput">
+														ลบ </a>
+												</div>
+											</div>
+										</td>
+										</tr>
+										</table>
+
+
+
+											<span style="font-size: xx-small;color: red;">(โปรดแนบไฟล์ jpg หรือ png ที่มีขนาดไม่เกิน  <?php echo ConfigUtil::getDefaultMaxUploadFileSize()?>MB)</span>
+
 											<div class="clearfix margin-top-10"></div>
 										</div>
 									</div>
@@ -421,30 +452,135 @@ foreach ($deptParent as $parent) {
 							<div class="row">
 								<div class="col-md-10">
 									<div class="form-group last">
-										<label class="control-label col-md-4">แนบรูปภาพ (ถ้ามี) :</label>
+										<label class="control-label col-md-4">คำอธิบาย <br>แนบรูปภาพ (ถ้ามี) :</label>
 										<div class="col-md-4">
-											<span style="font-size: xx-small;color: red;">(โปรดแนบไฟล์ jpg หรือ pdf ที่มีขนาดไม่เกิน  <?php echo ConfigUtil::getDefaultMaxUploadFileSize()?>MB)</span>
-											<div class="row fileupload-buttonbar">
-												<div class="col-lg-7">
-													<!-- The fileinput-button span is used to style the file input field as button -->
-													<span class="btn green fileinput-button"> <input
-														type="file" name="img2[]" multiple="multiple" onchange="validateFileInput(this);">
-													</span>
-													<!-- The global file processing state -->
-													<span class="fileupload-process"> </span>
+									<table style="width: 750px">
+										<tr>
+    										<td><input type="text" value="" id="img6_desc" class="form-control" name="AccidentImage[img6_description]" /></td>
+    										<td><input type="text" value="" id="img7_desc" class="form-control" name="AccidentImage[img7_description]" /></td>
+    										<td><input type="text" value="" id="img8_desc" class="form-control" name="AccidentImage[img8_description]" /></td>
+    										<td><input type="text" value="" id="img9_desc" class="form-control" name="AccidentImage[img9_description]" /></td>
+    										<td><input type="text" value="" id="img10_desc" class="form-control" name="AccidentImage[img10_description]" /></td>
+										</tr>
+
+										<tr>
+										<td width="150px">
+											<div class="fileinput fileinput-new"
+												data-provides="fileinput">
+												<div class="fileinput-new thumbnail"
+													style="width: 150px; height: 100px;">
+													<img
+														src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image"
+														alt="" />
 												</div>
-												<!-- The global progress information -->
-												<div class="col-lg-5 fileupload-progress fade">
-													<!-- The global progress bar -->
-													<div class="progress progress-striped active"
-														role="progressbar" aria-valuemin="0" aria-valuemax="100">
-														<div class="progress-bar progress-bar-success"
-															style="width: 0%;"></div>
-													</div>
-													<!-- The extended global progress information -->
-													<div class="progress-extended">&nbsp;</div>
+												<div class="fileinput-preview fileinput-exists thumbnail"
+													style="max-width: 150px; max-height: 100px;"></div>
+												<div>
+													<span class="btn default btn-file"> <span
+														class="fileinput-new"> เลือก </span> <span
+														class="fileinput-exists">เปลี่ยน </span> <input
+														type="file" name="img6[]" onchange="validateFileInput(this);">
+													</span> <a href="javascript:;"
+														class="btn red fileinput-exists" data-dismiss="fileinput">
+														ลบ </a>
 												</div>
 											</div>
+										</td>
+										<td width="150px">
+											<div class="fileinput fileinput-new"
+												data-provides="fileinput">
+												<div class="fileinput-new thumbnail"
+													style="width: 150px; height: 100px;">
+													<img
+														src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image"
+														alt="" />
+												</div>
+												<div class="fileinput-preview fileinput-exists thumbnail"
+													style="max-width: 150px; max-height: 100px;"></div>
+												<div>
+													<span class="btn default btn-file"> <span
+														class="fileinput-new"> เลือก </span> <span
+														class="fileinput-exists">เปลี่ยน </span> <input
+														type="file" name="img7[]" onchange="validateFileInput(this);">
+													</span> <a href="javascript:;"
+														class="btn red fileinput-exists" data-dismiss="fileinput">
+														ลบ </a>
+												</div>
+											</div>
+										</td>
+										<td width="150px">
+											<div class="fileinput fileinput-new"
+												data-provides="fileinput">
+												<div class="fileinput-new thumbnail"
+													style="width: 150px; height: 100px;">
+													<img
+														src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image"
+														alt="" />
+												</div>
+												<div class="fileinput-preview fileinput-exists thumbnail"
+													style="max-width: 150px; max-height: 100px;"></div>
+												<div>
+													<span class="btn default btn-file"> <span
+														class="fileinput-new"> เลือก </span> <span
+														class="fileinput-exists">เปลี่ยน </span> <input
+														type="file" name="img8[]" onchange="validateFileInput(this);">
+													</span> <a href="javascript:;"
+														class="btn red fileinput-exists" data-dismiss="fileinput">
+														ลบ </a>
+												</div>
+											</div>
+										</td>
+										<td width="150px">
+											<div class="fileinput fileinput-new"
+												data-provides="fileinput">
+												<div class="fileinput-new thumbnail"
+													style="width: 150px; height: 100px;">
+													<img
+														src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image"
+														alt="" />
+												</div>
+												<div class="fileinput-preview fileinput-exists thumbnail"
+													style="max-width: 150px; max-height: 100px;"></div>
+												<div>
+													<span class="btn default btn-file"> <span
+														class="fileinput-new"> เลือก </span> <span
+														class="fileinput-exists">เปลี่ยน </span> <input
+														type="file" name="img9[]" onchange="validateFileInput(this);">
+													</span> <a href="javascript:;"
+														class="btn red fileinput-exists" data-dismiss="fileinput">
+														ลบ </a>
+												</div>
+											</div>
+										</td>
+										<td width="150px">
+											<div class="fileinput fileinput-new"
+												data-provides="fileinput">
+												<div class="fileinput-new thumbnail"
+													style="width: 150px; height: 100px;">
+													<img
+														src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image"
+														alt="" />
+												</div>
+												<div class="fileinput-preview fileinput-exists thumbnail"
+													style="max-width: 150px; max-height: 100px;"></div>
+												<div>
+													<span class="btn default btn-file"> <span
+														class="fileinput-new"> เลือก </span> <span
+														class="fileinput-exists">เปลี่ยน </span> <input
+														type="file" name="img10[]" onchange="validateFileInput(this);">
+													</span> <a href="javascript:;"
+														class="btn red fileinput-exists" data-dismiss="fileinput">
+														ลบ </a>
+												</div>
+											</div>
+										</td>
+										</tr>
+										</table>
+
+
+
+											<span style="font-size: xx-small;color: red;">(โปรดแนบไฟล์ jpg หรือ png ที่มีขนาดไม่เกิน  <?php echo ConfigUtil::getDefaultMaxUploadFileSize()?>MB)</span>
+
 
 											<div class="clearfix margin-top-10"></div>
 										</div>
@@ -479,9 +615,9 @@ foreach ($deptParent as $parent) {
 										<div class="col-md-8">
 											<table>
 												<tr>
-													<td><label class="radio-inline"> <input type="checkbox"
+													<td><label class="radio-inline"> <input type="radio"
 															class="rdDamageTypeCls" checked="checked"
-															id="dammage_type" name="Accident_dammage_type[]" value="1" />เสียชีวิต
+															id="dammage_type" name="Accident_dammage_type[]" value="1" />&nbsp;&nbsp;เสียชีวิต
 															จำนวน
 
 													</label></td>
@@ -494,9 +630,9 @@ foreach ($deptParent as $parent) {
 													<td>ราย</td>
 												</tr>
 												<tr>
-													<td><label class="radio-inline"> <input type="checkbox"
+													<td><label class="radio-inline"> <input type="radio"
 															class="rdDamageTypeCls" id="dammage_type"
-															name="Accident_dammage_type[]" value="2" />สูญเสียอวัยวะ/ทุพพลภาพ
+															name="Accident_dammage_type[]" value="2" />&nbsp;&nbsp;สูญเสียอวัยวะ/ทุพพลภาพ
 															จำนวน
 
 													</label></td>
@@ -508,9 +644,9 @@ foreach ($deptParent as $parent) {
 													<td>ราย</td>
 												</tr>
 												<tr>
-													<td><label class="radio-inline"> <input type="checkbox"
+													<td><label class="radio-inline"> <input type="radio"
 															class="rdDamageTypeCls" id="dammage_type"
-															name="Accident_dammage_type[]" value="3" />บาดเจ็บ/เจ็บป่วย
+															name="Accident_dammage_type[]" value="3" />&nbsp;&nbsp;บาดเจ็บ/เจ็บป่วย
 															จำนวน
 
 													</label></td>
@@ -522,9 +658,9 @@ foreach ($deptParent as $parent) {
 													<td>ราย</td>
 												</tr>
 												<tr>
-													<td><label class="radio-inline"> <input type="checkbox"
+													<td><label class="radio-inline"> <input type="radio"
 															class="rdDamageTypeCls" id="dammage_type"
-															name="Accident_dammage_type[]" value="4" />ทรัพย์สินเสียหาย
+															name="Accident_dammage_type[]" value="4" />&nbsp;&nbsp;ทรัพย์สินเสียหาย
 															จำนวน
 
 													</label></td>
@@ -536,7 +672,7 @@ foreach ($deptParent as $parent) {
 													<td>บาท</td>
 												</tr>
 												<tr>
-													<td colspan="3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;โปรดระบุรายละเอียด
+													<td colspan="3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;โปรดระบุรายละเอียด
 
 														<input type="text" value="" id="dammage_type_4_other"
 														style="border: none; border-bottom-style: dotted; width: 300px;"
@@ -545,9 +681,9 @@ foreach ($deptParent as $parent) {
 
 												</tr>
 												<tr>
-													<td><label class="radio-inline"> <input type="checkbox"
+													<td><label class="radio-inline"> <input type="radio"
 															class="rdDamageTypeCls" id="dammage_type"
-															name="Accident_dammage_type[]" value="5" />มีการหยุดการปฏิบัติงาน
+															name="Accident_dammage_type[]" value="5" />&nbsp;&nbsp;มีการหยุดการปฏิบัติงาน
 															จำนวนวันที่หยุดการปฏิบัติงาน
 
 													</label></td>
@@ -556,6 +692,23 @@ foreach ($deptParent as $parent) {
 														name="Accident[dammage_type_5_value]" /></td>
 													<td>วัน</td>
 												</tr>
+												<!-- New Requirement -->
+												<tr>
+													<td><label class="radio-inline"> <input type="radio"
+															class="rdDamageTypeCls" id="dammage_type"
+															name="Accident_dammage_type[]" value="6" />&nbsp;&nbsp;ผลกระทบต่อสิ่งแวดล้อม โปรดระบุรายละเอียด
+
+													</label></td>
+												</tr>
+												<tr>
+													<td colspan="3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+														<input type="text" value="" id="dammage_type_6_value"
+														style="border: none; border-bottom-style: dotted; width: 400px;"
+														name="Accident[dammage_type_6_value]" />
+													</td>
+
+												</tr>
 											</table>
 										</div>
 
@@ -563,6 +716,9 @@ foreach ($deptParent as $parent) {
 									</div>
 								</div>
 							</div>
+							
+        
+        
 						</div>
 					</div>
 
@@ -603,11 +759,14 @@ foreach ($deptParent as $parent) {
 					</div>
 					<div class="col-md-10"></div>
 				</div>
+				
+
 			</div>
 		</div>
 	</div>
-	</div>
 	
+
+        
 	<input id="hostUrl" type="hidden" value="<?php echo ConfigUtil::getUrlHostName();?>">
 	<input type="hidden" id="maxUploadFileSize" value="<?php echo ConfigUtil::getDefaultMaxUploadFileSize()?>">
 
@@ -718,7 +877,7 @@ foreach ($deptParent as $parent) {
 
     	$('#report_date').datepicker({language:'th-th',format:'dd/mm/yyyy'})
     	$('#case_date').datepicker({language:'th-th',format:'dd/mm/yyyy'})
-    	
+       	$('#case_date_time').datetimepicker({format: 'HH:mm'});
     	
      
         $(".allowNum").keypress(function (e) {
@@ -812,15 +971,15 @@ foreach ($deptParent as $parent) {
 //             	$("#divReq-name2").html('');
 //             	$("#name2").closest('.form-group').removeClass('has-error');
 //         	}
-           	if($("#belong_to").val().length == 0){
-        		$("#belong_to").closest('.form-group').addClass('has-error');
-        		$("#divReq-belong_to").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
-        		$("#belong_to").focus();
-        		return false;
-            }else{
-            	$("#divReq-belong_to").html('');
-            	$("#belong_to").closest('.form-group').removeClass('has-error');
-        	}
+//            	if($("#belong_to").val().length == 0){
+//         		$("#belong_to").closest('.form-group').addClass('has-error');
+//         		$("#divReq-belong_to").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+//         		$("#belong_to").focus();
+//         		return false;
+//             }else{
+//             	$("#divReq-belong_to").html('');
+//             	$("#belong_to").closest('.form-group').removeClass('has-error');
+//         	}
           	if($("#case_date").val().length == 0){
         		$("#case_date").closest('.form-group').addClass('has-error');
         		$("#divReq-case_date").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
@@ -830,7 +989,9 @@ foreach ($deptParent as $parent) {
             	$("#divReq-case_date").html('');
             	$("#case_date").closest('.form-group').removeClass('has-error');
         	}
-        	if($("#case_date_time").val() == "00:00:00"){
+
+          	
+        	if($("#case_date_time").val().length == 0){
         		$("#case_date").closest('.form-group').addClass('has-error');
         		$("#divReq-case_date").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
         		$("#case_date_time").focus();
@@ -901,6 +1062,12 @@ foreach ($deptParent as $parent) {
     			case "5":
        				if($("#dammage_type_5_value").val().length == 0){
         				alert('ระบุจำนวนวันที่หยุดการปฏิบัติงาน');
+						return false;
+        			}
+        			break;
+    			case "6":
+       				if($("#dammage_type_6_value").val().length == 0){
+        				alert('ระบุรายละเอียด');
 						return false;
         			}
         			break;

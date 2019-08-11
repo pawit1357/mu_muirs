@@ -95,7 +95,11 @@ class AccidentController extends CController
                 // Save image.
                 $acc_img = new AccidentImage();
                 $acc_img->accident_id = $model->id;
-
+                
+                if (isset($_POST['AccidentImage'])) {                   
+                    $acc_img->attributes = $_POST['AccidentImage'];
+                }
+                
                 $img1 = $_FILES['img1'];
                 if (isset($img1)) {
                     $file_ary = CommonUtil::reArrayFiles($img1);
@@ -114,13 +118,101 @@ class AccidentController extends CController
                     foreach ($file_ary as $file) {
                         if ($file['size'] > 0) {
                             $acc_img->path_img2 = CommonUtil::upload($file);
-                            $acc_img->save();
+                        }
+                        $index ++;
+                    }
+                }
+                $img3 = $_FILES['img3'];
+                if (isset($img3)) {
+                    $file_ary = CommonUtil::reArrayFiles($img3);
+                    $index = 0;
+                    foreach ($file_ary as $file) {
+                        if ($file['size'] > 0) {
+                            $acc_img->path_img3 = CommonUtil::upload($file);
+                        }
+                        $index ++;
+                    }
+                }
+                $img4 = $_FILES['img4'];
+                if (isset($img4)) {
+                    $file_ary = CommonUtil::reArrayFiles($img4);
+                    $index = 0;
+                    foreach ($file_ary as $file) {
+                        if ($file['size'] > 0) {
+                            $acc_img->path_img4 = CommonUtil::upload($file);
+                        }
+                        $index ++;
+                    }
+                }
+                $img5 = $_FILES['img5'];
+                if (isset($img5)) {
+                    $file_ary = CommonUtil::reArrayFiles($img5);
+                    $index = 0;
+                    foreach ($file_ary as $file) {
+                        if ($file['size'] > 0) {
+                            $acc_img->path_img5 = CommonUtil::upload($file);
+                        }
+                        $index ++;
+                    }
+                }
+                $img6 = $_FILES['img6'];
+                if (isset($img6)) {
+                    $file_ary = CommonUtil::reArrayFiles($img6);
+                    $index = 0;
+                    foreach ($file_ary as $file) {
+                        if ($file['size'] > 0) {
+                            $acc_img->path_img6 = CommonUtil::upload($file);
+                        }
+                        $index ++;
+                    }
+                }
+                $img7 = $_FILES['img7'];
+                if (isset($img7)) {
+                    $file_ary = CommonUtil::reArrayFiles($img7);
+                    $index = 0;
+                    foreach ($file_ary as $file) {
+                        if ($file['size'] > 0) {
+                            $acc_img->path_img7 = CommonUtil::upload($file);
+                        }
+                        $index ++;
+                    }
+                }
+                $img8 = $_FILES['img8'];
+                if (isset($img8)) {
+                    $file_ary = CommonUtil::reArrayFiles($img8);
+                    $index = 0;
+                    foreach ($file_ary as $file) {
+                        if ($file['size'] > 0) {
+                            $acc_img->path_img8 = CommonUtil::upload($file);
+                        }
+                        $index ++;
+                    }
+                }
+                $img9 = $_FILES['img9'];
+                if (isset($img9)) {
+                    $file_ary = CommonUtil::reArrayFiles($img9);
+                    $index = 0;
+                    foreach ($file_ary as $file) {
+                        if ($file['size'] > 0) {
+                            $acc_img->path_img9 = CommonUtil::upload($file);
+                        }
+                        $index ++;
+                    }
+                }
+                $img10 = $_FILES['img10'];
+                if (isset($img10)) {
+                    $file_ary = CommonUtil::reArrayFiles($img10);
+                    $index = 0;
+                    foreach ($file_ary as $file) {
+                        if ($file['size'] > 0) {
+                            $acc_img->path_img10 = CommonUtil::upload($file);
                         }
                         $index ++;
                     }
                 }
                 $acc_img->save();
 
+                
                 // Notify//
                 $model = new Notify();
                 $model->report_type = 3; // 1:Acicent&Investigate,2:Incident,3:Accident
@@ -173,7 +265,6 @@ class AccidentController extends CController
         
         $model = $this->loadModel();
         $modelImg = AccidentImage::model()->find(array("condition"=>"accident_id =".$model->id));
-//         echo '::'.$modelImg->path_img1;
         
         if (isset($_POST['Accident'])) {
             try {
@@ -188,11 +279,13 @@ class AccidentController extends CController
                 $model->update();
 
                 // Save image.
-                $acc_img = AccidentImage::model()->findbyPk($model->id);
-                if(!isset($acc_img)){
-                    $acc_img = new AccidentImage();
-                    $acc_img->accident_id = $model->id;
+                $acc_img = new AccidentImage();
+                $acc_img = AccidentImage::model()->find(array("condition"=>"accident_id =".$model->id));
+                
+                if (isset($_POST['AccidentImage'])) {
+                    $acc_img->attributes = $_POST['AccidentImage'];
                 }
+                
 
                 $img1 = $_FILES['img1'];
                 if (isset($img1)) {
@@ -216,11 +309,102 @@ class AccidentController extends CController
                         $index ++;
                     }
                 }
-                if(!isset($acc_img)){
-                    $acc_img->update();
-                }else{
-                    $acc_img->save();
+                $img3 = $_FILES['img3'];
+                if (isset($img3)) {
+                    $file_ary = CommonUtil::reArrayFiles($img3);
+                    $index = 0;
+                    foreach ($file_ary as $file) {
+                        if ($file['size'] > 0) {
+                            $acc_img->path_img3 = CommonUtil::upload($file);
+                        }
+                        $index ++;
+                    }
                 }
+                $img4 = $_FILES['img4'];
+                if (isset($img4)) {
+                    $file_ary = CommonUtil::reArrayFiles($img4);
+                    $index = 0;
+                    foreach ($file_ary as $file) {
+                        if ($file['size'] > 0) {
+                            $acc_img->path_img4 = CommonUtil::upload($file);
+                        }
+                        $index ++;
+                    }
+                }
+                $img5 = $_FILES['img5'];
+                if (isset($img5)) {
+                    $file_ary = CommonUtil::reArrayFiles($img5);
+                    $index = 0;
+                    foreach ($file_ary as $file) {
+                        if ($file['size'] > 0) {
+                            $acc_img->path_img5 = CommonUtil::upload($file);
+                        }
+                        $index ++;
+                    }
+                }
+                $img6 = $_FILES['img6'];
+                if (isset($img6)) {
+                    $file_ary = CommonUtil::reArrayFiles($img6);
+                    $index = 0;
+                    foreach ($file_ary as $file) {
+                        if ($file['size'] > 0) {
+                            $acc_img->path_img6 = CommonUtil::upload($file);
+                        }
+                        $index ++;
+                    }
+                }
+                $img7 = $_FILES['img7'];
+                if (isset($img7)) {
+                    $file_ary = CommonUtil::reArrayFiles($img7);
+                    $index = 0;
+                    foreach ($file_ary as $file) {
+                        if ($file['size'] > 0) {
+                            $acc_img->path_img7 = CommonUtil::upload($file);
+                        }
+                        $index ++;
+                    }
+                }
+                $img8 = $_FILES['img8'];
+                if (isset($img8)) {
+                    $file_ary = CommonUtil::reArrayFiles($img8);
+                    $index = 0;
+                    foreach ($file_ary as $file) {
+                        if ($file['size'] > 0) {
+                            $acc_img->path_img8 = CommonUtil::upload($file);
+                        }
+                        $index ++;
+                    }
+                }
+                $img9 = $_FILES['img9'];
+                if (isset($img9)) {
+                    $file_ary = CommonUtil::reArrayFiles($img9);
+                    $index = 0;
+                    foreach ($file_ary as $file) {
+                        if ($file['size'] > 0) {
+                            $acc_img->path_img9 = CommonUtil::upload($file);
+                        }
+                        $index ++;
+                    }
+                }
+                $img10 = $_FILES['img10'];
+                if (isset($img10)) {
+                    $file_ary = CommonUtil::reArrayFiles($img10);
+                    $index = 0;
+                    foreach ($file_ary as $file) {
+                        if ($file['size'] > 0) {
+                            $acc_img->path_img10 = CommonUtil::upload($file);
+                        }
+                        $index ++;
+                    }
+                }
+                
+//                 if(!isset($acc_img)){
+                    $acc_img->update();
+//                 }else{
+//                     $acc_img->save();
+//                 }
+                
+                
                 // Notify//
                 $model1 = new Notify();
                 $model1->report_type = 3; // 1:Acicent&Investigate,2:Incident,3:Accident

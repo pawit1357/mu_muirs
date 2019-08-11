@@ -1,7 +1,4 @@
-<?php
-$deptParent = MDepartment::model()->findAll(array("condition"=>"faculty_id = -1",'order'=>'seq'));
-$deptChild = MDepartment::model()->findAll(array("condition"=>"faculty_id <> -1",'order'=>'seq'));
-?>
+
 <form id="Form1" method="post" enctype="multipart/form-data"
 	class="form-horizontal">
 
@@ -78,27 +75,7 @@ $deptChild = MDepartment::model()->findAll(array("condition"=>"faculty_id <> -1"
 <select class="form-control" name="Accident[department_id]" id="department_id" onchange="onchangeDepartment(this)">
 <option value="-1">-- (ไม่มีสังกัด) --</option>
 <?php
-foreach ($deptParent as $parent) {
-    $isGroup = false;
-    foreach ($deptChild as $child) {
-        if(intval($parent['id']) == intval($child['faculty_id'])){
-            $isGroup = true;
-        }
-    }
-    if($isGroup){
-        echo '<optgroup style="color:#008;font-style:normal;font-weight:normal;" label="'.$parent['name'].'">';
-        echo '</optgroup>';
-    }else{
-        echo '<option style="color:#'.(intval($parent['faculty_id']) == -1? '008':'000').';font-style:normal;font-weight:normal;" value="'.$parent['id'].'" '. ($parent['id'] == $data->department_id? 'selected="selected"':'') .'>'.htmlspecialchars($parent['name']).'</option>';
-    }
-    
-    foreach ($deptChild as $child) {
-        if(intval($parent['id']) == intval($child['faculty_id'])){
-            echo '<option style="color:#000;font-style:normal;font-weight:normal;" value="'.$child['id'].'" '. ($child['id'] == $data->department_id? 'selected="selected"':'') .'>&nbsp;&nbsp;&nbsp;-&nbsp;'.htmlspecialchars($child['name']).'</option>';
-        }
-    }
-}
-    
+echo CommonUtil::getDepartment($data->department_id);
 ?>
  
     
@@ -170,7 +147,7 @@ foreach ($deptParent as $parent) {
 							<div class="row">
 								<div class="col-md-10">
 									<div class="form-group">
-										<label class="control-label col-md-4">ผู้พบเห็นเหตุการณ์คนแรก
+										<label class="control-label col-md-4">ผู้พบเห็นเหตุการณ์
 											ชื่อ-สกุล :<span class="required"></span>
 										</label>
 										<div class="col-md-4">
@@ -184,8 +161,8 @@ foreach ($deptParent as $parent) {
 							<div class="row">
 								<div class="col-md-10">
 									<div class="form-group">
-										<label class="control-label col-md-4">สังกัด :<span
-											class="required">*</span>
+										<label class="control-label col-md-4">สังกัดผู้พบเห็นเหตุการณ์ :<span
+											class="required"></span>
 										</label>
 										<div class="col-md-4">
 											<input type="text" value="<?php echo $data->belong_to?>" id="belong_to"
@@ -232,58 +209,13 @@ foreach ($deptParent as $parent) {
 
 										</div>
 										
-<div class="col-md-2">
-<select  class="form-control select2" name="Accident[case_date_time]" id="case_date_time">
-        
-<option value="00:00:00" <?php echo ('00:00:00' == $data->case_date_time? 'selected="selected"':'')?>>00:00</option>
-<option value="00:30:00" <?php echo ('00:30:00' == $data->case_date_time? 'selected="selected"':'')?>>00:30</option>
-<option value="01:00:00" <?php echo ('01:00:00' == $data->case_date_time? 'selected="selected"':'')?>>01:00</option>
-<option value="01:30:00" <?php echo ('01:30:00' == $data->case_date_time? 'selected="selected"':'')?>>01:30</option>
-<option value="02:00:00" <?php echo ('02:00:00' == $data->case_date_time? 'selected="selected"':'')?>>02:00</option>
-<option value="02:30:00" <?php echo ('02:30:00' == $data->case_date_time? 'selected="selected"':'')?>>02:30</option>
-<option value="03:00:00" <?php echo ('03:00:00' == $data->case_date_time? 'selected="selected"':'')?>>03:00</option>
-<option value="03:30:00" <?php echo ('03:30:00' == $data->case_date_time? 'selected="selected"':'')?>>03:30</option>
-<option value="04:00:00" <?php echo ('04:00:00' == $data->case_date_time? 'selected="selected"':'')?>>04:00</option>
-<option value="04:30:00" <?php echo ('04:30:00' == $data->case_date_time? 'selected="selected"':'')?>>04:30</option>
-<option value="05:00:00" <?php echo ('05:00:00' == $data->case_date_time? 'selected="selected"':'')?>>05:00</option>
-<option value="05:30:00" <?php echo ('05:30:00' == $data->case_date_time? 'selected="selected"':'')?>>05:30</option>
-<option value="06:00:00" <?php echo ('06:00:00' == $data->case_date_time? 'selected="selected"':'')?>>06:00</option>
-<option value="06:30:00" <?php echo ('06:30:00' == $data->case_date_time? 'selected="selected"':'')?>>06:30</option>
-<option value="07:00:00" <?php echo ('07:00:00' == $data->case_date_time? 'selected="selected"':'')?>>07:00</option>
-<option value="07:30:00" <?php echo ('07:30:00' == $data->case_date_time? 'selected="selected"':'')?>>07:30</option>
-<option value="08:00:00" <?php echo ('08:00:00' == $data->case_date_time? 'selected="selected"':'')?>>08:00</option>
-<option value="08:30:00" <?php echo ('08:30:00' == $data->case_date_time? 'selected="selected"':'')?>>08:30</option>
-<option value="09:00:00" <?php echo ('09:00:00' == $data->case_date_time? 'selected="selected"':'')?>>09:00</option>
-<option value="09:30:00" <?php echo ('09:30:00' == $data->case_date_time? 'selected="selected"':'')?>>09:30</option>
-<option value="10:00:00" <?php echo ('10:00:00' == $data->case_date_time? 'selected="selected"':'')?>>10:00</option>
-<option value="10:30:00" <?php echo ('10:30:00' == $data->case_date_time? 'selected="selected"':'')?>>10:30</option>
-<option value="11:00:00" <?php echo ('11:00:00' == $data->case_date_time? 'selected="selected"':'')?>>11:00</option>
-<option value="11:30:00" <?php echo ('11:30:00' == $data->case_date_time? 'selected="selected"':'')?>>11:30</option>
-<option value="12:00:00" <?php echo ('12:00:00' == $data->case_date_time? 'selected="selected"':'')?>>12:00</option>
-<option value="12:30:00" <?php echo ('12:30:00' == $data->case_date_time? 'selected="selected"':'')?>>12:30</option>
-<option value="13:00:00" <?php echo ('13:00:00' == $data->case_date_time? 'selected="selected"':'')?>>13:00</option>
-<option value="13:30:00" <?php echo ('13:30:00' == $data->case_date_time? 'selected="selected"':'')?>>13:30</option>
-<option value="14:00:00" <?php echo ('14:00:00' == $data->case_date_time? 'selected="selected"':'')?>>14:00</option>
-<option value="14:30:00" <?php echo ('14:30:00' == $data->case_date_time? 'selected="selected"':'')?>>14:30</option>
-<option value="15:00:00" <?php echo ('15:00:00' == $data->case_date_time? 'selected="selected"':'')?>>15:00</option>
-<option value="15:30:00" <?php echo ('15:30:00' == $data->case_date_time? 'selected="selected"':'')?>>15:30</option>
-<option value="16:00:00" <?php echo ('16:00:00' == $data->case_date_time? 'selected="selected"':'')?>>16:00</option>
-<option value="16:30:00" <?php echo ('16:30:00' == $data->case_date_time? 'selected="selected"':'')?>>16:30</option>
-<option value="17:00:00" <?php echo ('17:00:00' == $data->case_date_time? 'selected="selected"':'')?>>17:00</option>
-<option value="17:30:00" <?php echo ('17:30:00' == $data->case_date_time? 'selected="selected"':'')?>>17:30</option>
-<option value="18:00:00" <?php echo ('18:00:00' == $data->case_date_time? 'selected="selected"':'')?>>18:00</option>
-<option value="18:30:00" <?php echo ('18:30:00' == $data->case_date_time? 'selected="selected"':'')?>>18:30</option>
-<option value="19:00:00" <?php echo ('19:00:00' == $data->case_date_time? 'selected="selected"':'')?>>19:00</option>
-<option value="19:30:00" <?php echo ('19:30:00' == $data->case_date_time? 'selected="selected"':'')?>>19:30</option>
-<option value="20:00:00" <?php echo ('20:00:00' == $data->case_date_time? 'selected="selected"':'')?>>20:00</option>
-<option value="20:30:00" <?php echo ('20:30:00' == $data->case_date_time? 'selected="selected"':'')?>>20:30</option>
-<option value="21:00:00" <?php echo ('21:00:00' == $data->case_date_time? 'selected="selected"':'')?>>21:00</option>
-<option value="21:30:00" <?php echo ('21:30:00' == $data->case_date_time? 'selected="selected"':'')?>>21:30</option>
-<option value="22:00:00" <?php echo ('22:00:00' == $data->case_date_time? 'selected="selected"':'')?>>22:00</option>
-<option value="22:30:00" <?php echo ('22:30:00' == $data->case_date_time? 'selected="selected"':'')?>>22:30</option>
-<option value="23:00:00" <?php echo ('23:00:00' == $data->case_date_time? 'selected="selected"':'')?>>23:00</option>
-<option value="23:30:00" <?php echo ('23:30:00' == $data->case_date_time? 'selected="selected"':'')?>>23:30</option>
-</select>
+										<div class="col-md-2">
+        							        <div class='input-group date'>
+                                              <input type='text' class="form-control" id='case_date_time'  name="Accident[case_date_time]" value="<?php echo $data->case_date_time;?>" />
+                                              <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-time"></span>
+                                              </span>
+                                            </div>
 										</div>
 										<div id="divReq-case_date"></div>
 									</div>
@@ -329,32 +261,135 @@ foreach ($deptParent as $parent) {
 							<div class="row">
 								<div class="col-md-10">
 									<div class="form-group last">
-										<label class="control-label col-md-4">แนบรูปภาพ (ถ้ามี) : </label>
+										<label class="control-label col-md-4">คำอธิบาย <br>แนบรูปภาพ (ถ้ามี) : </label>
 										<div class="col-md-4">
-											<span style="font-size: xx-small;color: red;">(โปรดแนบไฟล์ jpg หรือ pdf ที่มีขนาดไม่เกิน <?php echo ConfigUtil::getDefaultMaxUploadFileSize()?>MB)
-										<?php echo  !isset($imgs->path_img1)? '': '<a href="'.(ConfigUtil::getUrlHostName().$imgs->path_img1).'" target="_blank">Download</a>'?>
-											</span>
-											<div class="row fileupload-buttonbar">
-												<div class="col-lg-7">
-													<!-- The fileinput-button span is used to style the file input field as button -->
-													<span class="btn green fileinput-button"> <input
-														type="file" name="img1[]" multiple="multiple" onchange="validateFileInput(this);" >
-													</span>
-													<!-- The global file processing state -->
-													<span class="fileupload-process"> </span>
+									<table style="width: 750px">
+										<tr>
+    										<td><input type="text" value="<?php echo $imgs->img1_description;?>" id="img1_description" class="form-control" name="AccidentImage[img1_description]" /></td>
+    										<td><input type="text" value="<?php echo $imgs->img2_description;?>" id="img2_description" class="form-control" name="AccidentImage[img2_description]" /></td>
+    										<td><input type="text" value="<?php echo $imgs->img3_description;?>" id="img3_description" class="form-control" name="AccidentImage[img3_description]" /></td>
+    										<td><input type="text" value="<?php echo $imgs->img4_description;?>" id="img4_description" class="form-control" name="AccidentImage[img4_description]" /></td>
+    										<td><input type="text" value="<?php echo $imgs->img5_description;?>" id="img5_description" class="form-control" name="AccidentImage[img5_description]" /></td>
+										</tr>
+
+										<tr>
+										<td width="150px">
+											<div class="fileinput fileinput-new"
+												data-provides="fileinput">
+												<div class="fileinput-new thumbnail"
+													style="width: 150px; height: 100px;">
+													<img
+														src="/muirs<?php echo $imgs->path_img1?>"
+														alt="" />
 												</div>
-												<!-- The global progress information -->
-												<div class="col-lg-5 fileupload-progress fade">
-													<!-- The global progress bar -->
-													<div class="progress progress-striped active"
-														role="progressbar" aria-valuemin="0" aria-valuemax="100">
-														<div class="progress-bar progress-bar-success"
-															style="width: 0%;"></div>
-													</div>
-													<!-- The extended global progress information -->
-													<div class="progress-extended">&nbsp;</div>
+												<div class="fileinput-preview fileinput-exists thumbnail"
+													style="max-width: 150px; max-height: 100px;"></div>
+												<div>
+													<span class="btn default btn-file"> <span
+														class="fileinput-new"> เลือก </span> <span
+														class="fileinput-exists">เปลี่ยน </span> <input
+														type="file" name="img1[]" onchange="validateFileInput(this);">
+													</span> <a href="javascript:;"
+														class="btn red fileinput-exists" data-dismiss="fileinput">
+														ลบ </a>
 												</div>
 											</div>
+										</td>
+										<td width="150px">
+											<div class="fileinput fileinput-new"
+												data-provides="fileinput">
+												<div class="fileinput-new thumbnail"
+													style="width: 150px; height: 100px;">
+													<img
+														src="/muirs<?php echo $imgs->path_img2?>"
+														alt="" />
+												</div>
+												<div class="fileinput-preview fileinput-exists thumbnail"
+													style="max-width: 150px; max-height: 100px;"></div>
+												<div>
+													<span class="btn default btn-file"> <span
+														class="fileinput-new"> เลือก </span> <span
+														class="fileinput-exists">เปลี่ยน </span> <input
+														type="file" name="img2[]" onchange="validateFileInput(this);">
+													</span> <a href="javascript:;"
+														class="btn red fileinput-exists" data-dismiss="fileinput">
+														ลบ </a>
+												</div>
+											</div>
+										</td>
+										<td width="150px">
+											<div class="fileinput fileinput-new"
+												data-provides="fileinput">
+												<div class="fileinput-new thumbnail"
+													style="width: 150px; height: 100px;">
+													<img
+														src="/muirs<?php echo $imgs->path_img3?>"
+														alt="" />
+												</div>
+												<div class="fileinput-preview fileinput-exists thumbnail"
+													style="max-width: 150px; max-height: 100px;"></div>
+												<div>
+													<span class="btn default btn-file"> <span
+														class="fileinput-new"> เลือก </span> <span
+														class="fileinput-exists">เปลี่ยน </span> <input
+														type="file" name="img3[]" onchange="validateFileInput(this);">
+													</span> <a href="javascript:;"
+														class="btn red fileinput-exists" data-dismiss="fileinput">
+														ลบ </a>
+												</div>
+											</div>
+										</td>
+										<td width="150px">
+											<div class="fileinput fileinput-new"
+												data-provides="fileinput">
+												<div class="fileinput-new thumbnail"
+													style="width: 150px; height: 100px;">
+													<img
+														src="/muirs<?php echo $imgs->path_img4?>"
+														alt="" />
+												</div>
+												<div class="fileinput-preview fileinput-exists thumbnail"
+													style="max-width: 150px; max-height: 100px;"></div>
+												<div>
+													<span class="btn default btn-file"> <span
+														class="fileinput-new"> เลือก </span> <span
+														class="fileinput-exists">เปลี่ยน </span> <input
+														type="file" name="img4[]" onchange="validateFileInput(this);">
+													</span> <a href="javascript:;"
+														class="btn red fileinput-exists" data-dismiss="fileinput">
+														ลบ </a>
+												</div>
+											</div>
+										</td>
+										<td width="150px">
+											<div class="fileinput fileinput-new"
+												data-provides="fileinput">
+												<div class="fileinput-new thumbnail"
+													style="width: 150px; height: 100px;">
+													<img
+														src="/muirs<?php echo $imgs->path_img5?>"
+														alt="" />
+												</div>
+												<div class="fileinput-preview fileinput-exists thumbnail"
+													style="max-width: 150px; max-height: 100px;"></div>
+												<div>
+													<span class="btn default btn-file"> <span
+														class="fileinput-new"> เลือก </span> <span
+														class="fileinput-exists">เปลี่ยน </span> <input
+														type="file" name="img5[]" onchange="validateFileInput(this);">
+													</span> <a href="javascript:;"
+														class="btn red fileinput-exists" data-dismiss="fileinput">
+														ลบ </a>
+												</div>
+											</div>
+										</td>
+										</tr>
+										</table>
+
+
+
+											<span style="font-size: xx-small;color: red;">(โปรดแนบไฟล์ jpg หรือ png ที่มีขนาดไม่เกิน  <?php echo ConfigUtil::getDefaultMaxUploadFileSize()?>MB)</span>
+
 											<div class="clearfix margin-top-10"></div>
 										</div>
 									</div>
@@ -394,33 +429,135 @@ foreach ($deptParent as $parent) {
 							<div class="row">
 								<div class="col-md-10">
 									<div class="form-group last">
-										<label class="control-label col-md-4">แนบรูปภาพ (ถ้ามี) : </label>
+										<label class="control-label col-md-4">คำอธิบาย <br>แนบรูปภาพ (ถ้ามี) : </label>
 										<div class="col-md-4">
-										<span style="font-size: xx-small;color: red;">(โปรดแนบไฟล์ jpg หรือ pdf ที่มีขนาดไม่เกิน <?php echo ConfigUtil::getDefaultMaxUploadFileSize()?>MB)
-										<?php echo  !isset($imgs->path_img1)? '': '<a href="'.(ConfigUtil::getUrlHostName().$imgs->path_img1).'" target="_blank">Download</a>'?>	
-										
-										</span>
-											<div class="row fileupload-buttonbar">
-												<div class="col-lg-7">
-													<!-- The fileinput-button span is used to style the file input field as button -->
-													<span class="btn green fileinput-button"> <input id="img2"
-														type="file" name="img2[]" multiple="multiple" onchange="validateFileInput(this);"  >
-													</span>
-													<!-- The global file processing state -->
-													<span class="fileupload-process"> </span>
+									<table style="width: 750px">
+										<tr>
+    										<td><input type="text" value="<?php echo $imgs->img6_description;?>" id="img6_description" class="form-control" name="AccidentImage[img6_description]" /></td>
+    										<td><input type="text" value="<?php echo $imgs->img7_description;?>" id="img7_description" class="form-control" name="AccidentImage[img7_description]" /></td>
+    										<td><input type="text" value="<?php echo $imgs->img8_description;?>" id="img8_description" class="form-control" name="AccidentImage[img8_description]" /></td>
+    										<td><input type="text" value="<?php echo $imgs->img9_description;?>" id="img9_description" class="form-control" name="AccidentImage[img9_description]" /></td>
+    										<td><input type="text" value="<?php echo $imgs->img10_description;?>" id="img10_description" class="form-control" name="AccidentImage[img10_description]" /></td>
+										</tr>
+
+										<tr>
+										<td width="150px">
+											<div class="fileinput fileinput-new"
+												data-provides="fileinput">
+												<div class="fileinput-new thumbnail"
+													style="width: 150px; height: 100px;">
+													<img
+														src="/muirs<?php echo $imgs->path_img6?>"
+														alt="" />
 												</div>
-												<!-- The global progress information -->
-												<div class="col-lg-5 fileupload-progress fade">
-													<!-- The global progress bar -->
-													<div class="progress progress-striped active"
-														role="progressbar" aria-valuemin="0" aria-valuemax="100">
-														<div class="progress-bar progress-bar-success"
-															style="width: 0%;"></div>
-													</div>
-													<!-- The extended global progress information -->
-													<div class="progress-extended">&nbsp;</div>
+												<div class="fileinput-preview fileinput-exists thumbnail"
+													style="max-width: 150px; max-height: 100px;"></div>
+												<div>
+													<span class="btn default btn-file"> <span
+														class="fileinput-new"> เลือก </span> <span
+														class="fileinput-exists">เปลี่ยน </span> <input
+														type="file" name="img6[]" onchange="validateFileInput(this);">
+													</span> <a href="javascript:;"
+														class="btn red fileinput-exists" data-dismiss="fileinput">
+														ลบ </a>
 												</div>
 											</div>
+										</td>
+										<td width="150px">
+											<div class="fileinput fileinput-new"
+												data-provides="fileinput">
+												<div class="fileinput-new thumbnail"
+													style="width: 150px; height: 100px;">
+													<img
+														src="/muirs<?php echo $imgs->path_img7?>"
+														alt="" />
+												</div>
+												<div class="fileinput-preview fileinput-exists thumbnail"
+													style="max-width: 150px; max-height: 100px;"></div>
+												<div>
+													<span class="btn default btn-file"> <span
+														class="fileinput-new"> เลือก </span> <span
+														class="fileinput-exists">เปลี่ยน </span> <input
+														type="file" name="img7[]" onchange="validateFileInput(this);">
+													</span> <a href="javascript:;"
+														class="btn red fileinput-exists" data-dismiss="fileinput">
+														ลบ </a>
+												</div>
+											</div>
+										</td>
+										<td width="150px">
+											<div class="fileinput fileinput-new"
+												data-provides="fileinput">
+												<div class="fileinput-new thumbnail"
+													style="width: 150px; height: 100px;">
+													<img
+														src="/muirs<?php echo $imgs->path_img8?>"
+														alt="" />
+												</div>
+												<div class="fileinput-preview fileinput-exists thumbnail"
+													style="max-width: 150px; max-height: 100px;"></div>
+												<div>
+													<span class="btn default btn-file"> <span
+														class="fileinput-new"> เลือก </span> <span
+														class="fileinput-exists">เปลี่ยน </span> <input
+														type="file" name="img8[]" onchange="validateFileInput(this);">
+													</span> <a href="javascript:;"
+														class="btn red fileinput-exists" data-dismiss="fileinput">
+														ลบ </a>
+												</div>
+											</div>
+										</td>
+										<td width="150px">
+											<div class="fileinput fileinput-new"
+												data-provides="fileinput">
+												<div class="fileinput-new thumbnail"
+													style="width: 150px; height: 100px;">
+													<img
+														src="/muirs<?php echo $imgs->path_img9?>"
+														alt="" />
+												</div>
+												<div class="fileinput-preview fileinput-exists thumbnail"
+													style="max-width: 150px; max-height: 100px;"></div>
+												<div>
+													<span class="btn default btn-file"> <span
+														class="fileinput-new"> เลือก </span> <span
+														class="fileinput-exists">เปลี่ยน </span> <input
+														type="file" name="img9[]" onchange="validateFileInput(this);">
+													</span> <a href="javascript:;"
+														class="btn red fileinput-exists" data-dismiss="fileinput">
+														ลบ </a>
+												</div>
+											</div>
+										</td>
+										<td width="150px">
+											<div class="fileinput fileinput-new"
+												data-provides="fileinput">
+												<div class="fileinput-new thumbnail"
+													style="width: 150px; height: 100px;">
+													<img
+														src="/muirs<?php echo $imgs->path_img10?>"
+														alt="" />
+												</div>
+												<div class="fileinput-preview fileinput-exists thumbnail"
+													style="max-width: 150px; max-height: 100px;"></div>
+												<div>
+													<span class="btn default btn-file"> <span
+														class="fileinput-new"> เลือก </span> <span
+														class="fileinput-exists">เปลี่ยน </span> <input
+														type="file" name="img10[]" onchange="validateFileInput(this);">
+													</span> <a href="javascript:;"
+														class="btn red fileinput-exists" data-dismiss="fileinput">
+														ลบ </a>
+												</div>
+											</div>
+										</td>
+										</tr>
+										</table>
+
+
+
+											<span style="font-size: xx-small;color: red;">(โปรดแนบไฟล์ jpg หรือ png ที่มีขนาดไม่เกิน  <?php echo ConfigUtil::getDefaultMaxUploadFileSize()?>MB)</span>
+
 
 											<div class="clearfix margin-top-10"></div>
 										</div>
@@ -458,7 +595,7 @@ foreach ($deptParent as $parent) {
 												<tr>
 													<td><label class="radio-inline"> <input type="radio"
 															class="rdDamageTypeCls" <?php echo ($data->dammage_type =="1")? 'checked="checked"':''?> 
-															id="dammage_type" name="Accident[dammage_type]" value="1" />เสียชีวิต
+															id="dammage_type" name="Accident[dammage_type]" value="1" />&nbsp;&nbsp;เสียชีวิต
 															จำนวน
 
 													</label></td>
@@ -473,7 +610,7 @@ foreach ($deptParent as $parent) {
 												<tr>
 													<td><label class="radio-inline"> <input type="radio"
 															class="rdDamageTypeCls" id="dammage_type" <?php echo ($data->dammage_type =="2")? 'checked="checked"':''?>
-															name="Accident[dammage_type]" value="2" />สูญเสียอวัยวะ/ทุพพลภาพ
+															name="Accident[dammage_type]" value="2" />&nbsp;&nbsp;สูญเสียอวัยวะ/ทุพพลภาพ
 															จำนวน
 
 													</label></td>
@@ -487,7 +624,7 @@ foreach ($deptParent as $parent) {
 												<tr>
 													<td><label class="radio-inline"> <input type="radio"
 															class="rdDamageTypeCls" id="dammage_type" <?php echo ($data->dammage_type =="3")? 'checked="checked"':''?>
-															name="Accident[dammage_type]" value="3" />บาดเจ็บ/เจ็บป่วย
+															name="Accident[dammage_type]" value="3" />&nbsp;&nbsp;บาดเจ็บ/เจ็บป่วย
 															จำนวน
 
 													</label></td>
@@ -501,7 +638,7 @@ foreach ($deptParent as $parent) {
 												<tr>
 													<td><label class="radio-inline"> <input type="radio" <?php echo ($data->dammage_type =="4")? 'checked="checked"':''?>
 															class="rdDamageTypeCls" id="dammage_type"
-															name="Accident[dammage_type]" value="4" />ทรัพย์สินเสียหาย
+															name="Accident[dammage_type]" value="4" />&nbsp;&nbsp;ทรัพย์สินเสียหาย
 															จำนวน
 
 													</label></td>
@@ -513,9 +650,9 @@ foreach ($deptParent as $parent) {
 													<td>บาท</td>
 												</tr>
 												<tr>
-													<td colspan="3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;โปรดระบุรายละเอียด
+													<td colspan="3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;โปรดระบุรายละเอียด
 
-														<input type="text" value="" id="dammage_type_4_other"
+														<input type="text" value="<?php echo $data->dammage_type_4_other;?>" id="dammage_type_4_other"
 														style="border: none; border-bottom-style: dotted; width: 300px;"
 														name="Accident[dammage_type_4_other]" />
 													</td>
@@ -524,7 +661,7 @@ foreach ($deptParent as $parent) {
 												<tr>
 													<td><label class="radio-inline"> <input type="radio"
 															class="rdDamageTypeCls" id="dammage_type" <?php echo ($data->dammage_type =="5")? 'checked="checked"':''?>
-															name="Accident[dammage_type]" value="5" />มีการหยุดการปฏิบัติงาน
+															name="Accident[dammage_type]" value="5" />&nbsp;&nbsp;มีการหยุดการปฏิบัติงาน
 															จำนวนวันที่หยุดการปฏิบัติงาน
 
 													</label></td>
@@ -532,6 +669,23 @@ foreach ($deptParent as $parent) {
 														style="border: none; border-bottom-style: dotted; width: 80px;text-align: right;"
 														name="Accident[dammage_type_5_value]" /></td>
 													<td>วัน</td>
+												</tr>
+												<!-- New Requirement -->
+												<tr>
+													<td><label class="radio-inline"> <input type="radio"
+															class="rdDamageTypeCls" id="dammage_type" <?php echo ($data->dammage_type =="6")? 'checked="checked"':''?>
+															name="Accident_dammage_type[]" value="6" />&nbsp;&nbsp;ผลกระทบต่อสิ่งแวดล้อม โปรดระบุรายละเอียด
+
+													</label></td>
+												</tr>
+												<tr>
+													<td colspan="3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+														<input type="text" value="<?php echo $data->dammage_type_6_value;?>" id="dammage_type_6_value"
+														style="border: none; border-bottom-style: dotted; width: 400px;"
+														name="Accident[dammage_type_6_value]" />
+													</td>
+
 												</tr>
 											</table>
 										</div>
@@ -678,7 +832,8 @@ foreach ($deptParent as $parent) {
         
     	$('#report_date').datepicker({language:'th-th',format:'dd/mm/yyyy'})
     	$('#case_date').datepicker({language:'th-th',format:'dd/mm/yyyy'})
-    	
+       	$('#case_date_time').datetimepicker({format: 'HH:mm'});
+
     	
     	
 
@@ -791,15 +946,15 @@ foreach ($deptParent as $parent) {
 //             	$("#divReq-name2").html('');
 //             	$("#name2").closest('.form-group').removeClass('has-error');
 //         	}
-           	if($("#belong_to").val().length == 0){
-        		$("#belong_to").closest('.form-group').addClass('has-error');
-        		$("#divReq-belong_to").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
-        		$("#belong_to").focus();
-        		return false;
-            }else{
-            	$("#divReq-belong_to").html('');
-            	$("#belong_to").closest('.form-group').removeClass('has-error');
-        	}
+//            	if($("#belong_to").val().length == 0){
+//         		$("#belong_to").closest('.form-group').addClass('has-error');
+//         		$("#divReq-belong_to").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+//         		$("#belong_to").focus();
+//         		return false;
+//             }else{
+//             	$("#divReq-belong_to").html('');
+//             	$("#belong_to").closest('.form-group').removeClass('has-error');
+//         	}
           	if($("#case_date").val().length == 0){
         		$("#case_date").closest('.form-group').addClass('has-error');
         		$("#divReq-case_date").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
@@ -809,7 +964,7 @@ foreach ($deptParent as $parent) {
             	$("#divReq-case_date").html('');
             	$("#case_date").closest('.form-group').removeClass('has-error');
         	}
-        	if($("#case_date_time").val() == "00:00:00"){
+        	if($("#case_date_time").val().length == 0){
         		$("#case_date").closest('.form-group').addClass('has-error');
         		$("#divReq-case_date").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
         		$("#case_date_time").focus();
