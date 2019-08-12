@@ -1,8 +1,3 @@
-<?php
-$deptParent = MDepartment::model()->findAll(array("condition"=>"faculty_id = -1",'order'=>'seq'));
-$deptChild = MDepartment::model()->findAll(array("condition"=>"faculty_id <> -1",'order'=>'seq'));
-
-?>
 <form id="Form1" method="post" enctype="multipart/form-data"
 	class="form-horizontal">
 
@@ -27,25 +22,56 @@ $deptChild = MDepartment::model()->findAll(array("condition"=>"faculty_id <> -1"
 							<h4 class="panel-title">
 								<a class="accordion-toggle" data-toggle="collapse"
 									data-parent="#accordion1" href="#collapse_1"> <i
-									class="fa fa-newspaper-o"></i> 
+									class="fa fa-newspaper-o"></i> ข้อมูลผู้รายงาน
 								</a>
 							</h4>
 						</div>
 						<div id="collapse_1" class="panel-collapse in">
 							<br>
-
 							<div class="row">
 								<div class="col-md-10">
 									<div class="form-group">
-										<label class="control-label col-md-4">รายละเอียดของผู้ประสบเหตุ
+										<label class="control-label col-md-4">ชื่อผู้รายงาน
 											:<span class="required">*</span>
 										</label>
 
-										<div class="col-md-8">
-											<input id="person_name" type="text" value="" class="form-control"
-												name="">
+										<div class="col-md-4">
+											<input id="report_name" type="text" value="" class="form-control"
+												name="AccidentInvestigation[report_name]">
 										</div>
-										<div id="divReq-person_type"></div>
+										<div id="divReq-report_name"></div>
+									</div>
+									<div class="form-group">
+										<label class="control-label col-md-4">ตำแหน่ง
+											:<span class="required">*</span>
+										</label>
+
+										<div class="col-md-4">
+											<input id="report_position" type="text" value="" class="form-control"
+												name="AccidentInvestigation[report_position]">
+										</div>
+										<div id="divReq-report_position"></div>
+									</div>
+									<div class="form-group">
+										<label class="control-label col-md-4">วันที่เขียนรายงาน
+											:<span class="required">*</span>
+										</label>
+
+										<div class="col-md-4">
+											<div class="input-group date date-picker"
+												data-date-format="dd-mm-yyyy">
+												<input type="text"
+													value="<?php echo CommonUtil::getCurDate();?>"
+													id="case_date" class="form-control"
+													name="AccidentInvestigation[case_date]" /> <span
+													class="input-group-btn">
+													<button class="btn default" type="button">
+														<i class="fa fa-calendar"></i>
+													</button>
+												</span>
+											</div>
+										</div>
+										<div id="divReq-case_date"></div>
 									</div>
 								</div>
 							</div>
@@ -78,32 +104,32 @@ $deptChild = MDepartment::model()->findAll(array("condition"=>"faculty_id <> -1"
 											<div class="mt-radio-list">
 												<table>
 													<tr>
-														<td><input type="radio" checked="checked" id="person_type"
-															name="" value="1" class="mt-radio" /></td>
+														<td><input type="radio" checked="checked" id="person_type" class="rdPersonTypeCls"
+															name="Person_type[]" value="1" class="mt-radio" /></td>
 														<td>พนักงานมหาวิทยาลัย</td>
 														<td></td>
 													</tr>
 													<tr>
-														<td><input type="radio" id="person_type"
-															name="" value="2" class="mt-radio" /></td>
+														<td><input type="radio" id="person_type" class="rdPersonTypeCls"
+															name="Person_type[]" value="2" class="mt-radio" /></td>
 														<td>พนักงานที่ปฏิบัติงานในนามบริษัท/ ลูกจ้างชั่วคราว</td>
 														<td></td>
 													</tr>
 													<tr>
-														<td><input type="radio" id="person_type"
-															name="" value="3" class="mt-radio" /></td>
+														<td><input type="radio" id="person_type" class="rdPersonTypeCls"
+															name="Person_type[]" value="3" class="mt-radio" /></td>
 														<td>บุคคลภายนอกที่เข้ามาใช้บริการ</td>
 														<td></td>
 													</tr>
 													<tr>
-														<td><input type="radio" id="person_type"
-															name="" value="4" class="mt-radio" /></td>
+														<td><input type="radio" id="person_type" class="rdPersonTypeCls"
+															name="Person_type[]" value="4" class="mt-radio" /></td>
 														<td>นักศึกษา</td>
 														<td></td>
 													</tr>
 													<tr>
-														<td><input type="radio" id="person_type"
-															name="AccidentInvestigation[person_type]" value="5" class="mt-radio" /></td>
+														<td><input type="radio" id="person_type" class="rdPersonTypeCls"
+															name="Person_type[]" value="5" class="mt-radio" /></td>
 														<td>อื่นๆ<input type="text" value=""
 															id="person_type_other"
 															style="border: none; border-bottom-style: dotted; width: 150px; text-align: left;"
@@ -116,46 +142,6 @@ $deptChild = MDepartment::model()->findAll(array("condition"=>"faculty_id <> -1"
 											</div>
 										</div>
 										<div id="divReq-person_type"></div>
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-10">
-									<div class="form-group">
-										<label class="control-label col-md-4">ประเภทความเสียหาย : </label>
-										<div class="col-md-8">
-    										<div class="mt-radio-list">
-    											<input type="radio" checked="checked" id="person_lost_type" class="mt-radio"
-    												name="" value="1" />
-    											เสียชีวิต <input type="radio" id="person_lost_type" class="mt-radio"
-    												name="" value="2" />
-    											สูญเสียอวัยวะ/ทุพพลภาพ
-    											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input
-    												type="radio" id="person_lost_type"
-    												name="" value="3" />
-    											บาดเจ็บ/เจ็บป่วย
-    										</div>
-										</div>
-										<div id="divReq-person_lost_type"></div>
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-10">
-									<div class="form-group">
-										<label class="control-label col-md-4">เพศ :<span
-											class="required">*</span>
-										</label>
-										<div class="col-md-4">
-											<div class="mt-radio-list">
-												<input type="radio" id="person_sex" name="" value="1" class="mt-radio" checked="checked" />ชาย 
-												<input type="radio" id="person_sex" name="" value="2" class="mt-radio" />หญิง
-											</div>
-
-
-
-										</div>
-										<div id="divReq-person_sex"></div>
 									</div>
 								</div>
 							</div>
@@ -175,23 +161,7 @@ $deptChild = MDepartment::model()->findAll(array("condition"=>"faculty_id <> -1"
 									</div>
 								</div>
 							</div>
-							<div class="row">
-								<div class="col-md-10">
-									<div class="form-group">
-										<label class="control-label col-md-4">อายุ :<span
-											class="required">*</span>
-										</label>
-										<div class="col-md-4">
-											<input type="text" value="" id="person_age"
-												class="form-control allowNum"
-												name="" />
 
-										</div>
-										<div>ปี</div>
-										<div id="divReq-person_age"></div>
-									</div>
-								</div>
-							</div>
 							<div class="row">
 								<div class="col-md-10">
 									<div class="form-group">
@@ -214,32 +184,13 @@ $deptChild = MDepartment::model()->findAll(array("condition"=>"faculty_id <> -1"
 										<label class="control-label col-md-4">คณะ/ส่วนงาน :<span
 											class="required"></span></label>
 										<div class="col-md-6">
-											<select class="form-control select2"
+											<select class="form-control"
 												name=""
 												id="person_department_id">
 												<option value="-1">-- (ไม่มีสังกัด) --</option>
 <?php
-foreach ($deptParent as $parent) {
-    $isGroup = false;
-    foreach ($deptChild as $child) {
-        if(intval($parent['id']) == intval($child['faculty_id'])){
-            $isGroup = true;
-        }
-    }
-    if($isGroup){
-        echo '<optgroup style="color:#008;font-style:normal;font-weight:normal;" label="'.$parent['name'].'">';
-        echo '</optgroup>';
-    }else{
-        echo '<option style="color:#'.(intval($parent['faculty_id']) == -1? '008':'000').';font-style:normal;font-weight:normal;" value="'.$parent['id'].'">'.htmlspecialchars($parent['name']).'</option>';
-    }
-    
-    foreach ($deptChild as $child) {
-        if(intval($parent['id']) == intval($child['faculty_id'])){
-            echo '<option style="color:#000;font-style:normal;font-weight:normal;" value="'.$child['id'].'">&nbsp;&nbsp;&nbsp;-&nbsp;'.htmlspecialchars($child['name']).'</option>';
-        }
-    }
-}
-    
+echo CommonUtil::getDepartment('');
+
 ?>
 			</select>
 
@@ -279,36 +230,8 @@ foreach ($deptParent as $parent) {
 									</div>
 								</div>
 							</div>
-							<div class="row">
-								<div class="col-md-10">
-									<div class="form-group">
-										<label class="control-label col-md-4">(กรณีที่บาดเจ็บ)
-											อวัยวะที่บาดเจ็บ :<span class="required"></span>
-										</label>
-										<div class="col-md-4">
-											<input type="text" value="" id="person_dammage_body"
-												class="form-control"
-												name="" />
-										</div>
-										<div id="divReq-person_dammage_body"></div>
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-10">
-									<div class="form-group">
-										<label class="control-label col-md-4">ลักษณะการบาดเจ็บ :<span
-											class="required"></span>
-										</label>
-										<div class="col-md-4">
-											<input type="text" value="" id="person_dammage_body_desc"
-												class="form-control"
-												name="" />
-										</div>
-										<div id="divReq-person_dammage_body_desc"></div>
-									</div>
-								</div>
-							</div>
+							
+
 
 						</div>
 						<div class="row">
@@ -334,20 +257,20 @@ foreach ($deptParent as $parent) {
 											<thead>
 												<tr>
 													<th style="font-size: xx-small; text-align: center;"></th>
-													<th style="font-size: xx-small; text-align: center;">รายละเอียดของผู้ประสบเหตุ</th>
-													<th style="font-size: xx-small; text-align: center;">ประเภทความเสียหาย</th>
-													<th style="font-size: xx-small; text-align: center;">เพศ</th>
-													<th style="font-size: xx-small; text-align: center;">ชื่อ-นามสุกล</th>
-													<th style="font-size: xx-small; text-align: center;">อายุ</th>
-
-													<th style="font-size: xx-small; text-align: center;">ตำแหน่ง/ชั้นปี</th>
-													<th style="font-size: xx-small; text-align: center;">คณะ/ส่วนงาน</th>
-													<th style="font-size: xx-small; text-align: center;">หน้าที่</th>
-													<th style="font-size: xx-small; text-align: center;">ระยะเวลาปฏิบัติงาน</th>
+													<th style="font-size: xx-small; text-align: center;width: 100%">รายละเอียดของผู้ประสบเหตุ</th>
+													<th style="font-size: xx-small; text-align: center;width: 100%">ชื่อ-นามสุกล</th>
+													<th style="font-size: xx-small; text-align: center;width: 100%">ตำแหน่ง/ชั้นปี</th>
+													<th style="font-size: xx-small; text-align: center;width: 100%">คณะ/ส่วนงาน</th>
+													<th style="font-size: xx-small; text-align: center;width: 100%">หน้าที่</th>
+													<th style="font-size: xx-small; text-align: center;width: 100%">ระยะเวลาปฏิบัติงาน</th>
+													<!-- 
 													<th style="font-size: xx-small; text-align: center;">อวัยวะที่บาดเจ็บ</th>
 													<th style="font-size: xx-small; text-align: center;">ลักษณะการบาดเจ็บ</th>
+													<th style="font-size: xx-small; text-align: center;">ประเภทความเสียหาย</th>
+													<th style="font-size: xx-small; text-align: center;">เพศ</th>
 													<th style="font-size: xx-small; text-align: center;"></th>
-													
+													<th style="font-size: xx-small; text-align: center;">อายุ</th>
+													 -->
 												</tr>
 											</thead>
 											<tbody>
@@ -1016,45 +939,75 @@ foreach ($deptParent as $parent) {
           });
         
         $('#btnAdd').click(function (event) {
-            	var txt_person_type = $('#person_type').val();
-            	var txt_person_type_other = $('#person_type_other').val();
-            	var txt_person_lost_type = $('#person_lost_type').val();
+
+            	//var txt_person_type = $('#person_type').val();
+        		var personType = $('.rdPersonTypeCls:checked').val();
             	
-            	var txt_person_sex = $('#person_sex').val();
+            	var txt_person_type_other = $('#person_type_other').val();
             	var txt_person_name = $('#person_name').val();
-            	var txt_person_age = $('#person_age').val();
             	var txt_person_position = $('#person_position').val();
             	var txt_person_department_id = $('#person_department_id').val();
             	var txt_person_responsibility = $('#person_responsibility').val();
             	var txt_person_work_period = $('#person_work_period').val();
-            	var txt_person_dammage_body = $('#person_dammage_body').val();
-            	var txt_person_dammage_body_desc = $('#person_dammage_body_desc').val();
             	
+//             	var txt_person_dammage_body = $('#person_dammage_body').val();
+//             	var txt_person_dammage_body_desc = $('#person_dammage_body_desc').val();
+//             	var txt_person_lost_type = $('#person_lost_type').val();
+//             	var txt_person_sex = $('#person_sex').val();
+//             	var txt_person_age = $('#person_age').val();
     	    	var rowCount = $('#tData tr').length;
     	    	var rid = uniqId();
     	    	
-	    	$('#tData > tbody:last').append('<tr id="r'+(rid)+'"><td style="text-align: center;">'+(rowCount)+'.</td>'+
-	    			'<td style="font-size: xx-small; text-align: center;"><input style="width : 100px !important;" id="person_type" type="hidden" value="'+txt_person_type+'" class="form-control" name="person_types[]">'+
-	    			'<input style="width : 100px !important;" id="hperson_type" type="label" value="'+getPersonPype(txt_person_type)+'" class="form-control" readonly="readonly"></td>'+
+	    	$('#tData > tbody:last').append('<tr id="r'+(rid)+'">'+
+	    	    	'<td style="text-align: center;">'+(rowCount)+'.</td>'+
+	    	    	
+	    			'<td style="font-size: xx-small; text-align: center;">'+
+	    			'<input style="width : 100px !important;" id="person_type" type="hidden" value="'+personType+'" class="form-control" name="person_types[]">'+
+	    			'<input style="width : 200px !important;" id="hperson_type" type="label" value="'+getPersonType(personType)+'" class="form-control" readonly="readonly">'+
+	    			'</td>'+
 
-	    			'<td style="font-size: xx-small; text-align: center;"><input style="width : 100px !important;" id="person_lost_type" type="hidden" value="'+txt_person_lost_type+'" class="form-control" name="person_lost_types[]">'+
-	    			'<input style="width : 100px !important;" id="person_lost_type" type="label" value="'+getpersonLostType(txt_person_lost_type)+'" class="form-control" readonly="readonly"></td>'+
+	    			'<td style="font-size: xx-small; text-align: center;">'+
+	    			'<input style="width : 100px !important;" id="person_name" type="label" value="'+txt_person_name+'"class="form-control" name="person_names[]" readonly="readonly">'+
+	    			'</td>'+
+	    			
+	    			'<td style="font-size: xx-small; text-align: center;">'+
+	    			'<input style="width : 60px !important;" id="person_position" type="label" value="'+txt_person_position+'"class="form-control" name="person_positions[]" readonly="readonly">'+
+	    			'</td>'+
+
+	    			'<td style="font-size: xx-small; text-align: center;">'+
+					'<input style="width : 100px !important;" id="person_department_id" type="hidden" value="'+txt_person_department_id+'" class="form-control" name="person_department_ids[]">'+
+	    			'<input style="width : 100px !important;" id="person_department_id" type="label" value="'+getPersonDepartment(txt_person_department_id)+'" class="form-control" readonly="readonly">'+
+	    			'</td>'+
+	    			
+	    			'<td style="font-size: xx-small; text-align: center;">'+
+	    			'<input style="width : 60px !important;" id="person_responsibility" type="label" value="'+txt_person_responsibility+'"class="form-control" name="person_responsibilitys[]" readonly="readonly">'+
+	    			'</td>'+
+	    			
+	    			'<td style="font-size: xx-small; text-align: center;">'+
+	    			'<input style="width : 60px !important;" id="person_work_period" type="label" value="'+txt_person_work_period+'"class="form-control" name="person_work_periods[]" readonly="readonly">'+
+	    			'</td>'+
+	    			
+// 	    			'<td style="font-size: xx-small; text-align: center;">'+
+// 	    			'<input style="width : 60px !important;" id="person_dammage_body" type="label" value="'+txt_person_dammage_body+'"class="form-control" name="person_dammage_bodys[]" readonly="readonly">'+
+// 	    			'</td>'+
+	    			
+// 	    			'<td style="font-size: xx-small; text-align: center;">'+
+// 	    			'<input style="width : 60px !important;" id="person_dammage_body_desc" type="label" value="'+txt_person_dammage_body_desc+'"class="form-control" name="person_dammage_body_descs[]" readonly="readonly">'+
+// 	    			'</td>'+
+
+// 	    			'<td style="font-size: xx-small; text-align: center;">'+
+// 	    			'<input style="width : 100px !important;" id="person_lost_type" type="hidden" value="'+txt_person_lost_type+'" class="form-control" name="person_lost_types[]">'+
+// 	    			'<input style="width : 100px !important;" id="person_lost_type" type="label" value="'+getpersonLostType(txt_person_lost_type)+'" class="form-control" readonly="readonly">'+
+// 	    			'</td>'+
 	    		
-	    			'<td style="font-size: xx-small; text-align: center;"><input style="width : 100px !important;" id="person_sex" type="hidden" value="'+txt_person_sex+'"class="form-control" name="person_sexs[]">'+
-	    			'<input style="width : 100px !important;" id="hperson_sex" type="label" value="'+getPersonSex(txt_person_sex)+'" class="form-control" readonly="readonly"></td>'+
+// 	    			'<td style="font-size: xx-small; text-align: center;">'+
+// 	    			'<input style="width : 100px !important;" id="person_sex" type="hidden" value="'+txt_person_sex+'"class="form-control" name="person_sexs[]">'+
+// 	    			'<input style="width : 100px !important;" id="hperson_sex" type="label" value="'+getPersonSex(txt_person_sex)+'" class="form-control" readonly="readonly">'+
+// 	    			'</td>'+
+// 	    			'<td style="font-size: xx-small; text-align: center;">'+
+// 	    			'<input style="width : 60px !important;" id="person_age" type="label" value="'+txt_person_age+'"class="form-control" name="person_ages[]" readonly="readonly">'+
+// 	    			'</td>'+
 	    			
-	    			'<td style="font-size: xx-small; text-align: center;"><input style="width : 100px !important;" id="person_name" type="label" value="'+txt_person_name+'"class="form-control" name="person_names[]" readonly="readonly"></td>'+
-	    			'<td style="font-size: xx-small; text-align: center;"><input style="width : 60px !important;" id="person_age" type="label" value="'+txt_person_age+'"class="form-control" name="person_ages[]" readonly="readonly"></td>'+
-	    			'<td style="font-size: xx-small; text-align: center;"><input style="width : 60px !important;" id="person_position" type="label" value="'+txt_person_position+'"class="form-control" name="person_positions[]" readonly="readonly"></td>'+
-
-	    			'<td style="font-size: xx-small; text-align: center;"><input style="width : 100px !important;" id="person_department_id" type="hidden" value="'+txt_person_department_id+'" class="form-control" name="person_department_ids[]">'+
-	    			'<input style="width : 100px !important;" id="person_department_id" type="label" value="'+getPersonDepartment(txt_person_department_id)+'" class="form-control" readonly="readonly"></td>'+
-	    			
-	    			'<td style="font-size: xx-small; text-align: center;"><input style="width : 60px !important;" id="person_responsibility" type="label" value="'+txt_person_responsibility+'"class="form-control" name="person_responsibilitys[]" readonly="readonly"></td>'+
-	    			'<td style="font-size: xx-small; text-align: center;"><input style="width : 60px !important;" id="person_work_period" type="label" value="'+txt_person_work_period+'"class="form-control" name="person_work_periods[]" readonly="readonly"></td>'+
-	    			'<td style="font-size: xx-small; text-align: center;"><input style="width : 60px !important;" id="person_dammage_body" type="label" value="'+txt_person_dammage_body+'"class="form-control" name="person_dammage_bodys[]" readonly="readonly"></td>'+
-	    			'<td style="font-size: xx-small; text-align: center;"><input style="width : 60px !important;" id="person_dammage_body_desc" type="label" value="'+txt_person_dammage_body_desc+'"class="form-control" name="person_dammage_body_descs[]" readonly="readonly"></td>'+
-
 	    			'<td style="text-align: center;"><button type="button" class="btn red uppercase" id="btnAdd" onclick="return deleteElement(r'+(rid)+');">ลบ</button></td>'+
 	    	    	'</tr>'); 
 
@@ -1083,13 +1036,33 @@ foreach ($deptParent as $parent) {
      });
     	$( "#Form1" ).submit(function( event ) {
         	
-     		$row_count = $('#tData tbody tr').length;
-    		if($row_count == 0){
-        		alert('ยังไม่ได้เพิ่มรายงาน\n(กดปุ่ม+ เพื่อเพิ่มรายการก่อนบันทึก)');
-				return false;
+//      		$row_count = $('#tData tbody tr').length;
+//     		if($row_count == 0){
+//         		alert('ยังไม่ได้เพิ่มรายงาน\n(กดปุ่ม+ เพื่อเพิ่มรายการก่อนบันทึก)');
+// 				return false;
+//         	}
+
+			/*Section 0 : ข้อมูลผู้รายงาน*/
+        	if($("#report_name").val().length == 0){
+        		$("#report_name").closest('.form-group').addClass('has-error');
+        		$("#divReq-report_name").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+        		$("#report_name").focus();
+        		return false;
+            }else{
+            	$("#divReq-report_name").html('');
+            	$("#report_name").closest('.form-group').removeClass('has-error');
         	}
-
-
+        	
+        	if($("#report_position").val().length == 0){
+        		$("#report_position").closest('.form-group').addClass('has-error');
+        		$("#divReq-report_position").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+        		$("#report_position").focus();
+        		return false;
+            }else{
+            	$("#divReq-report_position").html('');
+            	$("#report_position").closest('.form-group').removeClass('has-error');
+        	}
+        	
         	if($("#case_date").val().length == 0){
         		$("#case_date").closest('.form-group').addClass('has-error');
         		$("#divReq-case_date").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
@@ -1099,156 +1072,243 @@ foreach ($deptParent as $parent) {
             	$("#divReq-case_date").html('');
             	$("#case_date").closest('.form-group').removeClass('has-error');
         	}
-        	if($("#accident_location").val().length == 0){
-        		$("#accident_location").closest('.form-group').addClass('has-error');
-        		$("#divReq-accident_location").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
-        		$("#accident_location").focus();
-        		return false;
-            }else{
-            	$("#divReq-accident_location").html('');
-            	$("#accident_location").closest('.form-group').removeClass('has-error');
-        	}
-        	if($("#activity_at_accident").val().length == 0){
-        		$("#activity_at_accident").closest('.form-group').addClass('has-error');
-        		$("#divReq-activity_at_accident").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
-        		$("#activity_at_accident").focus();
-        		return false;
-            }else{
-            	$("#divReq-activity_at_accident").html('');
-            	$("#activity_at_accident").closest('.form-group').removeClass('has-error');
-        	}
-        	if($("#count_work_person").val().length == 0){
-        		$("#count_work_person").closest('.form-group').addClass('has-error');
-        		$("#divReq-count_work_person").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
-        		$("#count_work_person").focus();
-        		return false;
-            }else{
-            	$("#divReq-count_work_person").html('');
-            	$("#count_work_person").closest('.form-group').removeClass('has-error');
-        	}
-//         	bodyAccident1 - 10	|RD
-        	if($("#treat_detail").val().length == 0){
-        		$("#treat_detail").closest('.form-group').addClass('has-error');
-        		$("#divReq-treat_detail").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
-        		$("#treat_detail").focus();
-        		return false;
-            }else{
-            	$("#divReq-treat_detail").html('');
-            	$("#treat_detail").closest('.form-group').removeClass('has-error');
-        	}
-        	if($("#leave_day").val().length == 0){
-        		$("#leave_day").closest('.form-group').addClass('has-error');
-        		$("#divReq-leave_day").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
-        		$("#leave_day").focus();
-        		return false;
-            }else{
-            	$("#divReq-leave_day").html('');
-            	$("#leave_day").closest('.form-group').removeClass('has-error');
-        	}
-        	if($("#eyewitnesses").val().length == 0){
-        		$("#eyewitnesses").closest('.form-group').addClass('has-error');
-        		$("#divReq-eyewitnesses").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
-        		$("#eyewitnesses").focus();
-        		return false;
-            }else{
-            	$("#divReq-eyewitnesses").html('');
-            	$("#eyewitnesses").closest('.form-group').removeClass('has-error');
-        	}
-        	if($("#accident_event_happen").val().length == 0){
-        		$("#accident_event_happen").closest('.form-group').addClass('has-error');
-        		$("#divReq-accident_event_happen").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
-        		$("#accident_event_happen").focus();
-        		return false;
-            }else{
-            	$("#divReq-accident_event_happen").html('');
-            	$("#accident_event_happen").closest('.form-group').removeClass('has-error');
-        	}
-        	//accident_type1 - 6	|RD
-        	//ever_happen1 -2   	|RD
-        	if($("#accident_cause").val().length == 0){
-        		$("#accident_cause").closest('.form-group').addClass('has-error');
-        		$("#divReq-accident_cause").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
-        		$("#accident_cause").focus();
-        		return false;
-            }else{
-            	$("#divReq-accident_cause").html('');
-            	$("#accident_cause").closest('.form-group').removeClass('has-error');
-        	}
-        	//accidental_damage_type	|RD
-        	var damageType = $('.rdDamageTypeCls:checked').val();
-			switch(damageType){
-    			case "1":
-    				if($("#accidental_damage1").val().length == 0){
-        				alert('ระบุจำนวนผู้เสียชีวิต');
-						return false;
-        			}
-        			break;
-    			case "2":
-    				if($("#accidental_damage2").val().length == 0){
-        				alert('ระบุจำนวนผู้สูญเสียอวัยวะ/ทุพพลภาพ');
-						return false;
-        			}
-        			break;
-    			case "3":
-       				if($("#accidental_damage3").val().length == 0){
-        				alert('ระบุจำนวนผู้บาดเจ็บ/เจ็บป่วย');
-						return false;
-        			}
-        			break;
-    			case "4":
-       				if($("#accidental_damage4").val().length == 0){
-        				alert('ระบุจำนวนผู้ทรัพย์สินเสียหาย');
-						return false;
-        			}
-        			break;
+        	/*Section 1 : ข้อมูลส่วนตัวผู้ได้รับบาดเจ็บ (Personal Detail)*/
+    		var rdPersonType = $('.rdPersonTypeCls:checked').val();
+			switch(rdPersonType){
     			case "5":
-       				if($("#accidental_damage5").val().length == 0){
-        				alert('ระบุจำนวนวันที่หยุดการปฏิบัติงาน');
+    				if($("#person_type_other").val().length == 0){
+        				alert('อื่นๆ โปรดระบุ');
 						return false;
         			}
         			break;
 			}
-        	//accidental_damage1 - 5	|RD
-        	if($("#accident_solve").val().length == 0){
-        		$("#accident_solve").closest('.form-group').addClass('has-error');
-        		$("#divReq-accident_solve").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
-        		$("#accident_solve").focus();
+        	if($("#person_name").val().length == 0){
+        		$("#person_name").closest('.form-group').addClass('has-error');
+        		$("#divReq-person_name").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+        		$("#person_name").focus();
         		return false;
             }else{
-            	$("#divReq-accident_solve").html('');
-            	$("#accident_solve").closest('.form-group').removeClass('has-error');
+            	$("#divReq-person_name").html('');
+            	$("#person_name").closest('.form-group').removeClass('has-error');
         	}
-        	if($("#accident_protect").val().length == 0){
-        		$("#accident_protect").closest('.form-group').addClass('has-error');
-        		$("#divReq-accident_protect").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
-        		$("#accident_protect").focus();
+        	if($("#person_position").val().length == 0){
+        		$("#person_position").closest('.form-group').addClass('has-error');
+        		$("#divReq-person_position").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+        		$("#person_position").focus();
         		return false;
             }else{
-            	$("#divReq-accident_protect").html('');
-            	$("#accident_protect").closest('.form-group').removeClass('has-error');
+            	$("#divReq-person_position").html('');
+            	$("#person_position").closest('.form-group').removeClass('has-error');
         	}
+        	if($("#person_position").val().length == 0){
+        		$("#person_position").closest('.form-group').addClass('has-error');
+        		$("#divReq-person_position").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+        		$("#person_position").focus();
+        		return false;
+            }else{
+            	$("#divReq-person_position").html('');
+            	$("#person_position").closest('.form-group').removeClass('has-error');
+        	}
+        	if($("#person_department_id").val() == "-1"){
+        		$("#person_department_id").closest('.form-group').addClass('has-error');
+        		$("#divReq-person_department_id").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+        		$("#person_department_id").focus();
+        		return false;
+            }else{
+            	$("#divReq-person_department_id").html('');
+            	$("#person_department_id").closest('.form-group').removeClass('has-error');
+        	}
+        	if($("#person_responsibility").val().length == 0){
+        		$("#person_responsibility").closest('.form-group').addClass('has-error');
+        		$("#divReq-person_responsibility").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+        		$("#person_responsibility").focus();
+        		return false;
+            }else{
+            	$("#divReq-person_responsibility").html('');
+            	$("#person_responsibility").closest('.form-group').removeClass('has-error');
+        	}
+        	if($("#person_work_period").val().length == 0){
+        		$("#person_work_period").closest('.form-group').addClass('has-error');
+        		$("#divReq-person_work_period").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+        		$("#person_work_period").focus();
+        		return false;
+            }else{
+            	$("#divReq-person_work_period").html('');
+            	$("#person_work_period").closest('.form-group').removeClass('has-error');
+        	}
+        	/*Section 2: ข้อมูลการเกิดอุบัติเหตุ (Accident Detail)*/
+
+        	
+//         	if($("#accident_location").val().length == 0){
+//         		$("#accident_location").closest('.form-group').addClass('has-error');
+//         		$("#divReq-accident_location").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+//         		$("#accident_location").focus();
+//         		return false;
+//             }else{
+//             	$("#divReq-accident_location").html('');
+//             	$("#accident_location").closest('.form-group').removeClass('has-error');
+//         	}
+//         	if($("#activity_at_accident").val().length == 0){
+//         		$("#activity_at_accident").closest('.form-group').addClass('has-error');
+//         		$("#divReq-activity_at_accident").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+//         		$("#activity_at_accident").focus();
+//         		return false;
+//             }else{
+//             	$("#divReq-activity_at_accident").html('');
+//             	$("#activity_at_accident").closest('.form-group').removeClass('has-error');
+//         	}
+//         	if($("#count_work_person").val().length == 0){
+//         		$("#count_work_person").closest('.form-group').addClass('has-error');
+//         		$("#divReq-count_work_person").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+//         		$("#count_work_person").focus();
+//         		return false;
+//             }else{
+//             	$("#divReq-count_work_person").html('');
+//             	$("#count_work_person").closest('.form-group').removeClass('has-error');
+//         	}
+// //         	bodyAccident1 - 10	|RD
+//         	if($("#treat_detail").val().length == 0){
+//         		$("#treat_detail").closest('.form-group').addClass('has-error');
+//         		$("#divReq-treat_detail").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+//         		$("#treat_detail").focus();
+//         		return false;
+//             }else{
+//             	$("#divReq-treat_detail").html('');
+//             	$("#treat_detail").closest('.form-group').removeClass('has-error');
+//         	}
+//         	if($("#leave_day").val().length == 0){
+//         		$("#leave_day").closest('.form-group').addClass('has-error');
+//         		$("#divReq-leave_day").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+//         		$("#leave_day").focus();
+//         		return false;
+//             }else{
+//             	$("#divReq-leave_day").html('');
+//             	$("#leave_day").closest('.form-group').removeClass('has-error');
+//         	}
+//         	if($("#eyewitnesses").val().length == 0){
+//         		$("#eyewitnesses").closest('.form-group').addClass('has-error');
+//         		$("#divReq-eyewitnesses").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+//         		$("#eyewitnesses").focus();
+//         		return false;
+//             }else{
+//             	$("#divReq-eyewitnesses").html('');
+//             	$("#eyewitnesses").closest('.form-group').removeClass('has-error');
+//         	}
+//         	if($("#accident_event_happen").val().length == 0){
+//         		$("#accident_event_happen").closest('.form-group').addClass('has-error');
+//         		$("#divReq-accident_event_happen").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+//         		$("#accident_event_happen").focus();
+//         		return false;
+//             }else{
+//             	$("#divReq-accident_event_happen").html('');
+//             	$("#accident_event_happen").closest('.form-group').removeClass('has-error');
+//         	}
+//         	//accident_type1 - 6	|RD
+//         	//ever_happen1 -2   	|RD
+//         	if($("#accident_cause").val().length == 0){
+//         		$("#accident_cause").closest('.form-group').addClass('has-error');
+//         		$("#divReq-accident_cause").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+//         		$("#accident_cause").focus();
+//         		return false;
+//             }else{
+//             	$("#divReq-accident_cause").html('');
+//             	$("#accident_cause").closest('.form-group').removeClass('has-error');
+//         	}
+//         	//accidental_damage_type	|RD
+//         	var damageType = $('.rdDamageTypeCls:checked').val();
+// 			switch(damageType){
+//     			case "1":
+//     				if($("#accidental_damage1").val().length == 0){
+//         				alert('ระบุจำนวนผู้เสียชีวิต');
+// 						return false;
+//         			}
+//         			break;
+//     			case "2":
+//     				if($("#accidental_damage2").val().length == 0){
+//         				alert('ระบุจำนวนผู้สูญเสียอวัยวะ/ทุพพลภาพ');
+// 						return false;
+//         			}
+//         			break;
+//     			case "3":
+//        				if($("#accidental_damage3").val().length == 0){
+//         				alert('ระบุจำนวนผู้บาดเจ็บ/เจ็บป่วย');
+// 						return false;
+//         			}
+//         			break;
+//     			case "4":
+//        				if($("#accidental_damage4").val().length == 0){
+//         				alert('ระบุจำนวนผู้ทรัพย์สินเสียหาย');
+// 						return false;
+//         			}
+//         			break;
+//     			case "5":
+//        				if($("#accidental_damage5").val().length == 0){
+//         				alert('ระบุจำนวนวันที่หยุดการปฏิบัติงาน');
+// 						return false;
+//         			}
+//         			break;
+// 			}
+//         	//accidental_damage1 - 5	|RD
+//         	if($("#accident_solve").val().length == 0){
+//         		$("#accident_solve").closest('.form-group').addClass('has-error');
+//         		$("#divReq-accident_solve").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+//         		$("#accident_solve").focus();
+//         		return false;
+//             }else{
+//             	$("#divReq-accident_solve").html('');
+//             	$("#accident_solve").closest('.form-group').removeClass('has-error');
+//         	}
+//         	if($("#accident_protect").val().length == 0){
+//         		$("#accident_protect").closest('.form-group').addClass('has-error');
+//         		$("#divReq-accident_protect").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+//         		$("#accident_protect").focus();
+//         		return false;
+//             }else{
+//             	$("#divReq-accident_protect").html('');
+//             	$("#accident_protect").closest('.form-group').removeClass('has-error');
+//         	}
         	this.submit();
     	});
     });
+
+//     function validateFieldText(element_id){
+//     	if($("#"+element_id).val().length == 0){
+//         	alert('');
+//     		$("#"+element_id).closest('.form-group').addClass('has-error');
+//     		$("#divReq-"+element_id).html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+//     		$("#report_name").focus();
+//     		return false;
+//         }else{
+//         	$("#divReq-"+element_id).html('');
+//         	$("#"+element_id).closest('.form-group').removeClass('has-error');
+//     	}
+//     }
     
     function uniqId() {
    		return Math.round(new Date().getTime() + (Math.random() * 100));
     }
+    
     function deleteElement(id){
         $("#"+id.id).remove();
     }
-    function getpersonLostType($val){
-        return 'dsafasdf';
+    
+
+    function getPersonType(element) {
+        var persontypes =["พนักงานมหาวิทยาลัย","พนักงานที่ปฏิบัติงานในนามบริษัท/ลูกจ้างชั่วคราว","บุคคลภายนอกที่เข้ามาใช้บริการ","นักศึกษา","อื่นๆ"];
+        return persontypes[element-1];
     }
-    function getPersonPype($val) {
-   		return 'xxxx1';
-    }
+    
     function getPersonSex($val){
-		return 'yyyy2';
+		return '';
    	}
+   	
     function getPersonDepartment($val){
-		return 'yyyy2asdf';
+		return '';
    	}
+
+ function getpersonLostType($val){
+ return '';
+}
 </script>
 
 </form>
