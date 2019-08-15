@@ -8,9 +8,9 @@
     
 // - SAFETY RECORD - ////
 $criteria = new CDbCriteria();
-$criteria->condition = "status=1 ".(($model->department_id == -1)? "" : " and department_id = ".$model->department_id);
+$criteria->condition = "status=1 ".(($model->department_id == -1 || empty($model->department_id))? "" : " and department_id = ".$model->department_id);
 
-// echo "SQL: status=1 ".(($model->department_id == -1)? "":" and department_id = ".$model->department_id);
+// echo "SQL: status=1 ".(($model->department_id == -1 || empty($model->department_id))? "" : " and department_id = ".$model->department_id);
 
 
 $safetyRecord = SafetyRecord::model()->find($criteria);
@@ -27,7 +27,7 @@ $day ="0";
 $year ="0";
 
 $duplicateData = Yii::app()->db->createCommand("SELECT max(amount) amt FROM tb_safety_record_history 
-where YEAR(create_date) = year(now()) ".(($model->department_id == -1)? "" : " and department_id = ".$model->department_id)."
+where YEAR(create_date) = year(now()) ".(($model->department_id == -1 || empty($model->department_id))? "" : " and department_id = ".$model->department_id)."
 group by department_id order by max(amount) desc limit 1")->queryAll();
 if(isset($duplicateData)){
     foreach($duplicateData as $offer) {

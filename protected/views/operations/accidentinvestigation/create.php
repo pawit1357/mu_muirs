@@ -62,8 +62,8 @@
 												data-date-format="dd-mm-yyyy">
 												<input type="text"
 													value="<?php echo CommonUtil::getCurDate();?>"
-													id="case_date" class="form-control"
-													name="AccidentInvestigation[case_date]" /> <span
+													id="report_date" class="form-control"
+													name="AccidentInvestigation[report_date]" /> <span
 													class="input-group-btn">
 													<button class="btn default" type="button">
 														<i class="fa fa-calendar"></i>
@@ -71,13 +71,12 @@
 												</span>
 											</div>
 										</div>
-										<div id="divReq-case_date"></div>
+										<div id="divReq-report_date"></div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-
 
 					<div class="panel panel-default">
 						<div class="panel-heading">
@@ -166,7 +165,7 @@
 								<div class="col-md-10">
 									<div class="form-group">
 										<label class="control-label col-md-4">ตำแหน่ง/ชั้นปี :<span
-											class="required"></span>
+											class="required">*</span>
 										</label>
 										<div class="col-md-4">
 											<input type="text" value="" id="person_position"
@@ -230,10 +229,96 @@ echo CommonUtil::getDepartment('');
 									</div>
 								</div>
 							</div>
-							
+                    </div>
+                    
+							xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
+<div class="row">
+								<div class="col-md-10">
+									<div class="form-group">
+										<label class="control-label col-md-4">อายุ :<span
+											class="required">*</span>
+										</label>
+										<div class="col-md-4">
+											<input type="text" value="" id="person_age"
+												class="form-control allowNum"
+												name="" />
 
-						</div>
+										</div>
+										<div>ปี</div>
+										<div id="divReq-person_age"></div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-10">
+									<div class="form-group">
+										<label class="control-label col-md-4">เพศ :<span
+											class="required">*</span>
+										</label>
+										<div class="col-md-4">
+											<div class="mt-radio-list">
+												<input type="radio"  id="person_sex" class="rdPersonSexCls"
+															 value="1" class="mt-radio" checked="checked" />ชาย 
+												<input type="radio" id="person_sex" class="rdPersonSexCls"
+															 name="" value="2" class="mt-radio" />หญิง
+											</div>
+										</div>
+										<div id="divReq-person_sex"></div>
+									</div>
+								</div>
+							</div>
+							<!-- 
+							<div class="row">
+								<div class="col-md-10">
+									<div class="form-group">
+										<label class="control-label col-md-4">ตำแหน่ง/ชั้นปี :<span
+											class="required"></span>
+										</label>
+										<div class="col-md-4">
+											<input type="text" value="" id="person_position"
+												class="form-control"
+												name="" />
+										</div>
+										<div id="divReq-person_position"></div>
+									</div>
+								</div>
+							</div>
+							 -->
+							<div class="row">
+								<div class="col-md-10">
+									<div class="form-group">
+										<label class="control-label col-md-4">(กรณีที่บาดเจ็บ)
+											อวัยวะที่บาดเจ็บ :<span class="required"></span>
+										</label>
+										<div class="col-md-4">
+											<input type="text" value="" id="person_dammage_body"
+												class="form-control"
+												name="" />
+										</div>
+										<div id="divReq-person_dammage_body"></div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-10">
+									<div class="form-group">
+										<label class="control-label col-md-4">ลักษณะการบาดเจ็บ :<span
+											class="required"></span>
+										</label>
+										<div class="col-md-4">
+											<input type="text" value="" id="person_dammage_body_desc"
+												class="form-control"
+												name="" />
+										</div>
+										<div id="divReq-person_dammage_body_desc"></div>
+									</div>
+								</div>
+							</div>
+							xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+						
+						
 						<div class="row">
 							<div class="col-md-12">
 								<div class="form-group">
@@ -241,14 +326,14 @@ echo CommonUtil::getDepartment('');
 									</label>
 
 									<div class="col-md-10">
-
-
 										<br>
 										<table>
 											<tr>
 												<td><button type="button" class="sm btn green" id="btnAdd">เพิ่ม (+)</button></td>
 											</tr>
 										</table>
+										<br>
+
 <br>
 							<div class="table-scrollable">
 
@@ -257,19 +342,24 @@ echo CommonUtil::getDepartment('');
 											<thead>
 												<tr>
 													<th style="font-size: xx-small; text-align: center;"></th>
+													<th style="font-size: xx-small; text-align: center;"></th>
 													<th style="font-size: xx-small; text-align: center;width: 100%">รายละเอียดของผู้ประสบเหตุ</th>
 													<th style="font-size: xx-small; text-align: center;width: 100%">ชื่อ-นามสุกล</th>
 													<th style="font-size: xx-small; text-align: center;width: 100%">ตำแหน่ง/ชั้นปี</th>
 													<th style="font-size: xx-small; text-align: center;width: 100%">คณะ/ส่วนงาน</th>
 													<th style="font-size: xx-small; text-align: center;width: 100%">หน้าที่</th>
 													<th style="font-size: xx-small; text-align: center;width: 100%">ระยะเวลาปฏิบัติงาน</th>
-													<!-- 
+													<th style="font-size: xx-small; text-align: center;">อายุ</th>
+													<th style="font-size: xx-small; text-align: center;">เพศ</th>
+													<th style="font-size: xx-small; text-align: center;">ตำแหน่ง</th>
 													<th style="font-size: xx-small; text-align: center;">อวัยวะที่บาดเจ็บ</th>
 													<th style="font-size: xx-small; text-align: center;">ลักษณะการบาดเจ็บ</th>
+													<!-- 
+
 													<th style="font-size: xx-small; text-align: center;">ประเภทความเสียหาย</th>
-													<th style="font-size: xx-small; text-align: center;">เพศ</th>
+
 													<th style="font-size: xx-small; text-align: center;"></th>
-													<th style="font-size: xx-small; text-align: center;">อายุ</th>
+	
 													 -->
 												</tr>
 											</thead>
@@ -302,7 +392,7 @@ echo CommonUtil::getDepartment('');
 										<label class="control-label col-md-4">วัน/เดือน/ปี ที่เกิดเหตุ 
 											:<span class="required">*</span>
 										</label>
-										<div class="col-md-4">
+										<div class="col-md-2">
 											<div class="input-group date date-picker"
 												data-date-format="dd-mm-yyyy">
 												<input type="text"
@@ -315,8 +405,15 @@ echo CommonUtil::getDepartment('');
 													</button>
 												</span>
 											</div>
-
-
+										</div>
+										<div class="col-md-2">
+										        <div class='input-group date' >
+                                                  <input type='text' class="form-control" id='case_date_time'  name="AccidentInvestigation[case_date_time]" />
+                                                  <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-time"></span>
+                                                  </span>
+                                                </div>
+        
 										</div>
 										<div id="divReq-case_date"></div>
 									</div>
@@ -344,11 +441,11 @@ echo CommonUtil::getDepartment('');
 											class="required">*</span>
 										</label>
 										<div class="col-md-4">
-											<input type="text" value="" id="activity_at_accident"
+											<input type="text" value="" id="accident_mission"
 												class="form-control"
-												name="AccidentInvestigation[activity_at_accident]" />
+												name="AccidentInvestigation[accident_mission]" />
 										</div>
-										<div id="divReq-activity_at_accident"></div>
+										<div id="divReq-accident_mission"></div>
 									</div>
 								</div>
 							</div>
@@ -474,30 +571,131 @@ echo CommonUtil::getDepartment('');
 									<div class="form-group last">
 										<label class="control-label col-md-4">แนบรูปภาพ (ถ้ามี) :</label>
 										<div class="col-md-4">
-										<span style="font-size: xx-small;color: red;">(โปรดแนบไฟล์ jpg หรือ pdf ที่มีขนาดไม่เกิน  <?php echo ConfigUtil::getDefaultMaxUploadFileSize()?>MB)</span>
 										
-											<div class="row fileupload-buttonbar">
-												<div class="col-lg-7">
-													<!-- The fileinput-button span is used to style the file input field as button -->
-													<span class="btn green fileinput-button"> <input
-														type="file" name="img1[]" multiple="multiple"  onchange="validateFileInput(this);">
-													</span>
-													<!-- The global file processing state -->
-													<span class="fileupload-process"> </span>
+									<table style="width: 750px">
+										<tr>
+    										<td><input type="text" value="" id="img1_desc" class="form-control" name="AccidentInvestigationImage[img1_description]" /></td>
+    										<td><input type="text" value="" id="img2_desc" class="form-control" name="AccidentInvestigationImage[img2_description]" /></td>
+    										<td><input type="text" value="" id="img3_desc" class="form-control" name="AccidentInvestigationImage[img3_description]" /></td>
+    										<td><input type="text" value="" id="img4_desc" class="form-control" name="AccidentInvestigationImage[img4_description]" /></td>
+    										<td><input type="text" value="" id="img5_desc" class="form-control" name="AccidentInvestigationImage[img5_description]" /></td>
+										</tr>
+
+										<tr>
+										<td width="150px">
+											<div class="fileinput fileinput-new"
+												data-provides="fileinput">
+												<div class="fileinput-new thumbnail"
+													style="width: 150px; height: 100px;">
+													<img
+														src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image"
+														alt="" />
 												</div>
-												<!-- The global progress information -->
-												<div class="col-lg-5 fileupload-progress fade">
-													<!-- The global progress bar -->
-													<div class="progress progress-striped active"
-														role="progressbar" aria-valuemin="0" aria-valuemax="100">
-														<div class="progress-bar progress-bar-success"
-															style="width: 0%;"></div>
-													</div>
-													<!-- The extended global progress information -->
-													<div class="progress-extended">&nbsp;</div>
+												<div class="fileinput-preview fileinput-exists thumbnail"
+													style="max-width: 150px; max-height: 100px;"></div>
+												<div>
+													<span class="btn default btn-file"> <span
+														class="fileinput-new"> เลือก </span> <span
+														class="fileinput-exists">เปลี่ยน </span> <input
+														type="file" name="img1[]" onchange="validateFileInput(this);">
+													</span> <a href="javascript:;"
+														class="btn red fileinput-exists" data-dismiss="fileinput">
+														ลบ </a>
 												</div>
 											</div>
-
+										</td>
+										<td width="150px">
+											<div class="fileinput fileinput-new"
+												data-provides="fileinput">
+												<div class="fileinput-new thumbnail"
+													style="width: 150px; height: 100px;">
+													<img
+														src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image"
+														alt="" />
+												</div>
+												<div class="fileinput-preview fileinput-exists thumbnail"
+													style="max-width: 150px; max-height: 100px;"></div>
+												<div>
+													<span class="btn default btn-file"> <span
+														class="fileinput-new"> เลือก </span> <span
+														class="fileinput-exists">เปลี่ยน </span> <input
+														type="file" name="img2[]" onchange="validateFileInput(this);">
+													</span> <a href="javascript:;"
+														class="btn red fileinput-exists" data-dismiss="fileinput">
+														ลบ </a>
+												</div>
+											</div>
+										</td>
+										<td width="150px">
+											<div class="fileinput fileinput-new"
+												data-provides="fileinput">
+												<div class="fileinput-new thumbnail"
+													style="width: 150px; height: 100px;">
+													<img
+														src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image"
+														alt="" />
+												</div>
+												<div class="fileinput-preview fileinput-exists thumbnail"
+													style="max-width: 150px; max-height: 100px;"></div>
+												<div>
+													<span class="btn default btn-file"> <span
+														class="fileinput-new"> เลือก </span> <span
+														class="fileinput-exists">เปลี่ยน </span> <input
+														type="file" name="img3[]" onchange="validateFileInput(this);">
+													</span> <a href="javascript:;"
+														class="btn red fileinput-exists" data-dismiss="fileinput">
+														ลบ </a>
+												</div>
+											</div>
+										</td>
+										<td width="150px">
+											<div class="fileinput fileinput-new"
+												data-provides="fileinput">
+												<div class="fileinput-new thumbnail"
+													style="width: 150px; height: 100px;">
+													<img
+														src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image"
+														alt="" />
+												</div>
+												<div class="fileinput-preview fileinput-exists thumbnail"
+													style="max-width: 150px; max-height: 100px;"></div>
+												<div>
+													<span class="btn default btn-file"> <span
+														class="fileinput-new"> เลือก </span> <span
+														class="fileinput-exists">เปลี่ยน </span> <input
+														type="file" name="img4[]" onchange="validateFileInput(this);">
+													</span> <a href="javascript:;"
+														class="btn red fileinput-exists" data-dismiss="fileinput">
+														ลบ </a>
+												</div>
+											</div>
+										</td>
+										<td width="150px">
+											<div class="fileinput fileinput-new"
+												data-provides="fileinput">
+												<div class="fileinput-new thumbnail"
+													style="width: 150px; height: 100px;">
+													<img
+														src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image"
+														alt="" />
+												</div>
+												<div class="fileinput-preview fileinput-exists thumbnail"
+													style="max-width: 150px; max-height: 100px;"></div>
+												<div>
+													<span class="btn default btn-file"> <span
+														class="fileinput-new"> เลือก </span> <span
+														class="fileinput-exists">เปลี่ยน </span> <input
+														type="file" name="img5[]" onchange="validateFileInput(this);">
+													</span> <a href="javascript:;"
+														class="btn red fileinput-exists" data-dismiss="fileinput">
+														ลบ </a>
+												</div>
+											</div>
+										</td>
+										</tr>
+										</table>
+											<span style="font-size: xx-small;color: red;">(โปรดแนบไฟล์ jpg หรือ png ที่มีขนาดไม่เกิน  <?php echo ConfigUtil::getDefaultMaxUploadFileSize()?>MB)</span>
+										
 											<div class="clearfix margin-top-10"></div>
 										</div>
 									</div>
@@ -555,7 +753,6 @@ echo CommonUtil::getDepartment('');
 
 						</div>
 					</div>
-
 
 					<div class="panel panel-default">
 						<div class="panel-heading">
@@ -682,9 +879,6 @@ echo CommonUtil::getDepartment('');
 						</div>
 					</div>
 
-
-
-
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<h4 class="panel-title">
@@ -717,29 +911,130 @@ echo CommonUtil::getDepartment('');
 									<div class="form-group last">
 										<label class="control-label col-md-4">แนบรูปภาพ (ถ้ามี) :</label>
 										<div class="col-md-4">
-										<span style="font-size: xx-small;color: red;">(โปรดแนบไฟล์ jpg หรือ pdf ที่มีขนาดไม่เกิน  <?php echo ConfigUtil::getDefaultMaxUploadFileSize()?>MB)</span>
+<table style="width: 750px">
+										<tr>
+    										<td><input type="text" value="" id="img6_desc" class="form-control" name="AccidentInvestigationImage[img6_description]" /></td>
+    										<td><input type="text" value="" id="img7_desc" class="form-control" name="AccidentInvestigationImage[img7_description]" /></td>
+    										<td><input type="text" value="" id="img8_desc" class="form-control" name="AccidentInvestigationImage[img8_description]" /></td>
+    										<td><input type="text" value="" id="img9_desc" class="form-control" name="AccidentInvestigationImage[img9_description]" /></td>
+    										<td><input type="text" value="" id="img10_desc" class="form-control" name="AccidentInvestigationImage[img10_description]" /></td>
+										</tr>
 
-											<div class="row fileupload-buttonbar">
-												<div class="col-lg-7">
-													<!-- The fileinput-button span is used to style the file input field as button -->
-													<span class="btn green fileinput-button"> <input
-														type="file" name="img2[]" multiple="multiple"  onchange="validateFileInput(this);">
-													</span>
-													<!-- The global file processing state -->
-													<span class="fileupload-process"> </span>
+										<tr>
+										<td width="150px">
+											<div class="fileinput fileinput-new"
+												data-provides="fileinput">
+												<div class="fileinput-new thumbnail"
+													style="width: 150px; height: 100px;">
+													<img
+														src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image"
+														alt="" />
 												</div>
-												<!-- The global progress information -->
-												<div class="col-lg-5 fileupload-progress fade">
-													<!-- The global progress bar -->
-													<div class="progress progress-striped active"
-														role="progressbar" aria-valuemin="0" aria-valuemax="100">
-														<div class="progress-bar progress-bar-success"
-															style="width: 0%;"></div>
-													</div>
-													<!-- The extended global progress information -->
-													<div class="progress-extended">&nbsp;</div>
+												<div class="fileinput-preview fileinput-exists thumbnail"
+													style="max-width: 150px; max-height: 100px;"></div>
+												<div>
+													<span class="btn default btn-file"> <span
+														class="fileinput-new"> เลือก </span> <span
+														class="fileinput-exists">เปลี่ยน </span> <input
+														type="file" name="img6[]" onchange="validateFileInput(this);">
+													</span> <a href="javascript:;"
+														class="btn red fileinput-exists" data-dismiss="fileinput">
+														ลบ </a>
 												</div>
 											</div>
+										</td>
+										<td width="150px">
+											<div class="fileinput fileinput-new"
+												data-provides="fileinput">
+												<div class="fileinput-new thumbnail"
+													style="width: 150px; height: 100px;">
+													<img
+														src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image"
+														alt="" />
+												</div>
+												<div class="fileinput-preview fileinput-exists thumbnail"
+													style="max-width: 150px; max-height: 100px;"></div>
+												<div>
+													<span class="btn default btn-file"> <span
+														class="fileinput-new"> เลือก </span> <span
+														class="fileinput-exists">เปลี่ยน </span> <input
+														type="file" name="img7[]" onchange="validateFileInput(this);">
+													</span> <a href="javascript:;"
+														class="btn red fileinput-exists" data-dismiss="fileinput">
+														ลบ </a>
+												</div>
+											</div>
+										</td>
+										<td width="150px">
+											<div class="fileinput fileinput-new"
+												data-provides="fileinput">
+												<div class="fileinput-new thumbnail"
+													style="width: 150px; height: 100px;">
+													<img
+														src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image"
+														alt="" />
+												</div>
+												<div class="fileinput-preview fileinput-exists thumbnail"
+													style="max-width: 150px; max-height: 100px;"></div>
+												<div>
+													<span class="btn default btn-file"> <span
+														class="fileinput-new"> เลือก </span> <span
+														class="fileinput-exists">เปลี่ยน </span> <input
+														type="file" name="img8[]" onchange="validateFileInput(this);">
+													</span> <a href="javascript:;"
+														class="btn red fileinput-exists" data-dismiss="fileinput">
+														ลบ </a>
+												</div>
+											</div>
+										</td>
+										<td width="150px">
+											<div class="fileinput fileinput-new"
+												data-provides="fileinput">
+												<div class="fileinput-new thumbnail"
+													style="width: 150px; height: 100px;">
+													<img
+														src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image"
+														alt="" />
+												</div>
+												<div class="fileinput-preview fileinput-exists thumbnail"
+													style="max-width: 150px; max-height: 100px;"></div>
+												<div>
+													<span class="btn default btn-file"> <span
+														class="fileinput-new"> เลือก </span> <span
+														class="fileinput-exists">เปลี่ยน </span> <input
+														type="file" name="img9[]" onchange="validateFileInput(this);">
+													</span> <a href="javascript:;"
+														class="btn red fileinput-exists" data-dismiss="fileinput">
+														ลบ </a>
+												</div>
+											</div>
+										</td>
+										<td width="150px">
+											<div class="fileinput fileinput-new"
+												data-provides="fileinput">
+												<div class="fileinput-new thumbnail"
+													style="width: 150px; height: 100px;">
+													<img
+														src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image"
+														alt="" />
+												</div>
+												<div class="fileinput-preview fileinput-exists thumbnail"
+													style="max-width: 150px; max-height: 100px;"></div>
+												<div>
+													<span class="btn default btn-file"> <span
+														class="fileinput-new"> เลือก </span> <span
+														class="fileinput-exists">เปลี่ยน </span> <input
+														type="file" name="img10[]" onchange="validateFileInput(this);">
+													</span> <a href="javascript:;"
+														class="btn red fileinput-exists" data-dismiss="fileinput">
+														ลบ </a>
+												</div>
+											</div>
+										</td>
+										</tr>
+										</table>
+										<span style="font-size: xx-small;color: red;">(โปรดแนบไฟล์ jpg หรือ png ที่มีขนาดไม่เกิน  <?php echo ConfigUtil::getDefaultMaxUploadFileSize()?>MB)</span>
+
 											<div class="clearfix margin-top-10"></div>
 										</div>
 									</div>
@@ -765,29 +1060,130 @@ echo CommonUtil::getDepartment('');
 									<div class="form-group last">
 										<label class="control-label col-md-4">แนบรูปภาพ (ถ้ามี) :</label>
 										<div class="col-md-4">
-										<span style="font-size: xx-small;color: red;">(โปรดแนบไฟล์ jpg หรือ pdf ที่มีขนาดไม่เกิน  <?php echo ConfigUtil::getDefaultMaxUploadFileSize()?>MB)</span>
+<table style="width: 750px">
+										<tr>
+    										<td><input type="text" value="" id="img11_desc" class="form-control" name="AccidentInvestigationImage[img11_description]" /></td>
+    										<td><input type="text" value="" id="img12_desc" class="form-control" name="AccidentInvestigationImage[img12_description]" /></td>
+    										<td><input type="text" value="" id="img13_desc" class="form-control" name="AccidentInvestigationImage[img13_description]" /></td>
+    										<td><input type="text" value="" id="img14_desc" class="form-control" name="AccidentInvestigationImage[img14_description]" /></td>
+    										<td><input type="text" value="" id="img15_desc" class="form-control" name="AccidentInvestigationImage[img15_description]" /></td>
+										</tr>
 
-											<div class="row fileupload-buttonbar">
-												<div class="col-lg-7">
-													<!-- The fileinput-button span is used to style the file input field as button -->
-													<span class="btn green fileinput-button"> <input
-														type="file" name="img3[]" multiple="multiple"  onchange="validateFileInput(this);">
-													</span>
-													<!-- The global file processing state -->
-													<span class="fileupload-process"> </span>
+										<tr>
+										<td width="150px">
+											<div class="fileinput fileinput-new"
+												data-provides="fileinput">
+												<div class="fileinput-new thumbnail"
+													style="width: 150px; height: 100px;">
+													<img
+														src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image"
+														alt="" />
 												</div>
-												<!-- The global progress information -->
-												<div class="col-lg-5 fileupload-progress fade">
-													<!-- The global progress bar -->
-													<div class="progress progress-striped active"
-														role="progressbar" aria-valuemin="0" aria-valuemax="100">
-														<div class="progress-bar progress-bar-success"
-															style="width: 0%;"></div>
-													</div>
-													<!-- The extended global progress information -->
-													<div class="progress-extended">&nbsp;</div>
+												<div class="fileinput-preview fileinput-exists thumbnail"
+													style="max-width: 150px; max-height: 100px;"></div>
+												<div>
+													<span class="btn default btn-file"> <span
+														class="fileinput-new"> เลือก </span> <span
+														class="fileinput-exists">เปลี่ยน </span> <input
+														type="file" name="img11[]" onchange="validateFileInput(this);">
+													</span> <a href="javascript:;"
+														class="btn red fileinput-exists" data-dismiss="fileinput">
+														ลบ </a>
 												</div>
 											</div>
+										</td>
+										<td width="150px">
+											<div class="fileinput fileinput-new"
+												data-provides="fileinput">
+												<div class="fileinput-new thumbnail"
+													style="width: 150px; height: 100px;">
+													<img
+														src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image"
+														alt="" />
+												</div>
+												<div class="fileinput-preview fileinput-exists thumbnail"
+													style="max-width: 150px; max-height: 100px;"></div>
+												<div>
+													<span class="btn default btn-file"> <span
+														class="fileinput-new"> เลือก </span> <span
+														class="fileinput-exists">เปลี่ยน </span> <input
+														type="file" name="img12[]" onchange="validateFileInput(this);">
+													</span> <a href="javascript:;"
+														class="btn red fileinput-exists" data-dismiss="fileinput">
+														ลบ </a>
+												</div>
+											</div>
+										</td>
+										<td width="150px">
+											<div class="fileinput fileinput-new"
+												data-provides="fileinput">
+												<div class="fileinput-new thumbnail"
+													style="width: 150px; height: 100px;">
+													<img
+														src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image"
+														alt="" />
+												</div>
+												<div class="fileinput-preview fileinput-exists thumbnail"
+													style="max-width: 150px; max-height: 100px;"></div>
+												<div>
+													<span class="btn default btn-file"> <span
+														class="fileinput-new"> เลือก </span> <span
+														class="fileinput-exists">เปลี่ยน </span> <input
+														type="file" name="img13[]" onchange="validateFileInput(this);">
+													</span> <a href="javascript:;"
+														class="btn red fileinput-exists" data-dismiss="fileinput">
+														ลบ </a>
+												</div>
+											</div>
+										</td>
+										<td width="150px">
+											<div class="fileinput fileinput-new"
+												data-provides="fileinput">
+												<div class="fileinput-new thumbnail"
+													style="width: 150px; height: 100px;">
+													<img
+														src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image"
+														alt="" />
+												</div>
+												<div class="fileinput-preview fileinput-exists thumbnail"
+													style="max-width: 150px; max-height: 100px;"></div>
+												<div>
+													<span class="btn default btn-file"> <span
+														class="fileinput-new"> เลือก </span> <span
+														class="fileinput-exists">เปลี่ยน </span> <input
+														type="file" name="img14[]" onchange="validateFileInput(this);">
+													</span> <a href="javascript:;"
+														class="btn red fileinput-exists" data-dismiss="fileinput">
+														ลบ </a>
+												</div>
+											</div>
+										</td>
+										<td width="150px">
+											<div class="fileinput fileinput-new"
+												data-provides="fileinput">
+												<div class="fileinput-new thumbnail"
+													style="width: 150px; height: 100px;">
+													<img
+														src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image"
+														alt="" />
+												</div>
+												<div class="fileinput-preview fileinput-exists thumbnail"
+													style="max-width: 150px; max-height: 100px;"></div>
+												<div>
+													<span class="btn default btn-file"> <span
+														class="fileinput-new"> เลือก </span> <span
+														class="fileinput-exists">เปลี่ยน </span> <input
+														type="file" name="img15[]" onchange="validateFileInput(this);">
+													</span> <a href="javascript:;"
+														class="btn red fileinput-exists" data-dismiss="fileinput">
+														ลบ </a>
+												</div>
+											</div>
+										</td>
+										</tr>
+										</table>
+										<span style="font-size: xx-small;color: red;">(โปรดแนบไฟล์ jpg หรือ png ที่มีขนาดไม่เกิน  <?php echo ConfigUtil::getDefaultMaxUploadFileSize()?>MB)</span>
+
 
 											<div class="clearfix margin-top-10"></div>
 										</div>
@@ -895,7 +1291,7 @@ echo CommonUtil::getDepartment('');
 	                oInput.value = "";
 	                return false;
 	            }else if (!blnValid) {
-	                alert("โปรดแนบไฟล์ jpg หรือ pdf" );
+	                alert("โปรดแนบไฟล์ jpg หรือ png" );
 	                oInput.value = "";
 	                return false;
 	            }
@@ -908,15 +1304,14 @@ echo CommonUtil::getDepartment('');
     
     jQuery(document).ready(function () {
 
-
+    	$('#report_date').datepicker({language:'th-th',format:'dd/mm/yyyy'})
     	$('#case_date').datepicker({language:'th-th',format:'dd/mm/yyyy'})
-    	
-    	
+    	$('#case_date_time').datetimepicker({format: 'HH:mm'});
 
 
+    	
         $(".allowNum").keypress(function (e) {
             if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
-//                alert('ป้อนข้อมูลได้เฉพาะตัวเลข');
                return false;
            }
           });
@@ -940,138 +1335,6 @@ echo CommonUtil::getDepartment('');
         
         $('#btnAdd').click(function (event) {
 
-            	//var txt_person_type = $('#person_type').val();
-        		var personType = $('.rdPersonTypeCls:checked').val();
-            	
-            	var txt_person_type_other = $('#person_type_other').val();
-            	var txt_person_name = $('#person_name').val();
-            	var txt_person_position = $('#person_position').val();
-            	var txt_person_department_id = $('#person_department_id').val();
-            	var txt_person_responsibility = $('#person_responsibility').val();
-            	var txt_person_work_period = $('#person_work_period').val();
-            	
-//             	var txt_person_dammage_body = $('#person_dammage_body').val();
-//             	var txt_person_dammage_body_desc = $('#person_dammage_body_desc').val();
-//             	var txt_person_lost_type = $('#person_lost_type').val();
-//             	var txt_person_sex = $('#person_sex').val();
-//             	var txt_person_age = $('#person_age').val();
-    	    	var rowCount = $('#tData tr').length;
-    	    	var rid = uniqId();
-    	    	
-	    	$('#tData > tbody:last').append('<tr id="r'+(rid)+'">'+
-	    	    	'<td style="text-align: center;">'+(rowCount)+'.</td>'+
-	    	    	
-	    			'<td style="font-size: xx-small; text-align: center;">'+
-	    			'<input style="width : 100px !important;" id="person_type" type="hidden" value="'+personType+'" class="form-control" name="person_types[]">'+
-	    			'<input style="width : 200px !important;" id="hperson_type" type="label" value="'+getPersonType(personType)+'" class="form-control" readonly="readonly">'+
-	    			'</td>'+
-
-	    			'<td style="font-size: xx-small; text-align: center;">'+
-	    			'<input style="width : 100px !important;" id="person_name" type="label" value="'+txt_person_name+'"class="form-control" name="person_names[]" readonly="readonly">'+
-	    			'</td>'+
-	    			
-	    			'<td style="font-size: xx-small; text-align: center;">'+
-	    			'<input style="width : 60px !important;" id="person_position" type="label" value="'+txt_person_position+'"class="form-control" name="person_positions[]" readonly="readonly">'+
-	    			'</td>'+
-
-	    			'<td style="font-size: xx-small; text-align: center;">'+
-					'<input style="width : 100px !important;" id="person_department_id" type="hidden" value="'+txt_person_department_id+'" class="form-control" name="person_department_ids[]">'+
-	    			'<input style="width : 100px !important;" id="person_department_id" type="label" value="'+getPersonDepartment(txt_person_department_id)+'" class="form-control" readonly="readonly">'+
-	    			'</td>'+
-	    			
-	    			'<td style="font-size: xx-small; text-align: center;">'+
-	    			'<input style="width : 60px !important;" id="person_responsibility" type="label" value="'+txt_person_responsibility+'"class="form-control" name="person_responsibilitys[]" readonly="readonly">'+
-	    			'</td>'+
-	    			
-	    			'<td style="font-size: xx-small; text-align: center;">'+
-	    			'<input style="width : 60px !important;" id="person_work_period" type="label" value="'+txt_person_work_period+'"class="form-control" name="person_work_periods[]" readonly="readonly">'+
-	    			'</td>'+
-	    			
-// 	    			'<td style="font-size: xx-small; text-align: center;">'+
-// 	    			'<input style="width : 60px !important;" id="person_dammage_body" type="label" value="'+txt_person_dammage_body+'"class="form-control" name="person_dammage_bodys[]" readonly="readonly">'+
-// 	    			'</td>'+
-	    			
-// 	    			'<td style="font-size: xx-small; text-align: center;">'+
-// 	    			'<input style="width : 60px !important;" id="person_dammage_body_desc" type="label" value="'+txt_person_dammage_body_desc+'"class="form-control" name="person_dammage_body_descs[]" readonly="readonly">'+
-// 	    			'</td>'+
-
-// 	    			'<td style="font-size: xx-small; text-align: center;">'+
-// 	    			'<input style="width : 100px !important;" id="person_lost_type" type="hidden" value="'+txt_person_lost_type+'" class="form-control" name="person_lost_types[]">'+
-// 	    			'<input style="width : 100px !important;" id="person_lost_type" type="label" value="'+getpersonLostType(txt_person_lost_type)+'" class="form-control" readonly="readonly">'+
-// 	    			'</td>'+
-	    		
-// 	    			'<td style="font-size: xx-small; text-align: center;">'+
-// 	    			'<input style="width : 100px !important;" id="person_sex" type="hidden" value="'+txt_person_sex+'"class="form-control" name="person_sexs[]">'+
-// 	    			'<input style="width : 100px !important;" id="hperson_sex" type="label" value="'+getPersonSex(txt_person_sex)+'" class="form-control" readonly="readonly">'+
-// 	    			'</td>'+
-// 	    			'<td style="font-size: xx-small; text-align: center;">'+
-// 	    			'<input style="width : 60px !important;" id="person_age" type="label" value="'+txt_person_age+'"class="form-control" name="person_ages[]" readonly="readonly">'+
-// 	    			'</td>'+
-	    			
-	    			'<td style="text-align: center;"><button type="button" class="btn red uppercase" id="btnAdd" onclick="return deleteElement(r'+(rid)+');">ลบ</button></td>'+
-	    	    	'</tr>'); 
-
-// 	    	 $('#txt_pathogen_name').val('');
-// 	    	 $('#txt_pathogen_code').val('');
-// 	    	 $('#txt_pathogen_volume').val('');
-// 	    	 $('#txt_supervisor').val('');
-// 	    	 $('#txt_manufacture_plant').val('');
-// 	    	 $('#txt_manufacture_fuse').val('');
-// 	    	 $('#txt_manufacture_prepare').val('');
-// 	    	 $('#txt_manufacture_transform').val('');
-// 	    	 $('#txt_manufacture_packing').val('');
-// 	    	 $('#txt_manufacture_total_packing').val('');
-// 	    	 $('#txt_distribute_sell').val('');
-// 	    	 $('#txt_distribute_pay').val('');
-// 	    	 $('#txt_distribute_give').val('');
-// 	    	 $('#txt_distribute_exchange').val('');
-// 	    	 $('#txt_distribute_donate').val('');
-// 	    	 $('#txt_distribute_lost').val('');
-// 	    	 $('#txt_distribute_discard').val('');
-// 	    	 $('#txt_distribute_destroy').val('');
-// 	    	 $('#txt_import').val('');
-// 	    	 $('#txt_export').val('');
-// 	    	 $('#txt_import_to_other').val('');
-	    	
-     });
-    	$( "#Form1" ).submit(function( event ) {
-        	
-//      		$row_count = $('#tData tbody tr').length;
-//     		if($row_count == 0){
-//         		alert('ยังไม่ได้เพิ่มรายงาน\n(กดปุ่ม+ เพื่อเพิ่มรายการก่อนบันทึก)');
-// 				return false;
-//         	}
-
-			/*Section 0 : ข้อมูลผู้รายงาน*/
-        	if($("#report_name").val().length == 0){
-        		$("#report_name").closest('.form-group').addClass('has-error');
-        		$("#divReq-report_name").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
-        		$("#report_name").focus();
-        		return false;
-            }else{
-            	$("#divReq-report_name").html('');
-            	$("#report_name").closest('.form-group').removeClass('has-error');
-        	}
-        	
-        	if($("#report_position").val().length == 0){
-        		$("#report_position").closest('.form-group').addClass('has-error');
-        		$("#divReq-report_position").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
-        		$("#report_position").focus();
-        		return false;
-            }else{
-            	$("#divReq-report_position").html('');
-            	$("#report_position").closest('.form-group').removeClass('has-error');
-        	}
-        	
-        	if($("#case_date").val().length == 0){
-        		$("#case_date").closest('.form-group').addClass('has-error');
-        		$("#divReq-case_date").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
-        		$("#case_date").focus();
-        		return false;
-            }else{
-            	$("#divReq-case_date").html('');
-            	$("#case_date").closest('.form-group').removeClass('has-error');
-        	}
         	/*Section 1 : ข้อมูลส่วนตัวผู้ได้รับบาดเจ็บ (Personal Detail)*/
     		var rdPersonType = $('.rdPersonTypeCls:checked').val();
 			switch(rdPersonType){
@@ -1100,24 +1363,25 @@ echo CommonUtil::getDepartment('');
             	$("#divReq-person_position").html('');
             	$("#person_position").closest('.form-group').removeClass('has-error');
         	}
-        	if($("#person_position").val().length == 0){
-        		$("#person_position").closest('.form-group').addClass('has-error');
-        		$("#divReq-person_position").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
-        		$("#person_position").focus();
-        		return false;
-            }else{
-            	$("#divReq-person_position").html('');
-            	$("#person_position").closest('.form-group').removeClass('has-error');
-        	}
         	if($("#person_department_id").val() == "-1"){
         		$("#person_department_id").closest('.form-group').addClass('has-error');
         		$("#divReq-person_department_id").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
         		$("#person_department_id").focus();
-        		return false;
+    		return false;
             }else{
             	$("#divReq-person_department_id").html('');
             	$("#person_department_id").closest('.form-group').removeClass('has-error');
         	}
+//         	if($("#person_position").val().length == 0){
+//         		$("#person_position").closest('.form-group').addClass('has-error');
+//         		$("#divReq-person_position").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+//         		$("#person_position").focus();
+//         		return false;
+//             }else{
+//             	$("#divReq-person_position").html('');
+//             	$("#person_position").closest('.form-group').removeClass('has-error');
+//         	}
+
         	if($("#person_responsibility").val().length == 0){
         		$("#person_responsibility").closest('.form-group').addClass('has-error');
         		$("#divReq-person_responsibility").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
@@ -1136,137 +1400,337 @@ echo CommonUtil::getDepartment('');
             	$("#divReq-person_work_period").html('');
             	$("#person_work_period").closest('.form-group').removeClass('has-error');
         	}
+        	if($("#person_age").val().length == 0){
+        		$("#person_age").closest('.form-group').addClass('has-error');
+        		$("#divReq-person_age").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+        		$("#person_age").focus();
+        		return false;
+            }else{
+            	$("#divReq-person_age").html('');
+            	$("#person_age").closest('.form-group').removeClass('has-error');
+        	}
+        	if($("#person_sex").val().length == 0){
+        		$("#person_sex").closest('.form-group').addClass('has-error');
+        		$("#divReq-person_sex").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+        		$("#person_sex").focus();
+        		return false;
+            }else{
+            	$("#divReq-person_sex").html('');
+            	$("#person_sex").closest('.form-group').removeClass('has-error');
+        	}
+        	
+        		var personType = $('.rdPersonTypeCls:checked').val();
+            	var txt_person_type_other = $('#person_type_other').val();
+            	var txt_person_name = $('#person_name').val();
+            	var txt_person_department_id = $('#person_department_id').val();
+            	var txt_person_department_id_text = $("#person_department_id option:selected").text();
+            	var txt_person_responsibility = $('#person_responsibility').val();
+            	var txt_person_work_period = $('#person_work_period').val();
+            	
+            	var txt_person_age = $('#person_age').val();
+        		var personSex = $('.rdPersonSexCls:checked').val();
+
+
+
+            	var txt_person_position = $('#person_position').val();
+            	var txt_person_dammage_body = $('#person_dammage_body').val();
+            	var txt_person_dammage_body_desc = $('#person_dammage_body_desc').val();
+
+    	    	var rowCount = $('#tData tr').length;
+    	    	var rid = uniqId();
+
+	    	$('#tData > tbody:last').append('<tr id="r'+(rid)+'">'+
+	    			'<td style="text-align: center;"><button type="button" class="btn red uppercase" id="btnAdd" onclick="return deleteElement(r'+(rid)+');">ลบ</button></td>'+
+	    	    	'<td style="text-align: center;">'+(rowCount)+'.</td>'+
+	    	    	
+	    			'<td style="font-size: xx-small; text-align: center;">'+
+	    			'<input style="width : 100px !important;" id="person_type" type="hidden" value="'+personType+'" class="form-control" name="person_types[]">'+
+	    			'<input style="width : 200px !important;" id="hperson_type" type="label" value="'+getPersonType(personType)+'" class="form-control" readonly="readonly">'+
+	    			'</td>'+
+
+	    			'<td style="font-size: xx-small; text-align: center;">'+
+	    			'<input style="width : 200px !important;" id="person_name" type="label" value="'+txt_person_name+'"class="form-control" name="person_names[]" readonly="readonly">'+
+	    			'</td>'+
+	    			
+	    			'<td style="font-size: xx-small; text-align: center;">'+
+	    			'<input style="width : 60px !important;" id="person_position" type="label" value="'+txt_person_position+'"class="form-control" name="person_positions[]" readonly="readonly">'+
+	    			'</td>'+
+
+	    			'<td style="font-size: xx-small; text-align: center;">'+
+					'<input style="width : 100px !important;" id="person_department_id" type="hidden" value="'+txt_person_department_id+'" class="form-control" name="person_department_ids[]">'+
+	    			'<input style="width : 200px !important;" id="person_department_id" type="label" value="'+txt_person_department_id_text+'" class="form-control" readonly="readonly">'+
+	    			'</td>'+
+	    			
+	    			'<td style="font-size: xx-small; text-align: center;">'+
+	    			'<input style="width : 120px !important;" id="person_responsibility" type="label" value="'+txt_person_responsibility+'"class="form-control" name="person_responsibilitys[]" readonly="readonly">'+
+	    			'</td>'+
+	    			
+	    			'<td style="font-size: xx-small; text-align: center;">'+
+	    			'<input style="width : 120px !important;" id="person_work_period" type="label" value="'+txt_person_work_period+'"class="form-control" name="person_work_periods[]" readonly="readonly">'+
+	    			'</td>'+
+
+	    			'<td style="font-size: xx-small; text-align: center;">'+
+	    			'<input style="width : 60px !important;" id="person_age" type="label" value="'+txt_person_age+'"class="form-control" name="person_ages[]" readonly="readonly">'+
+	    			'</td>'+
+	    			
+	    			'<td style="font-size: xx-small; text-align: center;">'+
+	    			'<input style="width : 100px !important;" id="person_sex" type="hidden" value="'+personSex+'"class="form-control" name="person_sexs[]">'+
+	    			'<input style="width : 100px !important;" id="hperson_sex" type="label" value="'+getPersonSex(personSex)+'" class="form-control" readonly="readonly">'+
+	    			'</td>'+
+
+	    			'<td style="font-size: xx-small; text-align: center;">'+
+	    			'<input style="width : 60px !important;" id="person_position" type="label" value="'+txt_person_position+'"class="form-control" name="person_positions[]" readonly="readonly">'+
+	    			'</td>'+
+	    			
+	    			'<td style="font-size: xx-small; text-align: center;">'+
+	    			'<input style="width : 60px !important;" id="person_dammage_body" type="label" value="'+txt_person_dammage_body+'"class="form-control" name="person_dammage_bodys[]" readonly="readonly">'+
+	    			'</td>'+
+	    			
+	    			'<td style="font-size: xx-small; text-align: center;">'+
+	    			'<input style="width : 60px !important;" id="person_dammage_body_desc" type="label" value="'+txt_person_dammage_body_desc+'"class="form-control" name="person_dammage_body_descs[]" readonly="readonly">'+
+	    			'</td>'+
+
+// 	    			'<td style="font-size: xx-small; text-align: center;">'+
+// 	    			'<input style="width : 100px !important;" id="person_lost_type" type="hidden" value="'+txt_person_lost_type+'" class="form-control" name="person_lost_types[]">'+
+// 	    			'<input style="width : 100px !important;" id="person_lost_type" type="label" value="'+getpersonLostType(txt_person_lost_type)+'" class="form-control" readonly="readonly">'+
+// 	    			'</td>'+
+	    		
+	    	    	'</tr>'); 
+
+// 	    	 $('#txt_pathogen_name').val('');
+// 	    	 $('#txt_pathogen_code').val('');
+// 	    	 $('#txt_pathogen_volume').val('');
+// 	    	 $('#txt_supervisor').val('');
+// 	    	 $('#txt_manufacture_plant').val('');
+// 	    	 $('#txt_manufacture_fuse').val('');
+// 	    	 $('#txt_manufacture_prepare').val('');
+// 	    	 $('#txt_manufacture_transform').val('');
+// 	    	 $('#txt_manufacture_packing').val('');
+// 	    	 $('#txt_manufacture_total_packing').val('');
+// 	    	 $('#txt_distribute_sell').val('');
+// 	    	 $('#txt_distribute_pay').val('');
+// 	    	 $('#txt_distribute_give').val('');
+// 	    	 $('#txt_distribute_exchange').val('');
+// 	    	 $('#txt_distribute_donate').val('');
+// 	    	 $('#txt_distribute_lost').val('');
+// 	    	 $('#txt_distribute_discard').val('');
+// 	    	 $('#txt_distribute_destroy').val('');
+// 	    	 $('#txt_import').val('');
+// 	    	 $('#txt_export').val('');
+// 	    	 $('#txt_import_to_other').val('');
+	    	
+     });
+    	$( "#Form1" ).submit(function( event ) {
+        	
+//      	$row_count = $('#tData tbody tr').length;
+//     		if($row_count == 0){
+//         		alert('ยังไม่ได้เพิ่มรายงาน\n(กดปุ่ม+ เพื่อเพิ่มรายการก่อนบันทึก)');
+// 				return false;
+//         	}
+			/*Section 0 : ข้อมูลผู้รายงาน*/
+        	if($("#report_name").val().length == 0){
+        		$("#report_name").closest('.form-group').addClass('has-error');
+        		$("#divReq-report_name").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+        		$("#report_name").focus();
+        		return false;
+            }else{
+            	$("#divReq-report_name").html('');
+            	$("#report_name").closest('.form-group').removeClass('has-error');
+        	}
+        	if($("#report_position").val().length == 0){
+        		$("#report_position").closest('.form-group').addClass('has-error');
+        		$("#divReq-report_position").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+        		$("#report_position").focus();
+        		return false;
+            }else{
+            	$("#divReq-report_position").html('');
+            	$("#report_position").closest('.form-group').removeClass('has-error');
+        	}
+        	if($("#report_date").val().length == 0){
+        		$("#report_date").closest('.form-group').addClass('has-error');
+        		$("#divReq-report_date").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+        		$("#case_date").focus();
+        		return false;
+            }else{
+            	$("#divReq-report_date").html('');
+            	$("#report_date").closest('.form-group').removeClass('has-error');
+        	}
+        	
         	/*Section 2: ข้อมูลการเกิดอุบัติเหตุ (Accident Detail)*/
+        	if($("#case_date").val().length == 0){
+        		$("#case_date").closest('.form-group').addClass('has-error');
+        		$("#divReq-case_date").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+        		$("#case_date").focus();
+        		return false;
+            }else{
+            	$("#divReq-case_date").html('');
+            	$("#case_date").closest('.form-group').removeClass('has-error');
+        	}
+        	if($("#case_date_time").val().length == 0){
+        		$("#report_date").closest('.form-group').addClass('has-error');
+        		$("#divReq-report_date").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+        		$("#case_date").focus();
+        		return false;
+            }else{
+            	$("#divReq-report_date").html('');
+            	$("#report_date").closest('.form-group').removeClass('has-error');
+        	}
+        	if($("#accident_location").val().length == 0){
+        		$("#accident_location").closest('.form-group').addClass('has-error');
+        		$("#divReq-accident_location").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+        		$("#accident_location").focus();
+        		return false;
+            }else{
+            	$("#divReq-accident_location").html('');
+            	$("#accident_location").closest('.form-group').removeClass('has-error');
+        	}
+        	if($("#accident_mission").val().length == 0){
+        		$("#accident_mission").closest('.form-group').addClass('has-error');
+        		$("#divReq-accident_mission").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+        		$("#accident_mission").focus();
+        		return false;
+            }else{
+            	$("#divReq-accident_mission").html('');
+            	$("#accident_mission").closest('.form-group').removeClass('has-error');
+        	}
+        	if($("#count_work_person").val().length == 0){
+        		$("#count_work_person").closest('.form-group').addClass('has-error');
+        		$("#divReq-count_work_person").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+        		$("#count_work_person").focus();
+        		return false;
+            }else{
+            	$("#divReq-count_work_person").html('');
+            	$("#count_work_person").closest('.form-group').removeClass('has-error');
+        	}
+
 
         	
-//         	if($("#accident_location").val().length == 0){
-//         		$("#accident_location").closest('.form-group').addClass('has-error');
-//         		$("#divReq-accident_location").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
-//         		$("#accident_location").focus();
-//         		return false;
-//             }else{
-//             	$("#divReq-accident_location").html('');
-//             	$("#accident_location").closest('.form-group').removeClass('has-error');
-//         	}
-//         	if($("#activity_at_accident").val().length == 0){
-//         		$("#activity_at_accident").closest('.form-group').addClass('has-error');
-//         		$("#divReq-activity_at_accident").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
-//         		$("#activity_at_accident").focus();
-//         		return false;
-//             }else{
-//             	$("#divReq-activity_at_accident").html('');
-//             	$("#activity_at_accident").closest('.form-group').removeClass('has-error');
-//         	}
-//         	if($("#count_work_person").val().length == 0){
-//         		$("#count_work_person").closest('.form-group').addClass('has-error');
-//         		$("#divReq-count_work_person").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
-//         		$("#count_work_person").focus();
-//         		return false;
-//             }else{
-//             	$("#divReq-count_work_person").html('');
-//             	$("#count_work_person").closest('.form-group').removeClass('has-error');
-//         	}
-// //         	bodyAccident1 - 10	|RD
-//         	if($("#treat_detail").val().length == 0){
-//         		$("#treat_detail").closest('.form-group').addClass('has-error');
-//         		$("#divReq-treat_detail").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
-//         		$("#treat_detail").focus();
-//         		return false;
-//             }else{
-//             	$("#divReq-treat_detail").html('');
-//             	$("#treat_detail").closest('.form-group').removeClass('has-error');
-//         	}
-//         	if($("#leave_day").val().length == 0){
-//         		$("#leave_day").closest('.form-group').addClass('has-error');
-//         		$("#divReq-leave_day").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
-//         		$("#leave_day").focus();
-//         		return false;
-//             }else{
-//             	$("#divReq-leave_day").html('');
-//             	$("#leave_day").closest('.form-group').removeClass('has-error');
-//         	}
-//         	if($("#eyewitnesses").val().length == 0){
-//         		$("#eyewitnesses").closest('.form-group').addClass('has-error');
-//         		$("#divReq-eyewitnesses").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
-//         		$("#eyewitnesses").focus();
-//         		return false;
-//             }else{
-//             	$("#divReq-eyewitnesses").html('');
-//             	$("#eyewitnesses").closest('.form-group').removeClass('has-error');
-//         	}
-//         	if($("#accident_event_happen").val().length == 0){
-//         		$("#accident_event_happen").closest('.form-group').addClass('has-error');
-//         		$("#divReq-accident_event_happen").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
-//         		$("#accident_event_happen").focus();
-//         		return false;
-//             }else{
-//             	$("#divReq-accident_event_happen").html('');
-//             	$("#accident_event_happen").closest('.form-group').removeClass('has-error');
-//         	}
-//         	//accident_type1 - 6	|RD
-//         	//ever_happen1 -2   	|RD
-//         	if($("#accident_cause").val().length == 0){
-//         		$("#accident_cause").closest('.form-group').addClass('has-error');
-//         		$("#divReq-accident_cause").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
-//         		$("#accident_cause").focus();
-//         		return false;
-//             }else{
-//             	$("#divReq-accident_cause").html('');
-//             	$("#accident_cause").closest('.form-group').removeClass('has-error');
-//         	}
+        	switch($('#bodyAccident10').is(":checked")){
+            	case true:
+    				if($("#body_accident_type_other").val().length == 0){
+    					alert('อื่นๆ โปรดระบุ');
+						return false;
+    				}
+                	break;
+        	}
+        	if($("#treat_detail").val().length == 0){
+        		$("#treat_detail").closest('.form-group').addClass('has-error');
+        		$("#divReq-treat_detail").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+        		$("#treat_detail").focus();
+        		return false;
+            }else{
+            	$("#divReq-treat_detail").html('');
+            	$("#treat_detail").closest('.form-group').removeClass('has-error');
+        	}
+        	if($("#leave_day").val().length == 0){
+        		$("#leave_day").closest('.form-group').addClass('has-error');
+        		$("#divReq-leave_day").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+        		$("#leave_day").focus();
+        		return false;
+            }else{
+            	$("#divReq-leave_day").html('');
+            	$("#leave_day").closest('.form-group').removeClass('has-error');
+        	}
+        	if($("#eyewitnesses").val().length == 0){
+        		$("#eyewitnesses").closest('.form-group').addClass('has-error');
+        		$("#divReq-eyewitnesses").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+        		$("#eyewitnesses").focus();
+        		return false;
+            }else{
+            	$("#divReq-eyewitnesses").html('');
+            	$("#eyewitnesses").closest('.form-group').removeClass('has-error');
+        	}
+        	if($("#accident_event_happen").val().length == 0){
+        		$("#accident_event_happen").closest('.form-group').addClass('has-error');
+        		$("#divReq-accident_event_happen").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+        		$("#accident_event_happen").focus();
+        		return false;
+            }else{
+            	$("#divReq-accident_event_happen").html('');
+            	$("#accident_event_happen").closest('.form-group').removeClass('has-error');
+        	}
+        	//accident_type1 - 6	|RD
+        	switch($('#accident_type6').is(":checked")){
+        		case true:
+    				if($("#accident_type6_other").val().length == 0){
+    					alert('อื่นๆ โปรดระบุ');
+    					return false;
+    				}
+            	break;
+    		}
+        	//ever_happen1 -2   	|RD
+        	switch($('#ever_happen1').is(":checked")){
+        		case true:
+    				if($("#ever_happen1_other").val().length == 0){
+    					alert('อื่นๆ โปรดระบุ');
+    					return false;
+    				}
+            	break;
+			}
+			/* Section 3 : การวิเคราะห์หาสาเหตุ (Accident Analysis) */
+        	if($("#accident_cause").val().length == 0){
+        		$("#accident_cause").closest('.form-group').addClass('has-error');
+        		$("#divReq-accident_cause").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+        		$("#accident_cause").focus();
+        		return false;
+            }else{
+            	$("#divReq-accident_cause").html('');
+            	$("#accident_cause").closest('.form-group').removeClass('has-error');
+        	}
 //         	//accidental_damage_type	|RD
-//         	var damageType = $('.rdDamageTypeCls:checked').val();
-// 			switch(damageType){
-//     			case "1":
-//     				if($("#accidental_damage1").val().length == 0){
-//         				alert('ระบุจำนวนผู้เสียชีวิต');
-// 						return false;
-//         			}
-//         			break;
-//     			case "2":
-//     				if($("#accidental_damage2").val().length == 0){
-//         				alert('ระบุจำนวนผู้สูญเสียอวัยวะ/ทุพพลภาพ');
-// 						return false;
-//         			}
-//         			break;
-//     			case "3":
-//        				if($("#accidental_damage3").val().length == 0){
-//         				alert('ระบุจำนวนผู้บาดเจ็บ/เจ็บป่วย');
-// 						return false;
-//         			}
-//         			break;
-//     			case "4":
-//        				if($("#accidental_damage4").val().length == 0){
-//         				alert('ระบุจำนวนผู้ทรัพย์สินเสียหาย');
-// 						return false;
-//         			}
-//         			break;
-//     			case "5":
-//        				if($("#accidental_damage5").val().length == 0){
-//         				alert('ระบุจำนวนวันที่หยุดการปฏิบัติงาน');
-// 						return false;
-//         			}
-//         			break;
-// 			}
-//         	//accidental_damage1 - 5	|RD
-//         	if($("#accident_solve").val().length == 0){
-//         		$("#accident_solve").closest('.form-group').addClass('has-error');
-//         		$("#divReq-accident_solve").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
-//         		$("#accident_solve").focus();
-//         		return false;
-//             }else{
-//             	$("#divReq-accident_solve").html('');
-//             	$("#accident_solve").closest('.form-group').removeClass('has-error');
-//         	}
-//         	if($("#accident_protect").val().length == 0){
-//         		$("#accident_protect").closest('.form-group').addClass('has-error');
-//         		$("#divReq-accident_protect").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
-//         		$("#accident_protect").focus();
-//         		return false;
-//             }else{
-//             	$("#divReq-accident_protect").html('');
-//             	$("#accident_protect").closest('.form-group').removeClass('has-error');
-//         	}
+        	var damageType = $('.rdDamageTypeCls:checked').val();
+			switch(damageType){
+    			case "1":
+    				if($("#accidental_damage1").val().length == 0){
+        				alert('ระบุจำนวนผู้เสียชีวิต');
+						return false;
+        			}
+        			break;
+    			case "2":
+    				if($("#accidental_damage2").val().length == 0){
+        				alert('ระบุจำนวนผู้สูญเสียอวัยวะ/ทุพพลภาพ');
+						return false;
+        			}
+        			break;
+    			case "3":
+       				if($("#accidental_damage3").val().length == 0){
+        				alert('ระบุจำนวนผู้บาดเจ็บ/เจ็บป่วย');
+						return false;
+        			}
+        			break;
+    			case "4":
+       				if($("#accidental_damage4").val().length == 0){
+        				alert('ระบุจำนวนผู้ทรัพย์สินเสียหาย');
+						return false;
+        			}
+        			break;
+    			case "5":
+       				if($("#accidental_damage5").val().length == 0){
+        				alert('ระบุจำนวนวันที่หยุดการปฏิบัติงาน');
+						return false;
+        			}
+        			break;
+			}
+        	//accidental_damage1 - 5	|RD
+/*  Section 5 : การดำเนินการแก้ไขและการป้องกันไม่ให้เกิดซ้ำ (Corrective and Preventive action) */
+        	if($("#accident_solve").val().length == 0){
+        		$("#accident_solve").closest('.form-group').addClass('has-error');
+        		$("#divReq-accident_solve").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+        		$("#accident_solve").focus();
+        		return false;
+            }else{
+            	$("#divReq-accident_solve").html('');
+            	$("#accident_solve").closest('.form-group').removeClass('has-error');
+        	}
+        	if($("#accident_protect").val().length == 0){
+        		$("#accident_protect").closest('.form-group').addClass('has-error');
+        		$("#divReq-accident_protect").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+        		$("#accident_protect").focus();
+        		return false;
+            }else{
+            	$("#divReq-accident_protect").html('');
+            	$("#accident_protect").closest('.form-group').removeClass('has-error');
+        	}
         	this.submit();
     	});
     });
@@ -1299,16 +1763,19 @@ echo CommonUtil::getDepartment('');
     }
     
     function getPersonSex($val){
-		return '';
-   	}
+    	$result = '';
+            switch($val){
+            case '1':
+                $result= 'ชาย';
+                break;
+            case '2':
+                $result= 'หญิง';
+                
+                break;
+       	}
+    	return $result;
+    }
    	
-    function getPersonDepartment($val){
-		return '';
-   	}
-
- function getpersonLostType($val){
- return '';
-}
 </script>
 
 </form>

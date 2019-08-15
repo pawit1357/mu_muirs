@@ -1,10 +1,10 @@
 <?php
-class AccidentInvestigationImage extends CActiveRecord {
+class AccidentInvestigationPerson extends CActiveRecord {
     public static function model($className = __CLASS__) {
         return parent::model ( $className );
     }
     public function tableName() {
-        return 'tb_accident_investigation_images';
+        return 'tb_accident_investigation_person';
     }
     public function relations() {
         return array (
@@ -21,36 +21,22 @@ class AccidentInvestigationImage extends CActiveRecord {
                 '
                 id,
                 accident_investigation_id,
-                path_img1,
-                path_img2,
-                path_img3,
-                path_img4,
-                path_img5,
-                path_img6,
-                path_img7,
-                path_img8,
-                path_img9,
-                path_img10,
-                path_img11,
-                path_img12,
-                path_img13,
-                path_img14,
-                path_img15,
-                img1_description,
-                img2_description,
-                img3_description,
-                img4_description,
-                img5_description,
-                img6_description,
-                img7_description,
-                img8_description,
-                img9_description,
-                img10_description,
-                img11_description,
-                img12_description,
-                img13_description,
-                img14_description,
-                img15_description
+                person_type,
+                person_type_other,
+                person_name,
+                person_position,
+                person_department_id,
+                person_responsibility,
+                person_work_period,
+                person_lost_type,
+                person_sex,
+                person_age,
+                person_dammage_body,
+                person_dammage_body_desc,
+                create_date datetime 
+                create_by,
+                update_date datetime 
+                update_by
                 ',
                 'safe'
             )
