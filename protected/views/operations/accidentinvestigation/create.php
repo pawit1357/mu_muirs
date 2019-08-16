@@ -104,35 +104,35 @@
 												<table>
 													<tr>
 														<td><input type="radio" checked="checked" id="person_type" class="rdPersonTypeCls"
-															name="Person_type[]" value="1" class="mt-radio" /></td>
+															name="AccidentInvestigationPerson[person_type]" value="1" class="mt-radio" /></td>
 														<td>พนักงานมหาวิทยาลัย</td>
 														<td></td>
 													</tr>
 													<tr>
 														<td><input type="radio" id="person_type" class="rdPersonTypeCls"
-															name="Person_type[]" value="2" class="mt-radio" /></td>
+															name="AccidentInvestigationPerson[person_type]" value="2" class="mt-radio" /></td>
 														<td>พนักงานที่ปฏิบัติงานในนามบริษัท/ ลูกจ้างชั่วคราว</td>
 														<td></td>
 													</tr>
 													<tr>
 														<td><input type="radio" id="person_type" class="rdPersonTypeCls"
-															name="Person_type[]" value="3" class="mt-radio" /></td>
+															name="AccidentInvestigationPerson[person_type]" value="3" class="mt-radio" /></td>
 														<td>บุคคลภายนอกที่เข้ามาใช้บริการ</td>
 														<td></td>
 													</tr>
 													<tr>
 														<td><input type="radio" id="person_type" class="rdPersonTypeCls"
-															name="Person_type[]" value="4" class="mt-radio" /></td>
+															name="AccidentInvestigationPerson[person_type]" value="4" class="mt-radio" /></td>
 														<td>นักศึกษา</td>
 														<td></td>
 													</tr>
 													<tr>
 														<td><input type="radio" id="person_type" class="rdPersonTypeCls"
-															name="Person_type[]" value="5" class="mt-radio" /></td>
+															name="AccidentInvestigationPerson[person_type]" value="5" class="mt-radio" /></td>
 														<td>อื่นๆ<input type="text" value=""
 															id="person_type_other"
 															style="border: none; border-bottom-style: dotted; width: 150px; text-align: left;"
-															name="" /></td>
+															name="AccidentInvestigationPerson[person_type_other]" /></td>
 													</tr>
 
 												</table>
@@ -153,7 +153,7 @@
 										</label>
 										<div class="col-md-4">
 											<input id="person_name" type="text" value="" class="form-control"
-												name="">
+												name="AccidentInvestigationPerson[person_name]">
 
 										</div>
 										<div id="divReq-person_name"></div>
@@ -170,7 +170,7 @@
 										<div class="col-md-4">
 											<input type="text" value="" id="person_position"
 												class="form-control"
-												name="" />
+												name="AccidentInvestigationPerson[person_position]" />
 
 										</div>
 										<div id="divReq-person_position"></div>
@@ -184,7 +184,7 @@
 											class="required"></span></label>
 										<div class="col-md-6">
 											<select class="form-control"
-												name=""
+												name="AccidentInvestigationPerson[person_department_id]"
 												id="person_department_id">
 												<option value="-1">-- (ไม่มีสังกัด) --</option>
 <?php
@@ -207,7 +207,7 @@ echo CommonUtil::getDepartment('');
 										<div class="col-md-4">
 											<input type="text" value="" id="person_responsibility"
 												class="form-control"
-												name="" />
+												name="AccidentInvestigationPerson[person_responsibility]" />
 										</div>
 										<div id="divReq-person_responsibility"></div>
 									</div>
@@ -222,7 +222,7 @@ echo CommonUtil::getDepartment('');
 										<div class="col-md-4">
 											<input type="text" value="" id="person_work_period"
 												class="form-control allowNum"
-												name="" />
+												name="AccidentInvestigationPerson[person_work_period]" />
 										</div>
 										<div>วัน</div>
 										<div id="divReq-person_work_period"></div>
@@ -231,7 +231,7 @@ echo CommonUtil::getDepartment('');
 							</div>
                     </div>
                     
-							xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+<!-- MERGE SECCION 4 -->
 
 <div class="row">
 								<div class="col-md-10">
@@ -242,7 +242,7 @@ echo CommonUtil::getDepartment('');
 										<div class="col-md-4">
 											<input type="text" value="" id="person_age"
 												class="form-control allowNum"
-												name="" />
+												name="AccidentInvestigationPerson[person_age]" />
 
 										</div>
 										<div>ปี</div>
@@ -258,10 +258,10 @@ echo CommonUtil::getDepartment('');
 										</label>
 										<div class="col-md-4">
 											<div class="mt-radio-list">
-												<input type="radio"  id="person_sex" class="rdPersonSexCls"
+												<input type="radio"  id="person_sex" class="rdPersonSexCls" name="AccidentInvestigationPerson[person_sex]"
 															 value="1" class="mt-radio" checked="checked" />ชาย 
 												<input type="radio" id="person_sex" class="rdPersonSexCls"
-															 name="" value="2" class="mt-radio" />หญิง
+															 name="AccidentInvestigationPerson[person_sex]" value="2" class="mt-radio" />หญิง
 											</div>
 										</div>
 										<div id="divReq-person_sex"></div>
@@ -294,7 +294,7 @@ echo CommonUtil::getDepartment('');
 										<div class="col-md-4">
 											<input type="text" value="" id="person_dammage_body"
 												class="form-control"
-												name="" />
+												name="AccidentInvestigationPerson[person_dammage_body]" />
 										</div>
 										<div id="divReq-person_dammage_body"></div>
 									</div>
@@ -309,14 +309,13 @@ echo CommonUtil::getDepartment('');
 										<div class="col-md-4">
 											<input type="text" value="" id="person_dammage_body_desc"
 												class="form-control"
-												name="" />
+												name="AccidentInvestigationPerson[person_dammage_body_desc]" />
 										</div>
 										<div id="divReq-person_dammage_body_desc"></div>
 									</div>
 								</div>
 							</div>
-							xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
+<!-- END MERGE SECCION 4 -->
 						
 						
 						<div class="row">
@@ -555,6 +554,7 @@ echo CommonUtil::getDepartment('');
 										<label class="control-label col-md-4">ลักษณะเหตุการณ์เกิดขึ้นได้อย่างไร 
 											: </label>
 										<div class="col-md-4">
+																					<span style="font-size: xx-small;color: red;"> (ใคร ทำอะไร ที่ไหน อย่างไร เมื่อไหร่)</span>
 											<textarea rows="5" cols="70" id="accident_event_happen"
 												name="AccidentInvestigation[accident_event_happen]"></textarea>
 
@@ -569,7 +569,7 @@ echo CommonUtil::getDepartment('');
 							<div class="row">
 								<div class="col-md-10">
 									<div class="form-group last">
-										<label class="control-label col-md-4">แนบรูปภาพ (ถ้ามี) :</label>
+										<label class="control-label col-md-4">คำอธิบาย : <br>แนบรูปภาพ (ถ้ามี) :</label>
 										<div class="col-md-4">
 										
 									<table style="width: 750px">
@@ -772,9 +772,9 @@ echo CommonUtil::getDepartment('');
 
 										<label class="control-label col-md-2"> </label>
 										<div class="col-md-8">
-											<textarea rows="5" cols="90" id="accident_cause"
-												name="AccidentInvestigation[accident_cause]"></textarea>
-
+                                        <table>
+											<?php CommonUtil::getAccidentAnalyze('');?>
+                                        </table>
 										</div>
 										<div id="divReq-accident_cause"></div>
 									</div>
@@ -909,7 +909,7 @@ echo CommonUtil::getDepartment('');
 							<div class="row">
 								<div class="col-md-10">
 									<div class="form-group last">
-										<label class="control-label col-md-4">แนบรูปภาพ (ถ้ามี) :</label>
+										<label class="control-label col-md-4">คำอธิบาย : <br>แนบรูปภาพ (ถ้ามี) :</label>
 										<div class="col-md-4">
 <table style="width: 750px">
 										<tr>
@@ -1058,7 +1058,7 @@ echo CommonUtil::getDepartment('');
 							<div class="row">
 								<div class="col-md-10">
 									<div class="form-group last">
-										<label class="control-label col-md-4">แนบรูปภาพ (ถ้ามี) :</label>
+										<label class="control-label col-md-4">คำอธิบาย : <br>แนบรูปภาพ (ถ้ามี) :</label>
 										<div class="col-md-4">
 <table style="width: 750px">
 										<tr>

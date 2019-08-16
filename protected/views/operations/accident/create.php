@@ -284,7 +284,7 @@ echo CommonUtil::getDepartment('');
 							<div class="row">
 								<div class="col-md-10">
 									<div class="form-group last">
-										<label class="control-label col-md-4">คำอธิบาย <br>แนบรูปภาพ (ถ้ามี) :</label>
+										<label class="control-label col-md-4">คำอธิบาย : <br>แนบรูปภาพ (ถ้ามี) :</label>
 										<div class="col-md-4">
 									<table style="width: 750px">
 										<tr>
@@ -452,7 +452,7 @@ echo CommonUtil::getDepartment('');
 							<div class="row">
 								<div class="col-md-10">
 									<div class="form-group last">
-										<label class="control-label col-md-4">คำอธิบาย <br>แนบรูปภาพ (ถ้ามี) :</label>
+										<label class="control-label col-md-4">คำอธิบาย : <br>แนบรูปภาพ (ถ้ามี) :</label>
 										<div class="col-md-4">
 									<table style="width: 750px">
 										<tr>

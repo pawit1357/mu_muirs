@@ -194,6 +194,7 @@ class CommonUtil {
 // 		$somevariable = $row->value;
 // 		return $somevariable;
 // 	}
+
 	public static function reArrayFiles($file_post) {
 		$file_ary = array ();
 		$file_count = count ( $file_post ['name'] );
@@ -207,6 +208,7 @@ class CommonUtil {
 		
 		return $file_ary;
 	}
+	
 	public static function makeRandomString($max=6) {
 	    $i = 0; //Reset the counter.
 	    $possible_keys = "0123456789";
@@ -230,7 +232,7 @@ class CommonUtil {
 	
 	public static function getDepartment($selected){
 	    
-	    $result = "";
+	   // $result = "";
 	    
 	    $deptParent = MDepartment::model()->findAll(array("condition"=>"faculty_id = -1",'order'=>'seq'));
 	    $deptChild = MDepartment::model()->findAll(array("condition"=>"faculty_id <> -1",'order'=>'seq'));
@@ -256,13 +258,32 @@ class CommonUtil {
 	        }
 	    }
 
-	    return $result;
+	    //return $result;
 	}
 	
+	public static function getAccidentAnalyze($selected){
+
+
+		$exploded=explode(",",$selected); //Limit is unspecified, so it will return all the substrings;
+
+	    $paramLists = MParameterList::model()->findAll(array('order'=>'id'));
+	    
+	    $index =1;
+	    foreach ($paramLists as $paramList) {
+	        //'.($index==1? 'checked="checked"':'').'
+	        echo '<tr>';
+	        echo '<td>'.(($paramList['param_group']==-1)? '' : '<input type="checkbox" '.((in_array($paramList['id'], $exploded)) ? 'checked="checked"':'').' id="accident_cause'.$index.'" name="accident_causes[]" value="'.$paramList['id'].'" />').'</td>';
+	        echo '<td>'.$paramList['param_name'].'</td>';
+	        echo '</tr>';
+	        $index++;
+	    }
+	}
 	
 	public static function resizeImg($images,$new_images) {
+		
 // 	    $images = "mygirl.jpg";
 // 	    $new_images = "MyResize/mygirl.jpg";
+
 	    $width=200; //*** Fix Width & Heigh (Autu caculate) ***//
 	    $size=GetimageSize($images);
 	    $height=round($width*$size[1]/$size[0]);
@@ -276,6 +297,18 @@ class CommonUtil {
 	    ImageDestroy($images_fin);
 	}
 	
+// 	public static function isContain($str, $check){
+// 		$result = false;
+		
+
+		
+		
+// 		echo $str.'-'.$check.''.$exploded[0];
+// 		if (strpos($str, $check) !== false) {
+// 			$result= true;
+// 		}
+// 		return $result;
+// 	}
 	
 	/* #MASTER# */
 	const CHECKBOX_TYPE = "1";
@@ -287,5 +320,6 @@ class CommonUtil {
 	const SURVEY_CHEM = "2";
 	const SURVEY_OCC = "3";
 	const SURVEY_RADBASE = "4";
+	
 }
 ?>

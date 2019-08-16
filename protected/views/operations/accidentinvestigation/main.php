@@ -23,14 +23,12 @@
 <!-- 								<th>รายละเอียดของผู้ประสบเหตุ</th> -->
 <!-- 								<th>ประเภทความเสียหาย</th> -->
 <!-- 								<th>เพศ</th> -->
-								<th>ชื่อ-นามสุกล</th>
-								<th>อายุ</th>
-								<th>ตำแหน่ง/ชั้นปี</th>
-								<th>คณะ/ส่วนงาน</th>
-								<th>หน้าที่</th>
+								<th>ผู้รายงาน</th>
+								<th>ตำแหน่ง</th>
+								<th>วันที่รายงาน</th>
+								<th>สถานที่เกิดเหตุ</th>
 <!-- 								<th>ระยะเวลาปฏิบัติงาน</th> -->
-								<th>อวัยวะที่บาดเจ็บ</th>
-								<th>กลุ่มข้อมูล</th>
+								<th>ลักษณะเหตุการณ์เกิดขึ้นได้อย่างไร</th>
 								<th class="no-sort"></th>
 							</tr>
 						</thead>
@@ -43,14 +41,11 @@
 		?>
 				<tr>
 								<td class="center"><?php echo $counter?></td>
-                				<td class="center"><?php echo $data->person_name?></td>
-                				<td class="center"><?php echo $data->person_age?></td>
-                				<td class="center"><?php echo $data->person_position?></td>
-                				<td class="center"><?php echo $data->department->name?></td>
-                				<td class="center"><?php echo $data->person_responsibility?></td>
-                				<td class="center"><?php echo $data->person_dammage_body?></td>
-                				<td class="center"><?php echo $data->group_id?></td>
-                				
+                				<td class="center"><?php echo $data->report_name?></td>
+                				<td class="center"><?php echo $data->report_position?></td>
+                				<td class="center"><?php echo $data->report_date?></td>
+                				<td class="center"><?php echo $data->accident_location?></td>
+                				<td class="center"><?php echo $data->accident_event_happen?></td>
 								<td class="center">
 								
 									

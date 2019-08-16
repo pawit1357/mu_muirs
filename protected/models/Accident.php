@@ -1,6 +1,7 @@
 <?php
 class Accident extends CActiveRecord {
     
+    public $department_id;
     public $report_date_to;
     public $report_date_from;
     

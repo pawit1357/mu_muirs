@@ -12,7 +12,7 @@ class NormalPersonController extends CController {
 		$this->render ( '//operations/normalperson/main' );
 	}
 	
-	public function actionCreate()
+	public function actionCAccident()
 	{	    
 	    if (isset($_POST['Accident'])) {
 	        try {
@@ -24,7 +24,7 @@ class NormalPersonController extends CController {
 	            $model->report_date = CommonUtil::getDate($model->report_date);
 	            $model->case_date = CommonUtil::getDate($model->case_date);
 	            $model->create_date = date("Y-m-d H:i:s");
-// 	            $model->create_by = UserLoginUtils::getUsersLoginId();
+	            $model->create_by = UserLoginUtils::getUsersLoginId();
 	            
 	            $Accident_dammage_type = '';
 	            if (isset($_POST['Accident_dammage_type'])) {
@@ -36,46 +36,50 @@ class NormalPersonController extends CController {
 	            }
 	            $model->dammage_type = rtrim($Accident_dammage_type, ",");
 	            
-	            if (strpos($model->dammage_type, '1') !== false || strpos($model->dammage_type, '5') !== false) {
-	                // record only die.
-	                $lastAcDate = date("Y-m-d");
+// 	            if (strpos($model->dammage_type, '1') !== false || strpos($model->dammage_type, '5') !== false) {
+// 	                // record only die.
+// 	                $lastAcDate = date("Y-m-d");
 	                
-	                $criteria = new CDbCriteria();
-	                $criteria->condition = " department_id = ".$model->department_id." and status = 1 and year=".date("Y");
-	                $row = SafetyRecord::model()->find($criteria);
+// 	                $criteria = new CDbCriteria();
+// 	                $criteria->condition = " department_id = ".UserLoginUtils::getDepartmentId()." and status = 1 and year=".date("Y");
+// 	                $row = SafetyRecord::model()->find($criteria);
 	                
-	                if(!isset($row)){
-	                    $row = new SafetyRecord();
-	                    $row->department_id = UserLoginUtils::getDepartmentId();
-	                    $row->year = date("Y");
-	                    $row->days_target = 365;
-	                    $row->status = 1;
-	                    $row->last_accident_occurred_date = $model->case_date;
-	                    $row->create_date = date("Y-m-d H:i:s");
-	                    $row->save();
+// 	                if(!isset($row)){
+// 	                    $row = new SafetyRecord();
+// 	                    $row->department_id = UserLoginUtils::getDepartmentId();
+// 	                    $row->year = date("Y");
+// 	                    $row->days_target = 365;
+// 	                    $row->status = 1;
+// 	                    $row->last_accident_occurred_date = $model->case_date;
+// 	                    $row->create_date = date("Y-m-d H:i:s");
+// 	                    $row->save();
 	                    
-	                    $lastAcDate = $model->case_date;
-	                }else{
-	                    $lastAcDate = $row->last_accident_occurred_date;
-	                    $row->last_accident_occurred_date = $model->case_date;
-	                    $row->update_date = date("Y-m-d H:i:s");
-	                    $row->update();
-	                }
+// 	                    $lastAcDate = $model->case_date;
+// 	                }else{
+// 	                    $lastAcDate = $row->last_accident_occurred_date;
+// 	                    $row->last_accident_occurred_date = $model->case_date;
+// 	                    $row->update_date = date("Y-m-d H:i:s");
+// 	                    $row->update();
+// 	                }
 	                
-	                $rowHis = new SafetyRecordHistory();
-	                $rowHis->department_id = UserLoginUtils::getDepartmentId();
-	                $rowHis->amount = CommonUtil::dateDiff($lastAcDate, $row->last_accident_occurred_date);
-	                $rowHis->last_accident_occurred_date = $model->case_date;
-	                $rowHis->create_date = date("Y-m-d H:i:s");
-	                $rowHis->save();
+// 	                $rowHis = new SafetyRecordHistory();
+// 	                $rowHis->department_id = UserLoginUtils::getDepartmentId();
+// 	                $rowHis->amount = CommonUtil::dateDiff($lastAcDate, $row->last_accident_occurred_date);
+// 	                $rowHis->last_accident_occurred_date = $model->case_date;
+// 	                $rowHis->create_date = date("Y-m-d H:i:s");
+// 	                $rowHis->save();
 	                
-	            }
+// 	            }
 	            
 	            $model->save();
 	            
 	            // Save image.
 	            $acc_img = new AccidentImage();
 	            $acc_img->accident_id = $model->id;
+	            
+	            if (isset($_POST['AccidentImage'])) {
+	                $acc_img->attributes = $_POST['AccidentImage'];
+	            }
 	            
 	            $img1 = $_FILES['img1'];
 	            if (isset($img1)) {
@@ -95,12 +99,100 @@ class NormalPersonController extends CController {
 	                foreach ($file_ary as $file) {
 	                    if ($file['size'] > 0) {
 	                        $acc_img->path_img2 = CommonUtil::upload($file);
-	                        $acc_img->save();
+	                    }
+	                    $index ++;
+	                }
+	            }
+	            $img3 = $_FILES['img3'];
+	            if (isset($img3)) {
+	                $file_ary = CommonUtil::reArrayFiles($img3);
+	                $index = 0;
+	                foreach ($file_ary as $file) {
+	                    if ($file['size'] > 0) {
+	                        $acc_img->path_img3 = CommonUtil::upload($file);
+	                    }
+	                    $index ++;
+	                }
+	            }
+	            $img4 = $_FILES['img4'];
+	            if (isset($img4)) {
+	                $file_ary = CommonUtil::reArrayFiles($img4);
+	                $index = 0;
+	                foreach ($file_ary as $file) {
+	                    if ($file['size'] > 0) {
+	                        $acc_img->path_img4 = CommonUtil::upload($file);
+	                    }
+	                    $index ++;
+	                }
+	            }
+	            $img5 = $_FILES['img5'];
+	            if (isset($img5)) {
+	                $file_ary = CommonUtil::reArrayFiles($img5);
+	                $index = 0;
+	                foreach ($file_ary as $file) {
+	                    if ($file['size'] > 0) {
+	                        $acc_img->path_img5 = CommonUtil::upload($file);
+	                    }
+	                    $index ++;
+	                }
+	            }
+	            $img6 = $_FILES['img6'];
+	            if (isset($img6)) {
+	                $file_ary = CommonUtil::reArrayFiles($img6);
+	                $index = 0;
+	                foreach ($file_ary as $file) {
+	                    if ($file['size'] > 0) {
+	                        $acc_img->path_img6 = CommonUtil::upload($file);
+	                    }
+	                    $index ++;
+	                }
+	            }
+	            $img7 = $_FILES['img7'];
+	            if (isset($img7)) {
+	                $file_ary = CommonUtil::reArrayFiles($img7);
+	                $index = 0;
+	                foreach ($file_ary as $file) {
+	                    if ($file['size'] > 0) {
+	                        $acc_img->path_img7 = CommonUtil::upload($file);
+	                    }
+	                    $index ++;
+	                }
+	            }
+	            $img8 = $_FILES['img8'];
+	            if (isset($img8)) {
+	                $file_ary = CommonUtil::reArrayFiles($img8);
+	                $index = 0;
+	                foreach ($file_ary as $file) {
+	                    if ($file['size'] > 0) {
+	                        $acc_img->path_img8 = CommonUtil::upload($file);
+	                    }
+	                    $index ++;
+	                }
+	            }
+	            $img9 = $_FILES['img9'];
+	            if (isset($img9)) {
+	                $file_ary = CommonUtil::reArrayFiles($img9);
+	                $index = 0;
+	                foreach ($file_ary as $file) {
+	                    if ($file['size'] > 0) {
+	                        $acc_img->path_img9 = CommonUtil::upload($file);
+	                    }
+	                    $index ++;
+	                }
+	            }
+	            $img10 = $_FILES['img10'];
+	            if (isset($img10)) {
+	                $file_ary = CommonUtil::reArrayFiles($img10);
+	                $index = 0;
+	                foreach ($file_ary as $file) {
+	                    if ($file['size'] > 0) {
+	                        $acc_img->path_img10 = CommonUtil::upload($file);
 	                    }
 	                    $index ++;
 	                }
 	            }
 	            $acc_img->save();
+	            
 	            
 	            // Notify//
 	            $model = new Notify();
@@ -122,12 +214,12 @@ class NormalPersonController extends CController {
 	        }
 	    } else {
 	        // Render
-	        $this->render('//operations/normalperson/create');
+	        $this->render('//operations/normalperson/accident');
 	    }
 	}
 
 
-	public function actionCreateIncident()
+	public function actionCIncident()
 	{
 
 	    if (isset ( $_POST ['Incident'] )) {
@@ -140,21 +232,75 @@ class NormalPersonController extends CController {
 	        $model->create_date = date ( "Y-m-d H:i:s" );
 	        $model->create_by = UserLoginUtils::getUsersLoginId ();
 	        
-	        $img1 = $_FILES ['img1'];
+	        $model->save ();
 	        
-	        if (isset ( $img1 )) {
-	            $file_ary = CommonUtil::reArrayFiles ( $img1 );
-	            
+	        // Save image.
+	        $acc_img = new IncidentImage();
+	        $acc_img->incident_id = $model->id;
+	        
+	        if (isset($_POST['IncidentImage'])) {
+	            $acc_img->attributes = $_POST['IncidentImage'];
+	        }
+	        
+	        $img1 = $_FILES['img1'];
+	        if (isset($img1)) {
+	            $file_ary = CommonUtil::reArrayFiles($img1);
 	            $index = 0;
-	            foreach ( $file_ary as $file ) {
-	                if ($file ['size'] > 0) {
-	                    $model->img1 = CommonUtil::upload ( $file );
+	            foreach ($file_ary as $file) {
+	                if ($file['size'] > 0) {
+	                    $acc_img->path_img1 = CommonUtil::upload($file);
 	                }
 	                $index ++;
 	            }
 	        }
+	        $img2 = $_FILES['img2'];
+	        if (isset($img2)) {
+	            $file_ary = CommonUtil::reArrayFiles($img2);
+	            $index = 0;
+	            foreach ($file_ary as $file) {
+	                if ($file['size'] > 0) {
+	                    $acc_img->path_img2 = CommonUtil::upload($file);
+	                }
+	                $index ++;
+	            }
+	        }
+	        $img3 = $_FILES['img3'];
+	        if (isset($img3)) {
+	            $file_ary = CommonUtil::reArrayFiles($img3);
+	            $index = 0;
+	            foreach ($file_ary as $file) {
+	                if ($file['size'] > 0) {
+	                    $acc_img->path_img3 = CommonUtil::upload($file);
+	                }
+	                $index ++;
+	            }
+	        }
+	        $img4 = $_FILES['img4'];
+	        if (isset($img4)) {
+	            $file_ary = CommonUtil::reArrayFiles($img4);
+	            $index = 0;
+	            foreach ($file_ary as $file) {
+	                if ($file['size'] > 0) {
+	                    $acc_img->path_img4 = CommonUtil::upload($file);
+	                }
+	                $index ++;
+	            }
+	        }
+	        $img5 = $_FILES['img5'];
+	        if (isset($img5)) {
+	            $file_ary = CommonUtil::reArrayFiles($img5);
+	            $index = 0;
+	            foreach ($file_ary as $file) {
+	                if ($file['size'] > 0) {
+	                    $acc_img->path_img5 = CommonUtil::upload($file);
+	                }
+	                $index ++;
+	            }
+	        }
+	        $acc_img->save();
 	        
-	        $model->save ();
+	        
+	        
 	        
 	        // Notify//
 	        $model = new Notify();
@@ -174,7 +320,7 @@ class NormalPersonController extends CController {
 	        $this->render ( '//operations/normalperson/result' );
 	    } else {
 	        // Render
-	        $this->render('//operations/normalperson/create_incident');
+	        $this->render('//operations/normalperson/incident');
 	        
 	    }
 	}
