@@ -65,7 +65,7 @@
 											<div class="input-group date date-picker"
 												data-date-format="dd-mm-yyyy">
 												<input type="text"
-													value="<?php echo (isset($data->report_date)? $data->report_date: CommonUtil::getCurDate());?>"
+													value="<?php echo (isset($data->report_date)? CommonUtil::getDateThai($data->report_date) : CommonUtil::getCurDate());?>"
 													id="report_date" class="form-control"
 													name="AccidentInvestigation[report_date]" /> <span
 													class="input-group-btn">
@@ -248,7 +248,27 @@ echo CommonUtil::getDepartment (  count($persons)>1? '' : $person->person_depart
 						</div>
 
 						<!-- MERGE SECCION 4 -->
-
+							<div class="row">
+								<div class="col-md-10">
+									<div class="form-group">
+										<label class="control-label col-md-4">ประเภทความเสียหาย : </label>
+										<div class="col-md-8">
+    										<div class="mt-radio-list">
+    											<input type="radio" checked="checked" class="rdPersonLostTypeCls" id="person_lost_type" <?php echo count($persons)>1? '' : ($person->person_lost_type =="1")? 'checked="checked"':''; ?>
+    												name="AccidentInvestigationPerson[person_lost_type]" value="1" />
+    											เสียชีวิต <input type="radio" class="rdPersonLostTypeCls" id="person_lost_type" <?php echo count($persons)>1? '' : ($person->person_lost_type =="2")? 'checked="checked"':''; ?>
+    												name="AccidentInvestigationPerson[person_lost_type]" value="2" />
+    											สูญเสียอวัยวะ/ทุพพลภาพ
+    											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input
+    												type="radio" id="person_lost_type" class="rdPersonLostTypeCls" <?php echo count($persons)>1? '' : ($person->person_lost_type =="3")? 'checked="checked"':''; ?>
+    												name="AccidentInvestigationPerson[person_lost_type]" value="3" />
+    											บาดเจ็บ/เจ็บป่วย
+    										</div>
+										</div>
+										<div id="divReq-person_lost_type"></div>
+									</div>
+								</div>
+							</div>
 						<div class="row">
 							<div class="col-md-10">
 								<div class="form-group">
@@ -347,7 +367,7 @@ echo CommonUtil::getDepartment (  count($persons)>1? '' : $person->person_depart
 										<table>
 											<tr>
 												<td><button type="button" class="sm btn green" id="btnAdd">เพิ่ม
-														(+)</button></td>
+														(+)</button><span style="font-size: xx-small; color: red;"> (กรณีมีผู้บาดเจ็บมากกว่า 1 คน)</span></td>
 											</tr>
 										</table>
 										<br> <br>
@@ -371,6 +391,8 @@ echo CommonUtil::getDepartment (  count($persons)>1? '' : $person->person_depart
 															style="font-size: xx-small; text-align: center; width: 100%">หน้าที่</th>
 														<th
 															style="font-size: xx-small; text-align: center; width: 100%">ระยะเวลาปฏิบัติงาน</th>
+															<th style="font-size: xx-small; text-align: center; width: 100%">ประเภทความเสียหาย </th>
+															
 														<th style="font-size: xx-small; text-align: center;">อายุ</th>
 														<th style="font-size: xx-small; text-align: center;">เพศ</th>
 														<th style="font-size: xx-small; text-align: center;">ตำแหน่ง</th>
@@ -418,6 +440,11 @@ echo CommonUtil::getDepartment (  count($persons)>1? '' : $person->person_depart
 															
 															$tr =$tr .'<td style="font-size: xx-small; text-align: center;">';
 															$tr =$tr .'<input style="width : 120px !important;" id="person_work_period" type="label" value="'.$person->person_work_period.'"class="form-control" name="person_work_periods[]" readonly="readonly">';
+															$tr =$tr .'</td>';
+															
+															$tr =$tr .'<td style="font-size: xx-small; text-align: center;">';
+															$tr =$tr .'<input style="width : 100px !important;" id="person_sex" type="hidden" value="'.$person->person_lost_type.'"class="form-control" name="person_sexs[]">';
+															$tr =$tr .'<input style="width : 100px !important;" id="hperson_sex" type="label" value="'.$person->person_lost_type.'" class="form-control" readonly="readonly">';
 															$tr =$tr .'</td>';
 															
 															$tr =$tr .'<td style="font-size: xx-small; text-align: center;">';
@@ -477,7 +504,7 @@ echo CommonUtil::getDepartment (  count($persons)>1? '' : $person->person_depart
 											<div class="input-group date date-picker"
 												data-date-format="dd-mm-yyyy">
 												<input type="text"
-													value="<?php echo (isset($data->case_date)? $data->case_date: CommonUtil::getCurDate());?>"
+													value="<?php echo (isset($data->case_date)? CommonUtil::getDateThai($data->case_date): CommonUtil::getCurDate());?>"
 													id="case_date" class="form-control"
 													name="AccidentInvestigation[case_date]" /> <span
 													class="input-group-btn">
@@ -1576,10 +1603,12 @@ echo CommonUtil::getDepartment (  count($persons)>1? '' : $person->person_depart
             	var txt_person_department_id_text = $("#person_department_id option:selected").text();
             	var txt_person_responsibility = $('#person_responsibility').val();
             	var txt_person_work_period = $('#person_work_period').val();
+
             	
             	var txt_person_age = $('#person_age').val();
         		var personSex = $('.rdPersonSexCls:checked').val();
-
+        		var personLostType = $('.rdPersonLostTypeCls:checked').val();
+        		
 
 
             	var txt_person_position = $('#person_position').val();
@@ -1618,10 +1647,16 @@ echo CommonUtil::getDepartment (  count($persons)>1? '' : $person->person_depart
 	    			'<td style="font-size: xx-small; text-align: center;">'+
 	    			'<input style="width : 120px !important;" id="person_work_period" type="label" value="'+txt_person_work_period+'"class="form-control" name="person_work_periods[]" readonly="readonly">'+
 	    			'</td>'+
-
+	    			
+	    			'<td style="font-size: xx-small; text-align: center;">'+
+	    			'<input style="width : 100px !important;" id="person_lost_type" type="hidden" value="'+personLostType+'"class="form-control" name="person_lost_types[]">'+
+	    			'<input style="width : 100px !important;" id="hperson_lost_type" type="label" value="'+getpersonLostType(personLostType)+'" class="form-control" readonly="readonly">'+
+	    			'</td>'+
+	    			
 	    			'<td style="font-size: xx-small; text-align: center;">'+
 	    			'<input style="width : 60px !important;" id="person_age" type="label" value="'+txt_person_age+'"class="form-control" name="person_ages[]" readonly="readonly">'+
 	    			'</td>'+
+
 	    			
 	    			'<td style="font-size: xx-small; text-align: center;">'+
 	    			'<input style="width : 100px !important;" id="person_sex" type="hidden" value="'+personSex+'"class="form-control" name="person_sexs[]">'+
@@ -1925,6 +1960,22 @@ echo CommonUtil::getDepartment (  count($persons)>1? '' : $person->person_depart
        	}
     	return $result;
     }
+    function getpersonLostType($val){
+    	$result = '';
+            switch($val){
+            case '1':
+                $result= 'เสียชีวิต ';
+                break;
+            case '2':
+                $result= 'สูญเสียอวัยวะ/ทุพพลภาพ';
+                break;
+            case '3':
+                $result='บาดเจ็บ/เจ็บป่วย';
+                break;
+       	}
+    	return $result;
+    }
+    
    	
 </script>
 

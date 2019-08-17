@@ -13,6 +13,11 @@ class AccidentInvestigationPerson extends CActiveRecord {
                 'AccidentInvestigation',
                 'accident_investigation_id'
             ),
+        		'department' => array(
+        				self::BELONGS_TO,
+        				'MDepartment',
+        				'person_department_id'
+        		),
         );
     }
     public function rules() {

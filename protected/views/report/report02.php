@@ -1,25 +1,3 @@
-<?php
-
-$deptParent = MDepartment::model()->findAll(array("condition"=>"faculty_id = -1",'order'=>'seq'));
-$deptChild = MDepartment::model()->findAll(array("condition"=>"faculty_id <> -1",'order'=>'seq'));
-
-
-// $criteria = new CDbCriteria ();
-// switch (UserLoginUtils::getUserRoleName ()) {
-// 	case UserLoginUtils::ADMIN :
-// 	case UserLoginUtils::EXCUTIVE :
-// 		break;
-// 	case UserLoginUtils::STAFF :
-// 	case UserLoginUtils::USER :
-// 		$dept_id = isset ( UserLoginUtils::getRegisterInfo ()->dep_owner_department_id ) ? UserLoginUtils::getRegisterInfo ()->dep_owner_department_id : 0;
-// 		$criteria->condition = " t.id = " . $dept_id;
-// 		break;
-// }
-// $departments = MDepartment::model ()->findAll ( $criteria );
-
-
-?>
-
 <form id="Form1" method="post" enctype="multipart/form-data"
 	class="form-horizontal">
 
@@ -45,26 +23,7 @@ $deptChild = MDepartment::model()->findAll(array("condition"=>"faculty_id <> -1"
 <select class="form-control" name="AccidentInvestigation[owner_department_id]" id="owner_department_id" onchange="onchangeDepartment(this)">
 <option value="-1">-- (ทั้งหมด) --</option>
 <?php
-foreach ($deptParent as $parent) {
-    $isGroup = false;
-    foreach ($deptChild as $child) {
-        if(intval($parent['id']) == intval($child['faculty_id'])){
-            $isGroup = true;
-        }
-    }
-    if($isGroup){
-        echo '<optgroup style="color:#008;font-style:normal;font-weight:normal;" label="'.$parent['name'].'">';
-        echo '</optgroup>';
-    }else{
-        echo '<option style="color:#'.(intval($parent['faculty_id']) == -1? '008':'000').';font-style:normal;font-weight:normal;" value="'.$parent['id'].'" '. ($parent['id'] == $data->owner_department_id? 'selected="selected"':'') .'>'.htmlspecialchars($parent['name']).'</option>';
-    }
-    
-    foreach ($deptChild as $child) {
-        if(intval($parent['id']) == intval($child['faculty_id'])){
-            echo '<option style="color:#000;font-style:normal;font-weight:normal;" value="'.$child['id'].'" '. ($child['id'] == $data->owner_department_id? 'selected="selected"':'') .'>&nbsp;&nbsp;&nbsp;-&nbsp;'.htmlspecialchars($child['name']).'</option>';
-        }
-    }
-}
+echo CommonUtil::getDepartment('');
 ?>
 </select>
 							</div>
@@ -157,12 +116,16 @@ foreach ($deptParent as $parent) {
 						<thead>
 							<tr>
 								<th>ลำดับ</th>
-								<th>ชื่อ-นามสุกล</th>
-								<th>อายุ</th>
-								<th>ตำแหน่ง/ชั้นปี</th>
-								<th>คณะ/ส่วนงาน</th>
-								<th>หน้าที่</th>
-								<th>อวัยวะที่บาดเจ็บ</th>
+<!-- 								<th>รายละเอียดของผู้ประสบเหตุ</th> -->
+<!-- 								<th>ประเภทความเสียหาย</th> -->
+<!-- 								<th>เพศ</th> -->
+								<th>ผู้รายงาน</th>
+								<th>ตำแหน่ง</th>
+								<th>วันที่รายงาน</th>
+								<th>สถานที่เกิดเหตุ</th>
+<!-- 								<th>ระยะเวลาปฏิบัติงาน</th> -->
+								<th>ลักษณะเหตุการณ์เกิดขึ้นได้อย่างไร</th>
+								<th class="no-sort"></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -172,13 +135,15 @@ foreach ($deptParent as $parent) {
 		?>
 				<tr>
 								<td class="center"><?php echo $counter?></td>
-                				<td class="center"><?php echo $data->person_name?></td>
-                				<td class="center"><?php echo $data->person_age?></td>
-                				<td class="center"><?php echo $data->person_position?></td>
-                				<td class="center"><?php echo $data->department->name?></td>
-                				<td class="center"><?php echo $data->person_responsibility?></td>
-                				<td class="center"><?php echo $data->person_dammage_body?></td>
-                				
+                				<td class="center"><?php echo $data->report_name?></td>
+                				<td class="center"><?php echo $data->report_position?></td>
+                				<td class="center"><?php echo $data->report_date?></td>
+                				<td class="center"><?php echo $data->accident_location?></td>
+                				<td class="center"><?php echo $data->accident_event_happen?></td>
+								<td class="center">
+								<a title="Edit" class="fa fa-file-pdf-o"	href="<?php echo Yii::app()->CreateUrl('Report/Export02Pdf/id/'.$data->id)?>"></a>
+								
+								</td>                				
 							</tr>
 			<?php
 			$counter++;

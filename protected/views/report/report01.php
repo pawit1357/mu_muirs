@@ -123,7 +123,7 @@ echo CommonUtil::getDepartment('');
 								<th>ลักษณะเหตุการณ์</th>
 								<th>สถานที่เกิดเหตุ</th>
 								<th>วัน/เดือน/ปี ที่เกิดเหตุ </th>
-								<th></th>
+								<th class="no-sort"></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -140,7 +140,7 @@ echo CommonUtil::getDepartment('');
 								<td class="center"><?php echo $data->accident_location?></td>
 								<td class="center"><?php echo $data->case_date?></td>
 								<td class="center">
-								<a title="Edit" class="fa fa-file-pdf-o"	href="<?php echo Yii::app()->CreateUrl('Report/ExportPdf/id/'.$data->id)?>"></a>
+								<a title="Edit" class="fa fa-file-pdf-o"	href="<?php echo Yii::app()->CreateUrl('Report/Export01Pdf/id/'.$data->id)?>"></a>
 								
 								</td>
 							</tr>

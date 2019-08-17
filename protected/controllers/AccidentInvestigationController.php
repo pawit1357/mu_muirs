@@ -403,6 +403,9 @@ class AccidentInvestigationController extends CController {
 				$person_lost_types = $_POST ['person_lost_types'];
 				$person_dammage_bodys = $_POST ['person_dammage_bodys'];
 				$person_dammage_body_descs = $_POST ['person_dammage_body_descs'];
+				$person_dammage_body_descs = $_POST ['person_dammage_body_descs'];
+				
+				
 				// #####################################################
 				$index = 0;
 				if (isset ( $person_names )) {
