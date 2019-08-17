@@ -236,7 +236,21 @@ echo CommonUtil::getDepartment($data->department_id);
 								</div>
 							</div>
 
-
+							<div class="row">
+								<div class="col-md-10">
+									<div class="form-group">
+										<label class="control-label col-md-4">ลำดับเหตุการณ์:<span
+											class="required">*</span>
+										</label>
+										<div class="col-md-4">
+											<textarea rows="5" cols="70" id="accident_chronology"
+												 name="Accident[accident_chronology]"><?php echo $data->accident_chronology;?></textarea>
+										</div>
+										<div id="divReq-chronology"></div>
+									</div>
+								</div>
+							</div>
+							
 							<div class="row">
 								<div class="col-md-10">
 									<div class="form-group">
@@ -977,15 +991,15 @@ echo CommonUtil::getDepartment($data->department_id);
             	$("#divReq-Accident_location").html('');
             	$("#Accident_location").closest('.form-group').removeClass('has-error');
         	}
-//          	if($("#accident_chronology").val().length == 0){
-//         		$("#accident_chronology").closest('.form-group').addClass('has-error');
-//         		$("#divReq-accident_chronology").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
-//         		$("#accident_chronology").focus();
-//         		return false;
-//             }else{
-//             	$("#divReq-accident_chronology").html('');
-//             	$("#accident_chronology").closest('.form-group').removeClass('has-error');
-//         	}
+         	if($("#accident_chronology").val().length == 0){
+        		$("#accident_chronology").closest('.form-group').addClass('has-error');
+        		$("#divReq-accident_chronology").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+        		$("#accident_chronology").focus();
+        		return false;
+            }else{
+            	$("#divReq-accident_chronology").html('');
+            	$("#accident_chronology").closest('.form-group').removeClass('has-error');
+        	}
          	if($("#Accident_event").val().length == 0){
         		$("#Accident_event").closest('.form-group').addClass('has-error');
         		$("#divReq-accident_event").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");

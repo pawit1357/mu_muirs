@@ -244,7 +244,7 @@ echo CommonUtil::getDepartment('');
 									</div>
 								</div>
 							</div>
-<!-- 
+
 							<div class="row">
 								<div class="col-md-10">
 									<div class="form-group">
@@ -259,7 +259,7 @@ echo CommonUtil::getDepartment('');
 									</div>
 								</div>
 							</div>
- -->
+
 							<div class="row">
 								<div class="col-md-10">
 									<div class="form-group">
@@ -1023,15 +1023,15 @@ echo CommonUtil::getDepartment('');
             	$("#Accident_event").closest('.form-group').removeClass('has-error');
         	}
         	
-//          	if($("#chronology").val().length == 0){
-//         		$("#chronology").closest('.form-group').addClass('has-error');
-//         		$("#divReq-chronology").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
-//         		$("#chronology").focus();
-//         		return false;
-//             }else{
-//             	$("#divReq-chronology").html('');
-//             	$("#chronology").closest('.form-group').removeClass('has-error');
-//         	}
+         	if($("#chronology").val().length == 0){
+        		$("#chronology").closest('.form-group').addClass('has-error');
+        		$("#divReq-chronology").html("<span id=\"id-error\" class=\"help-block help-block-error\">This field is required.</span>");
+        		$("#chronology").focus();
+        		return false;
+            }else{
+            	$("#divReq-chronology").html('');
+            	$("#chronology").closest('.form-group').removeClass('has-error');
+        	}
 
     		var damageType = $('.rdDamageTypeCls:checked').val();
 			switch(damageType){

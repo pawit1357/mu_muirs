@@ -1,23 +1,3 @@
-<?php
-$deptParent = MDepartment::model()->findAll(array("condition"=>"faculty_id = -1",'order'=>'seq'));
-$deptChild = MDepartment::model()->findAll(array("condition"=>"faculty_id <> -1",'order'=>'seq'));
-
-
-// $criteria = new CDbCriteria ();
-// switch (UserLoginUtils::getUserRoleName ()) {
-// 	case UserLoginUtils::ADMIN :
-// 	case UserLoginUtils::EXCUTIVE :
-// 		break;
-// 	case UserLoginUtils::STAFF :
-// 	case UserLoginUtils::USER :
-// 		$dept_id = isset ( UserLoginUtils::getRegisterInfo ()->dep_department_id ) ? UserLoginUtils::getRegisterInfo ()->dep_department_id : 0;
-// 		$criteria->condition = " t.id = " . $dept_id;
-// 		break;
-// }
-
-// $departments = MDepartment::model ()->findAll ( $criteria );
-
-?>
 <form id="Form1" method="post" enctype="multipart/form-data"
 	class="form-horizontal">
 
@@ -43,26 +23,7 @@ $deptChild = MDepartment::model()->findAll(array("condition"=>"faculty_id <> -1"
 <select class="form-control" name="Accident[department_id]" id="department_id" onchange="onchangeDepartment(this)">
 <option value="-1">-- (ทั้งหมด) --</option>
 <?php
-foreach ($deptParent as $parent) {
-    $isGroup = false;
-    foreach ($deptChild as $child) {
-        if(intval($parent['id']) == intval($child['faculty_id'])){
-            $isGroup = true;
-        }
-    }
-    if($isGroup){
-        echo '<optgroup style="color:#008;font-style:normal;font-weight:normal;" label="'.$parent['name'].'">';
-        echo '</optgroup>';
-    }else{
-        echo '<option style="color:#'.(intval($parent['faculty_id']) == -1? '008':'000').';font-style:normal;font-weight:normal;" value="'.$parent['id'].'" '. ($parent['id'] == $data->department_id? 'selected="selected"':'') .'>'.htmlspecialchars($parent['name']).'</option>';
-    }
-    
-    foreach ($deptChild as $child) {
-        if(intval($parent['id']) == intval($child['faculty_id'])){
-            echo '<option style="color:#000;font-style:normal;font-weight:normal;" value="'.$child['id'].'" '. ($child['id'] == $data->department_id? 'selected="selected"':'') .'>&nbsp;&nbsp;&nbsp;-&nbsp;'.htmlspecialchars($child['name']).'</option>';
-        }
-    }
-}
+echo CommonUtil::getDepartment('');
 ?>
 </select>
 							</div>
@@ -162,6 +123,7 @@ foreach ($deptParent as $parent) {
 								<th>ลักษณะเหตุการณ์</th>
 								<th>สถานที่เกิดเหตุ</th>
 								<th>วัน/เดือน/ปี ที่เกิดเหตุ </th>
+								<th></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -177,6 +139,10 @@ foreach ($deptParent as $parent) {
 								<td class="center"><?php echo $data->accident_event?></td>
 								<td class="center"><?php echo $data->accident_location?></td>
 								<td class="center"><?php echo $data->case_date?></td>
+								<td class="center">
+								<a title="Edit" class="fa fa-file-pdf-o"	href="<?php echo Yii::app()->CreateUrl('Report/ExportPdf/id/'.$data->id)?>"></a>
+								
+								</td>
 							</tr>
 			<?php
 			$counter++;
