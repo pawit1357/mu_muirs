@@ -58,7 +58,7 @@
 <?php }?>
 
 <?php if(strcmp($data->role_id,"1")!=0){?>
-<a title="Delete" onclick="return confirm('ต้องการลบข้อมูลใช่หรือไม่?')"
+<a title="Delete"  onclick="return confirm('ต้องการลบข้อมูลใช่หรือไม่?')" 
 									class="fa fa-trash"
 									href="<?php echo Yii::app()->CreateUrl('Users/Delete/id/'.$data->id)?>"></a>
 <?php }?>		

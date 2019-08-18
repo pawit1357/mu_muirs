@@ -51,6 +51,13 @@ class Incident extends CActiveRecord {
 	}
 	public function search() {
 		$criteria = new CDbCriteria ();
+		switch (UserLoginUtils::getUserRole ()) {
+			case "1" : // Admin
+				break;
+			default :
+				$criteria->addCondition ( "t.owner_department_id = " . UserLoginUtils::getDepartmentId () );
+				break;
+		}
 		return new CActiveDataProvider ( get_class ( $this ), array (
 				'criteria' => $criteria,
 				'sort' => array (

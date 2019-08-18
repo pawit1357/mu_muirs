@@ -832,9 +832,7 @@ echo CommonUtil::getDepartment($data->department_id);
 	}
 	
     function onchangeDepartment(sel){
-  	  //alert(sel.options[sel.selectedIndex].text);
-
-  	  $("#belong_to").val(sel.options[sel.selectedIndex].text);
+  	  //$("#belong_to").val(sel.options[sel.selectedIndex].text);
   	}
     
     jQuery(document).ready(function () {

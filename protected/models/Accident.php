@@ -1,28 +1,37 @@
 <?php
 class Accident extends CActiveRecord {
-    
-    public $department_id;
-    public $report_date_to;
-    public $report_date_from;
-    
+	public $department_id;
+	public $report_date_to;
+	public $report_date_from;
 	public static function model($className = __CLASS__) {
 		return parent::model ( $className );
 	}
-	
 	public function tableName() {
 		return 'tb_accident';
 	}
 	public function relations() {
 		return array (
-		    'department' => array(self::BELONGS_TO,'MDepartment','department_id'),
-		    'onwerdepartment' => array(self::BELONGS_TO,'MDepartment','owner_department_id'),
-		    'accidentImage' => array(self::BELONGS_TO,'AccidentImage','id'),
+				'department' => array (
+						self::BELONGS_TO,
+						'MDepartment',
+						'department_id'
+				),
+				'onwerdepartment' => array (
+						self::BELONGS_TO,
+						'MDepartment',
+						'owner_department_id'
+				),
+				'accidentImage' => array (
+						self::BELONGS_TO,
+						'AccidentImage',
+						'id'
+				)
 		);
 	}
 	public function rules() {
 		return array (
 				array (
-					   '
+						'
                         id,
                         name,
                         position_or_level,
@@ -51,15 +60,14 @@ class Accident extends CActiveRecord {
                         create_by,
                         create_date,
                         update_date,
-                        update_by
+                        update_by,report_date_from,report_date_to
                         ',
-                        'safe' 
+						'safe'
 				)
 		);
 	}
 	public function attributeLabels() {
 		return array ();
-		
 	}
 	public function getUrl($post = null) {
 		if ($post === null)
@@ -71,15 +79,22 @@ class Accident extends CActiveRecord {
 	}
 	public function search() {
 		$criteria = new CDbCriteria ();
+		switch (UserLoginUtils::getUserRole ()) {
+			case "1" : // Admin
+				break;
+			default :
+				$criteria->addCondition ( "t.department_id = " . UserLoginUtils::getDepartmentId () );
+				break;
+		}
+
 		return new CActiveDataProvider ( get_class ( $this ), array (
 				'criteria' => $criteria,
 				'sort' => array (
-						'defaultOrder' => 't.create_date desc' 
+						'defaultOrder' => 't.create_date desc'
 				),
 				'pagination' => array (
-						'pageSize' => 1500 
-				)  // ConfigUtil::getDefaultPageSize()
-		
+						'pageSize' => 1500
+				) // ConfigUtil::getDefaultPageSize()
 		) );
 	}
 	public static function getMax() {

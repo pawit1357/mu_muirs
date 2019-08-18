@@ -20,6 +20,8 @@
 						<thead>
 							<tr>
 								<th>ลำดับ</th>
+																<th>หน่วยงาน</th>
+								
 <!-- 								<th>รายละเอียดของผู้ประสบเหตุ</th> -->
 <!-- 								<th>ประเภทความเสียหาย</th> -->
 <!-- 								<th>เพศ</th> -->
@@ -41,6 +43,7 @@
 		?>
 				<tr>
 								<td class="center"><?php echo $counter?></td>
+								<td class="center"><?php echo $data->department->name?></td>
                 				<td class="center"><?php echo $data->report_name?></td>
                 				<td class="center"><?php echo $data->report_position?></td>
                 				<td class="center"><?php echo $data->report_date?></td>

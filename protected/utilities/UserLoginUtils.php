@@ -1,10 +1,12 @@
 <?php
 session_start ();
 class UserLoginUtils {
+	
 	const ADMIN = "ADMIN";
 	const STAFF = "STAFF";
 	const USER = "USER";
 	const EXCUTIVE = "EXCUTIVE";
+	
 	public static function isLogin() {
 		return isset ( $_SESSION ['USER_LOGIN_ID'] );
 	}
@@ -237,6 +239,15 @@ class UserLoginUtils {
 			}
 		} else {
 			return null;
+		}
+	}
+	public static function isAdmin(){
+		switch (UserLoginUtils::getUserRole ()) {
+			case "1" : // Admin
+				return true;
+			default :
+				return false;
+				break;
 		}
 	}
 }

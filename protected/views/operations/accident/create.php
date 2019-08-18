@@ -73,7 +73,7 @@
 									<div class="form-group">
 										<label class="control-label col-md-4">คณะ/ส่วนงาน :<span
 											class="required">*</span></label>
-										<div class="col-sm-4">
+										<div class="col-sm-5">
 										
 										                
 										
@@ -81,7 +81,7 @@
 <select class="form-control" name="Accident[department_id]" id="department_id" onchange="onchangeDepartment(this)">
 <option value="-1">-- (ไม่มีสังกัด) --</option>
 <?php
-echo CommonUtil::getDepartment('');
+echo CommonUtil::getDepartment(UserLoginUtils::getDepartmentId());
 ?>
 </select>
 
@@ -844,7 +844,7 @@ echo CommonUtil::getDepartment('');
 // 	var treeData;
 
     function onchangeDepartment(sel){
-    	  $("#belong_to").val(sel.options[sel.selectedIndex].text)
+    	  //$("#belong_to").val(sel.options[sel.selectedIndex].text)
     }
     
 //     function initTree(treeData) {

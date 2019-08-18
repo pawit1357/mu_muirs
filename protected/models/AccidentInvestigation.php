@@ -1,9 +1,7 @@
 <?php
 class AccidentInvestigation extends CActiveRecord {
-    
-    public $report_date_to;
-    public $report_date_from;
-    
+	public $report_date_to;
+	public $report_date_from;
 	public static function model($className = __CLASS__) {
 		return parent::model ( $className );
 	}
@@ -12,16 +10,16 @@ class AccidentInvestigation extends CActiveRecord {
 	}
 	public function relations() {
 		return array (
-				'department' => array(
+				'department' => array (
 						self::BELONGS_TO,
 						'MDepartment',
-						'person_department_id'
+						'owner_department_id'
 				),
-                'accidentInvestigationImage' => array(
-				    self::BELONGS_TO,
-				    'AccidentInvestigationImage',
-				    'id'
-				),
+				'accidentInvestigationImage' => array (
+						self::BELONGS_TO,
+						'AccidentInvestigationImage',
+						'id'
+				)
 		);
 	}
 	public function rules() {
@@ -56,20 +54,19 @@ class AccidentInvestigation extends CActiveRecord {
                             accidental_damage4_other,
                             accidental_damage5,
                             accident_solve,
-                            accident_protect,
+                            accident_protect,owner_department_id,
                             create_date,
                             create_by,
                             update_date,
-                            update_by
+                            update_by,report_date_from,report_date_to
                             ',
-						'safe' 
-				) 
+						'safe'
+				)
 		);
 	}
 	public function attributeLabels() {
-		return array ()
-
-		;
+		return array ();
+		
 	}
 	public function getUrl($post = null) {
 		if ($post === null)
@@ -81,15 +78,21 @@ class AccidentInvestigation extends CActiveRecord {
 	}
 	public function search() {
 		$criteria = new CDbCriteria ();
+		switch (UserLoginUtils::getUserRole ()) {
+			case "1" : // Admin
+				break;
+			default :
+				$criteria->addCondition ( "t.owner_department_id = " . UserLoginUtils::getDepartmentId () );
+				break;
+		}
 		return new CActiveDataProvider ( get_class ( $this ), array (
 				'criteria' => $criteria,
 				'sort' => array (
-						'defaultOrder' => 't.id asc' 
+						'defaultOrder' => 't.id asc'
 				),
 				'pagination' => array (
-						'pageSize' => 15 
+						'pageSize' => 15
 				) // ConfigUtil::getDefaultPageSize()
- 
 		) );
 	}
 	public static function getMax() {
@@ -97,6 +100,6 @@ class AccidentInvestigation extends CActiveRecord {
 		$criteria->order = 'id DESC';
 		$row = self::model ()->find ( $criteria );
 		$max = $row->id;
-		return $max+1;
+		return $max + 1;
 	}
 }

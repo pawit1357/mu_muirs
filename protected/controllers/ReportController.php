@@ -43,6 +43,7 @@ class ReportController extends CController {
 			$startDate = CommonUtil::getDate ( CommonUtil::getCurDate () );
 			$endDate = CommonUtil::getDate ( CommonUtil::getCurDate () );
 			$criteria->addBetweenCondition ( 'case_date', $startDate, $endDate, 'AND' );
+			
 			$dataProvider = new CActiveDataProvider ( "Accident", array (
 					'criteria' => $criteria
 			) );

@@ -19,9 +19,9 @@
 						<thead>
 							<tr>
 								<th>ลำดับ</th>
+								<th>คณะ/ส่วนงาน</th>
 								<th>ผู้รายงาน</th>
 								<th>เบอร์โทรศัพท์</th>
-								<th>คณะ/ส่วนงาน</th>
 								<th>ลักษณะเหตุการณ์</th>
 								<th>สถานที่เกิดเหตุ</th>
 								<th>วัน/เดือน/ปี ที่เกิดเหตุ </th>
@@ -37,9 +37,9 @@
 		?>
 				<tr>
 								<td class="center"><?php echo $counter?></td>
+								<td class="center"><?php echo $data->department->name?></td>
 								<td class="center"><?php echo $data->name?></td>
 								<td class="center"><?php echo $data->phone_number?></td>
-								<td class="center"><?php echo $data->department->name?></td>
 								<td class="center"><?php echo $data->accident_event?></td>
 								<td class="center"><?php echo $data->accident_location?></td>
 								<td class="center"><?php echo $data->case_date?></td>

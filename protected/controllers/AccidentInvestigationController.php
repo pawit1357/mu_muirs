@@ -32,6 +32,7 @@ class AccidentInvestigationController extends CController {
 
 				$model = new AccidentInvestigation ();
 				$model->attributes = $_POST ['AccidentInvestigation'];
+				$model->owner_department_id = UserLoginUtils::getDepartmentId();
 				$model->create_date = date ( "Y-m-d H:i:s" );
 				$model->create_by = UserLoginUtils::getUsersLoginId ();
 				$model->update_date = date ( "Y-m-d H:i:s" );

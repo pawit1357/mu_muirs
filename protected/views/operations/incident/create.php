@@ -75,7 +75,7 @@
 												id="owner_department_id">
 												<option value="-1">-- (ไม่มีสังกัด) --</option>
 <?php
-echo CommonUtil::getDepartment('');
+echo CommonUtil::getDepartment(UserLoginUtils::getDepartmentId());
 ?>
 			</select>
 

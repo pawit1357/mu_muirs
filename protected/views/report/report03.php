@@ -20,10 +20,17 @@
 							<label class="control-label col-md-3">สังกัดหน่วยงาน:<span
 								class="required">*</span></label>
 							<div class="col-md-6">
-<select class="form-control" name="Incident[owner_department_id]" id="owner_department_id" onchange="onchangeDepartment(this)">
+<select class="form-control" name="Incident[owner_department_id]" id="owner_department_id" onchange="onchangeDepartment(this)" <?php echo UserLoginUtils::isAdmin()? '"':'disabled="disabled'?>>
 <option value="-1">-- (ทั้งหมด) --</option>
 <?php
-echo CommonUtil::getDepartment('');
+switch (UserLoginUtils::getUserRole ()) {
+	case "1" : // Admin
+		echo CommonUtil::getDepartment('');
+		break;
+	default :
+		echo CommonUtil::getDepartment(UserLoginUtils::getDepartmentId () );
+		break;
+}
 ?>
 </select>
 							</div>
