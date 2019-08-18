@@ -292,8 +292,9 @@ class AccidentController extends CController
 				if (isset($img1)) {
 					$file_ary = CommonUtil::reArrayFiles($img1);
 					$index = 0;
-					foreach ($file_ary as $file) {
-						if ($file['size'] > 0) {
+					
+					foreach ($file_ary as $file) {						
+						if ($file['size'] > 0) {							
 							$acc_img->path_img1 = CommonUtil::upload($file);
 						}
 						$index ++;

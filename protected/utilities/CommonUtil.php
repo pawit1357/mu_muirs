@@ -131,18 +131,41 @@ class CommonUtil {
 
 		return $day . '/' . $month . '/' . ((( int ) $year) + 543);
 	}
-	public function upload($file) {
+	//linux
+	public static function upload($file) {
+		
 		$currentdir = getcwd ();
 
-		$upload_dir = $currentdir . "\\uploads\\" . date ( "Ymd" ) . "\\";
-		$dest_dir = "/uploads/" . date ( "Ymd" ) . "/";
-		if (! file_exists ( $upload_dir )) {
-			mkdir ( $upload_dir, 0777, true );
+		$upload_dir = $currentdir . "/uploads/" . date ( "Y/m/d" ) . "/";
+		$dest_dir = "/uploads/" . date ( "Y/m/d" ) . "/";
+		
+		if(!file_exists($upload_dir)){
+			if (!mkdir($upload_dir, 0755, true)) {//0755
+				die('Failed to create folders...');
+			}
+			
 		}
-
 		$file_name = strtolower ( self::random_string ( 10 ) . '.' . self::f_extension ( $file ['name'] ) );
 		$file_dir = $upload_dir . $file_name;
 
+		$move = move_uploaded_file ( $file ["tmp_name"], $file_dir );
+		return $dest_dir . $file_name;
+	}
+	//windows
+	public static function upload2($file) {
+		$currentdir = getcwd ();
+		$Y = date ( "Y" );
+		$m = date ( "m" );
+		$d = date ( "d" );
+		$upload_dir = $currentdir . "\\uploads\\" .$Y."\\".$m."\\".$d. "\\";
+		$dest_dir = "/uploads/" . date ( "Y/m/d" ) . "/";
+		if (! file_exists ( $upload_dir )) {
+			mkdir ( $upload_dir, 0777, true );
+		}
+		
+		$file_name = strtolower ( self::random_string ( 10 ) . '.' . self::f_extension ( $file ['name'] ) );
+		$file_dir = $upload_dir . $file_name;
+		
 		$move = move_uploaded_file ( $file ["tmp_name"], $file_dir );
 		return $dest_dir . $file_name;
 	}
@@ -164,46 +187,7 @@ class CommonUtil {
 
 		return $key;
 	}
-	// public static function getLastRevision($ref_doc) {
-	// $criteria = new CDbCriteria ();
-	// $criteria->condition = "refer_doc ='" . $ref_doc . "'";
-	// $criteria->order = 'id DESC';
-	// $row = Form1::model ()->find ( $criteria );
-	// $somevariable = $row->revision;
-	// return $somevariable + 1;
-	// }
-	// public static function getLastRevision_Form2($ref_doc, $type) {
-	// $criteria = new CDbCriteria ();
-	// $criteria->condition = "ref_doc ='" . $ref_doc . "' AND type=" . $type;
-	// $criteria->order = 'id DESC';
-	// $row = Form2::model ()->find ( $criteria );
-	// $somevariable = $row->revision;
-	// return $somevariable + 1;
-	// }
-	// public static function getLastRevision_Form3($ref_doc) {
-	// $criteria = new CDbCriteria ();
-	// $criteria->condition = "ref_doc ='" . $ref_doc . "'";
-	// $criteria->order = 'id DESC';
-	// $row = Form3::model ()->find ( $criteria );
-	// $somevariable = $row->revision;
-	// return $somevariable + 1;
-	// }
-	// public static function getLastRevision_Form6($ref_doc) {
-	// $criteria = new CDbCriteria ();
-	// $criteria->condition = "ref_doc ='" . $ref_doc . "'";
-	// $criteria->order = 'id DESC';
-	// $row = Form6::model ()->find ( $criteria );
-	// $somevariable = $row->revision;
-	// return $somevariable + 1;
-	// }
-	// public static function getValue($id) {
-	// $criteria = new CDbCriteria ();
-	// $criteria->condition = "id ='" . $id . "'";
-	// $criteria->order = 'id DESC';
-	// $row = MSetting::model ()->find ( $criteria );
-	// $somevariable = $row->value;
-	// return $somevariable;
-	// }
+
 	public static function reArrayFiles($file_post) {
 		$file_ary = array ();
 		$file_count = count ( $file_post ['name'] );
@@ -319,16 +303,6 @@ class CommonUtil {
 		ImageDestroy ( $images_orig );
 		ImageDestroy ( $images_fin );
 	}
-
-	// public static function isContain($str, $check){
-	// $result = false;
-
-	// echo $str.'-'.$check.''.$exploded[0];
-	// if (strpos($str, $check) !== false) {
-	// $result= true;
-	// }
-	// return $result;
-	// }
 
 	/* #MASTER# */
 	const CHECKBOX_TYPE = "1";

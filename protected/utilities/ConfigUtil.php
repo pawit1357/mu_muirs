@@ -3,6 +3,9 @@ class ConfigUtil {
 	private static $emailSubject = 'MU Accident Report System';
 	private static $hostName = 'http://localhost:90/muirs/';
 	private static $siteName = 'http://localhost:90/muirs/index.php/Site/LogOut';
+// 	private static $hostName = 'http://myapps1357.com/muirs/';
+// 	private static $siteName = 'http://myapps1357.com/muirs/index.php/Site/LogOut';
+	
 	private static $ApplicationTitle = 'MU-IRS | MU Incident Report System';
 	private static $ApplicationCopyRight = '2012 &copy; ศูนย์บริหารความปลอดภัยอาชีวอนามัยและสิ่งแวดล้อม มหาวิทยาลัยมหิดล ศาลายา';
 	private static $ApplicationAddress = '';
