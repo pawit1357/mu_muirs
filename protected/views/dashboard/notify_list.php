@@ -10,7 +10,7 @@
 						รายการแจ้งเตือน
 					</div>
 					<div class="actions">
-					<?php echo  CHtml::link('ย้อนกลับ',array('Dashboard'),array('class'=>'btn btn-default btn-sm'));?>
+					<?php echo  CHtml::link('ย้อนกลับ',array('Dashboard/'),array('class'=>'btn btn-default btn-sm'));?>
 					</div>
 				</div>
 				<div class="portlet-body">
@@ -19,6 +19,7 @@
 						<thead>
 							<tr>
 								<th>ลำดับ</th>
+								<th>คณะ/ส่วนงาน</th>
 								<th>ประเภทรายงาน</th>
 								<th>รายละเอียด</th>
 								<th>วันที่</th>
@@ -31,6 +32,13 @@
 	
 	$criteria = new CDbCriteria();
 	$criteria->order = 'create_date DESC';
+	switch (UserLoginUtils::getUserRole ()) {
+		case "1" : // Admin
+			break;
+		default :
+			$criteria->addCondition ( "t.department_id = " . UserLoginUtils::getDepartmentId () );
+			break;
+	}
 // 	$criteria->condition = " isRead=0";
 	$dataProvider = Notify::model()->findAll($criteria);
 	
@@ -38,6 +46,7 @@
 		?>
 				<tr>
 								<td class="center"><?php echo $counter?></td>
+								<td class="center"><?php echo $data->department->name?></td>
 								<td class="center"><?php echo $data->title?></td>
 								<td class="center"><?php echo $data->remark?></td>
 								<td class="center"><?php echo $data->create_date?></td>

@@ -7,12 +7,18 @@ class Notify extends CActiveRecord {
 		return 'tb_notify';
 	}
 	public function relations() {
-		return array ();
+		return array (
+				'department' => array (
+						self::BELONGS_TO,
+						'MDepartment',
+						'department_id'
+				)
+		);
 	}
 	public function rules() {
 		return array (
 				array (
-						'id,report_type,remark,isRead,create_date',
+						'id,report_type,remark,isRead,create_date,department_id',
 						'safe' 
 				) 
 		);

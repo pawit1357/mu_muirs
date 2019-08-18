@@ -10,7 +10,7 @@ class AccidentInvestigationController extends CController {
 		if (! UserLoginUtils::authorizePage ( $_SERVER ['REQUEST_URI'] )) {
 			$this->redirect ( Yii::app ()->createUrl ( 'DashBoard/Permission' ) );
 		}
-
+		
 		// Render
 		$model = new AccidentInvestigation ();
 		$this->render ( '//operations/accidentinvestigation/main', array (
@@ -25,11 +25,11 @@ class AccidentInvestigationController extends CController {
 		if (! UserLoginUtils::authorizePage ( $_SERVER ['REQUEST_URI'] )) {
 			$this->redirect ( Yii::app ()->createUrl ( 'DashBoard/Permission' ) );
 		}
-
+		
 		if (isset ( $_POST ['AccidentInvestigation'] )) {
 			try {
 				$transaction = Yii::app ()->db->beginTransaction ();
-
+				
 				$model = new AccidentInvestigation ();
 				$model->attributes = $_POST ['AccidentInvestigation'];
 				$model->owner_department_id = UserLoginUtils::getDepartmentId();
@@ -37,7 +37,7 @@ class AccidentInvestigationController extends CController {
 				$model->create_by = UserLoginUtils::getUsersLoginId ();
 				$model->update_date = date ( "Y-m-d H:i:s" );
 				$model->update_by = UserLoginUtils::getUsersLoginId ();
-
+				
 				$model->report_date = CommonUtil::getDate ( $model->report_date );
 				$model->case_date = CommonUtil::getDate ( $model->case_date );
 				$body_accident_type = '';
@@ -58,7 +58,7 @@ class AccidentInvestigationController extends CController {
 					$accident_type = "";
 				}
 				$model->accident_type = rtrim ( $accident_type, "," );
-
+				
 				$accident_cause = '';
 				if (isset ( $_POST ['accident_causes'] )) {
 					foreach ( $_POST ['accident_causes'] as $item ) {
@@ -67,10 +67,10 @@ class AccidentInvestigationController extends CController {
 				} else {
 					$accident_cause = "";
 				}
-
+				
 				$model->accident_cause = rtrim ( $accident_cause, "," );
 				$model->save ();
-
+				
 				// #####################################################
 				$person_types = $_POST ['person_types'];
 				$person_type_others = $_POST ['person_type_others'];
@@ -89,7 +89,7 @@ class AccidentInvestigationController extends CController {
 				$index = 0;
 				if (isset ( $person_names )) {
 					foreach ( $person_names as $item ) {
-
+						
 						$person = new AccidentInvestigationPerson ();
 						$person->accident_investigation_id = $model->id;
 						//
@@ -117,11 +117,11 @@ class AccidentInvestigationController extends CController {
 				// Save image.
 				$acc_img = new AccidentInvestigationImage ();
 				$acc_img->accident_investigation_id = $model->id;
-
+				
 				if (isset ( $_POST ['AccidentInvestigationImage'] )) {
 					$acc_img->attributes = $_POST ['AccidentInvestigationImage'];
 				}
-
+				
 				$img1 = $_FILES ['img1'];
 				if (isset ( $img1 )) {
 					$file_ary = CommonUtil::reArrayFiles ( $img1 );
@@ -288,20 +288,21 @@ class AccidentInvestigationController extends CController {
 					}
 				}
 				$acc_img->save ();
-
+				
 				// Notify//
-				$model = new Notify ();
-				$model->report_type = 1; // 1:Acicent&Investigate,2:Incident,3:Accident
-				$model->title = 'Acicent&Investigate';
-				$model->remark = '';
-				$model->isRead = false;
-				$model->create_date = date ( "Y-m-d H:i:s" );
-				$model->save ();
+				$notify = new Notify ();
+				$notify->report_type = 1; // 1:Acicent&Investigate,2:Incident,3:Accident
+				$notify->department_id = UserLoginUtils::getDepartmentId ();
+				$notify->title = 'บันทึกข้อมูลอุบัติการณ์';
+				$notify->remark = 'บันทึกข้อมูลอุบัติการณ์'.$model->report_name.','.$model->report_position;
+				$notify->isRead = false;
+				$notify->create_date = date ( "Y-m-d H:i:s" );
+				$notify->save ();
 				// End-Notify//
-
+				
 				// echo "SAVE";
 				$transaction->commit ();
-
+				
 				$this->render ( '//operations/accidentinvestigation/result' );
 			} catch ( Exception $e ) {
 				$transaction->rollback ();
@@ -321,7 +322,7 @@ class AccidentInvestigationController extends CController {
 		}
 		$model = $this->loadModel ();
 		$model->delete ();
-
+		
 		$this->redirect ( Yii::app ()->createUrl ( 'AccidentInvestigation/' ) );
 	}
 	public function actionUpdate() {
@@ -332,7 +333,7 @@ class AccidentInvestigationController extends CController {
 		if (! UserLoginUtils::authorizePage ( $_SERVER ['REQUEST_URI'] )) {
 			$this->redirect ( Yii::app ()->createUrl ( 'DashBoard/Permission' ) );
 		}
-
+		
 		$model = new AccidentInvestigation ();
 		$model = $this->loadModel ();
 		$modelImg = AccidentInvestigationImage::model ()->find ( array (
@@ -345,18 +346,18 @@ class AccidentInvestigationController extends CController {
 				"condition" => "accident_investigation_id =" . $model->id,
 				'limit' => 1
 		) );
-
+		
 		if (isset ( $_POST ['AccidentInvestigation'] )) {
 			try {
-
+				
 				$transaction = Yii::app ()->db->beginTransaction ();
-
+				
 				$model->attributes = $_POST ['AccidentInvestigation'];
 				$model->create_date = date ( "Y-m-d H:i:s" );
 				$model->create_by = UserLoginUtils::getUsersLoginId ();
 				$model->update_date = date ( "Y-m-d H:i:s" );
 				$model->update_by = UserLoginUtils::getUsersLoginId ();
-
+				
 				$model->report_date = CommonUtil::getDate ( $model->report_date );
 				$model->case_date = CommonUtil::getDate ( $model->case_date );
 				$body_accident_type = '';
@@ -377,7 +378,7 @@ class AccidentInvestigationController extends CController {
 					$accident_type = "";
 				}
 				$model->accident_type = rtrim ( $accident_type, "," );
-
+				
 				$accident_cause = '';
 				if (isset ( $_POST ['accident_causes'] )) {
 					foreach ( $_POST ['accident_causes'] as $item ) {
@@ -386,10 +387,10 @@ class AccidentInvestigationController extends CController {
 				} else {
 					$accident_cause = "";
 				}
-
+				
 				$model->accident_cause = rtrim ( $accident_cause, "," );
 				$model->update ();
-
+				
 				// #####################################################
 				$person_types = $_POST ['person_types'];
 				$person_type_others = $_POST ['person_type_others'];
@@ -416,12 +417,12 @@ class AccidentInvestigationController extends CController {
 					AccidentInvestigationPerson::model ()->deleteAll ( $cri );
 					
 					foreach ( $person_names as $item ) {
-
-
-							$person = new AccidentInvestigationPerson ();
-							$person->accident_investigation_id = $model->id;
-
-
+						
+						
+						$person = new AccidentInvestigationPerson ();
+						$person->accident_investigation_id = $model->id;
+						
+						
 						// ---------------------------------------------------------------
 						$person->person_type = $person_types [$index];
 						$person->person_type_other = $person_type_others [$index];
@@ -436,11 +437,11 @@ class AccidentInvestigationController extends CController {
 						$person->person_dammage_body = $person_dammage_bodys [$index];
 						$person->person_dammage_body_desc = $person_dammage_body_descs [$index];
 						// ---------------------------------------------------------------
-
-	
-							$person->save ();
 						
-
+						
+						$person->save ();
+						
+						
 						$index ++;
 					}
 				} else {
@@ -449,17 +450,17 @@ class AccidentInvestigationController extends CController {
 					$person->accident_investigation_id = $model->id;
 					$person->update ();
 				}
-
+				
 				// Save image.
 				$acc_img = new AccidentInvestigationImage ();
 				$acc_img = AccidentInvestigationImage::model ()->find ( array (
 						"condition" => "accident_investigation_id =" . $model->id
 				) );
-
+				
 				if (isset ( $_POST ['AccidentInvestigationImage'] )) {
 					$acc_img->attributes = $_POST ['AccidentInvestigationImage'];
 				}
-
+				
 				$img1 = $_FILES ['img1'];
 				if (isset ( $img1 )) {
 					$file_ary = CommonUtil::reArrayFiles ( $img1 );
@@ -626,9 +627,9 @@ class AccidentInvestigationController extends CController {
 					}
 				}
 				$acc_img->update ();
-
+				
 				$transaction->commit ();
-
+				
 				$this->redirect ( Yii::app ()->createUrl ( 'AccidentInvestigation' ) );
 			} catch ( Exception $e ) {
 				echo $e;
