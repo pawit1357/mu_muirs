@@ -1,328 +1,262 @@
 <?php
-class AjaxReportController extends CController
-{
-    
-    public $layout = 'ajax';
-    
-    private $_model;
-    
-    public function actionIndex()
-    {}
-    
-    public function actionGetCRpt01()
-    {
-        
-        // Create connection
-        $con = mysqli_connect(ConfigUtil::getHostName(), ConfigUtil::getUsername(), ConfigUtil::getPassword(), ConfigUtil::getDbName());
-        
-        $sql = "
+class AjaxReportController extends CController {
+	public $layout = 'ajax';
+	private $_model;
+	public function actionIndex() {
+	}
+	public function actionGetCRpt01() {
+
+		// Create connection
+		$con = mysqli_connect ( ConfigUtil::getHostName (), ConfigUtil::getUsername (), ConfigUtil::getPassword (), ConfigUtil::getDbName () );
+		// mysqli_set_charset($con,"utf8");
+
+		$sql = "
 		   SELECT
 		   COUNT(CASE WHEN dammage_type = 1  THEN dammage_type END) AS 'typ1',
 		   COUNT(CASE WHEN dammage_type = 2  THEN dammage_type END) AS 'typ2',
 		   COUNT(CASE WHEN dammage_type = 3  THEN dammage_type END) AS 'typ3',
 		   COUNT(CASE WHEN dammage_type = 4  THEN dammage_type END) AS 'typ4',
 		   COUNT(CASE WHEN dammage_type = 5  THEN dammage_type END) AS 'typ5'
-		   FROM TB_ACCIDENT
+		   FROM tb_accident
 			";
-        
-        $type1 = array();
-        $type2 = array();
-        $type3 = array();
-        $type4 = array();
-        $type5= array();
-        
-        $type1['name'] = iconv("tis-620","utf-8","àÊÕÂªÕÇÔµ(ÃÒÂ)");
-        $type2['name'] = iconv("tis-620","utf-8","ÊÙ­àÊÕÂÍÇÑÂÇÐ/·Ø¾¾ÅÀÒ¾");
-        $type3['name'] = iconv("tis-620","utf-8","ºÒ´à¨çº/à¨çº»èÇÂ");
-        $type4['name'] = iconv("tis-620","utf-8","·ÃÑ¾ÂìÊÔ¹àÊÕÂËÒÂ");
-        $type5['name'] = iconv("tis-620","utf-8","Í×è¹ æ");
 
-        if ($result1 = mysqli_query($con, $sql)) {
-            while ($r = mysqli_fetch_array($result1)) {
-            	$type1['data'][] = $r['typ1'];//"ÍØºÑµÔàËµØÍ×è¹ æ"
-            	$type1['data'][] = 0;//"ÍØºÑµÔàËµØ·Ò§à¤ÁÕ"
-            	$type1['data'][] = 0;//"ÍØºÑµÔàËµØ·Ò§ªÕÇÀÒ¾"
-            	$type1['data'][] = 0;//"ÍØºÑµÔàËµØ·Ò§ÃÑ§ÊÕ"
-            	$type1['data'][] = 0;//"ÍØºÑµÔàËµØ·Ò§ä¿¿éÒ"
-            	$type1['data'][] = 0;//"ÍÑ¤¤ÕÀÑÂ"
-            	
-            	$type2['data'][] = $r['typ2'];
-            	$type2['data'][] = 0;
-            	$type2['data'][] = 0;
-            	$type2['data'][] = 0;
-            	$type2['data'][] = 0;
-            	$type2['data'][] = 0;
-            	
-            	$type3['data'][] = $r['typ3'];
-            	$type3['data'][] = 0;
-            	$type3['data'][] = 0;
-            	$type3['data'][] = 0;
-            	$type3['data'][] = 0;
-            	$type3['data'][] = 0;
-            	
-            	$type4['data'][] = $r['typ4'];
-            	$type4['data'][] = 0;
-            	$type4['data'][] = 0;
-            	$type4['data'][] = 0;
-            	$type4['data'][] = 0;
-            	$type4['data'][] = 0;
-            	
-            	$type5['data'][] = $r['typ5'];
-            	$type5['data'][] = 0;
-            	$type5['data'][] = 0;
-            	$type5['data'][] = 0;
-            	$type5['data'][] = 0;
-            	$type5['data'][] = 0;
-            }
-        } else {
-            print mysql_error();
-        }
-        
-        $resultJson = array();
-        array_push($resultJson, $type1);
-        array_push($resultJson, $type2);
-        array_push($resultJson, $type3);
-        array_push($resultJson, $type4);
-        array_push($resultJson, $type5);
-        
+		$type1 = array ();
+		$type2 = array ();
+		$type3 = array ();
+		$type4 = array ();
+		$type5 = array ();
 
-        echo json_encode($resultJson, JSON_NUMERIC_CHECK  );
-    }
-    public function actionGetCRpt02()
-    {
-    	
-    	// Create connection
-    	$con = mysqli_connect(ConfigUtil::getHostName(), ConfigUtil::getUsername(), ConfigUtil::getPassword(), ConfigUtil::getDbName());
-    	
-    	$sql = "
+		$type1 ['name'] = "à¹€à¸ªà¸µà¸¢à¸Šà¸µà¸§à¸´à¸•(à¸£à¸²à¸¢)";
+		$type2 ['name'] = "à¸ªà¸¹à¸à¹€à¸ªà¸µà¸¢à¸­à¸§à¸±à¸¢à¸§à¸°/à¸—à¸¸à¸žà¸žà¸¥à¸ à¸²à¸ž";
+		$type3 ['name'] = "à¸šà¸²à¸”à¹€à¸ˆà¹‡à¸š/à¹€à¸ˆà¹‡à¸šà¸›à¹ˆà¸§à¸¢";
+		$type4 ['name'] = "à¸—à¸£à¸±à¸žà¸¢à¹Œà¸ªà¸´à¸™à¹€à¸ªà¸µà¸¢à¸«à¸²à¸¢";
+		$type5 ['name'] = "à¸­à¸·à¹ˆà¸™ à¹†";
+
+		if ($result1 = mysqli_query ( $con, $sql )) {
+			while ( $r = mysqli_fetch_array ( $result1 ) ) {
+				$type1 ['data'] [] = $r ['typ1']; // "à¸­à¸¸à¸šà¸±à¸•à¸´à¹€à¸«à¸•à¸¸à¸­à¸·à¹ˆà¸™ à¹†"
+				$type1 ['data'] [] = 0; // "à¸­à¸¸à¸šà¸±à¸•à¸´à¹€à¸«à¸•à¸¸à¸—à¸²à¸‡à¹€à¸„à¸¡à¸µ"
+				$type1 ['data'] [] = 0; // "à¸­à¸¸à¸šà¸±à¸•à¸´à¹€à¸«à¸•à¸¸à¸—à¸²à¸‡à¸Šà¸µà¸§à¸ à¸²à¸ž"
+				$type1 ['data'] [] = 0; // "à¸­à¸¸à¸šà¸±à¸•à¸´à¹€à¸«à¸•à¸¸à¸—à¸²à¸‡à¸£à¸±à¸‡à¸ªà¸µ"
+				$type1 ['data'] [] = 0; // "à¸­à¸¸à¸šà¸±à¸•à¸´à¹€à¸«à¸•à¸¸à¸—à¸²à¸‡à¹„à¸Ÿà¸Ÿà¹‰à¸²"
+				$type1 ['data'] [] = 0; // "à¸­à¸±à¸„à¸„à¸µà¸ à¸±à¸¢"
+
+				$type2 ['data'] [] = $r ['typ2'];
+				$type2 ['data'] [] = 0;
+				$type2 ['data'] [] = 0;
+				$type2 ['data'] [] = 0;
+				$type2 ['data'] [] = 0;
+				$type2 ['data'] [] = 0;
+
+				$type3 ['data'] [] = $r ['typ3'];
+				$type3 ['data'] [] = 0;
+				$type3 ['data'] [] = 0;
+				$type3 ['data'] [] = 0;
+				$type3 ['data'] [] = 0;
+				$type3 ['data'] [] = 0;
+
+				$type4 ['data'] [] = $r ['typ4'];
+				$type4 ['data'] [] = 0;
+				$type4 ['data'] [] = 0;
+				$type4 ['data'] [] = 0;
+				$type4 ['data'] [] = 0;
+				$type4 ['data'] [] = 0;
+
+				$type5 ['data'] [] = $r ['typ5'];
+				$type5 ['data'] [] = 0;
+				$type5 ['data'] [] = 0;
+				$type5 ['data'] [] = 0;
+				$type5 ['data'] [] = 0;
+				$type5 ['data'] [] = 0;
+			}
+		} else {
+			print mysql_error ();
+		}
+
+		$resultJson = array ();
+		array_push ( $resultJson, $type1 );
+		array_push ( $resultJson, $type2 );
+		array_push ( $resultJson, $type3 );
+		array_push ( $resultJson, $type4 );
+		array_push ( $resultJson, $type5 );
+
+		echo json_encode ( $resultJson, JSON_NUMERIC_CHECK );
+	}
+	public function actionGetCRpt02() {
+
+		// Create connection
+		$con = mysqli_connect ( ConfigUtil::getHostName (), ConfigUtil::getUsername (), ConfigUtil::getPassword (), ConfigUtil::getDbName () );
+		mysqli_set_charset ( $con, "utf8" );
+
+		$sql = "
 		   SELECT
 		   SUM(CASE WHEN dammage_type = 4  THEN dammage_type_4_value END) AS 'typ'
-		   FROM TB_ACCIDENT where dammage_type=4
+		   FROM tb_accident where dammage_type=4
 			";
-    	
-//     	$type1 = array();
-//     	$type2 = array();
-//     	$type3 = array();
-    	$type4 = array();
-//     	$type5= array();
-    	
-//     	$type1['name'] = iconv("tis-620","utf-8","àÊÕÂªÕÇÔµ(ÃÒÂ)");
-//     	$type2['name'] = iconv("tis-620","utf-8","ÊÙ­àÊÕÂÍÇÑÂÇÐ/·Ø¾¾ÅÀÒ¾");
-//     	$type3['name'] = iconv("tis-620","utf-8","ºÒ´à¨çº/à¨çº»èÇÂ");
-    	$type4['name'] = iconv("tis-620","utf-8","·ÃÑ¾ÂìÊÔ¹àÊÕÂËÒÂ(ºÒ·)");
-//     	$type5['name'] = iconv("tis-620","utf-8","Í×è¹ æ");
-    	
-    	if ($result1 = mysqli_query($con, $sql)) {
-    		while ($r = mysqli_fetch_array($result1)) {
-//     			$type1['data'][] = $r['typ1'];//"ÍØºÑµÔàËµØÍ×è¹ æ"
-//     			$type1['data'][] = 0;//"ÍØºÑµÔàËµØ·Ò§à¤ÁÕ"
-//     			$type1['data'][] = 0;//"ÍØºÑµÔàËµØ·Ò§ªÕÇÀÒ¾"
-//     			$type1['data'][] = 0;//"ÍØºÑµÔàËµØ·Ò§ÃÑ§ÊÕ"
-//     			$type1['data'][] = 0;//"ÍØºÑµÔàËµØ·Ò§ä¿¿éÒ"
-//     			$type1['data'][] = 0;//"ÍÑ¤¤ÕÀÑÂ"
-    			
-//     			$type2['data'][] = $r['typ2'];
-//     			$type2['data'][] = 0;
-//     			$type2['data'][] = 0;
-//     			$type2['data'][] = 0;
-//     			$type2['data'][] = 0;
-//     			$type2['data'][] = 0;
-    			
-//     			$type3['data'][] = $r['typ3'];
-//     			$type3['data'][] = 0;
-//     			$type3['data'][] = 0;
-//     			$type3['data'][] = 0;
-//     			$type3['data'][] = 0;
-//     			$type3['data'][] = 0;
-    			
-    			$type4['data'][] = $r['typ'];
-    			$type4['data'][] = 0;
-    			$type4['data'][] = 0;
-    			$type4['data'][] = 0;
-    			$type4['data'][] = 0;
-    			$type4['data'][] = 0;
-    			
-//     			$type5['data'][] = $r['typ5'];
-//     			$type5['data'][] = 0;
-//     			$type5['data'][] = 0;
-//     			$type5['data'][] = 0;
-//     			$type5['data'][] = 0;
-//     			$type5['data'][] = 0;
-    		}
-    	} else {
-    		print mysql_error();
-    	}
-    	
-    	$resultJson = array();
-//     	array_push($resultJson, $type1);
-//     	array_push($resultJson, $type2);
-//     	array_push($resultJson, $type3);
-    	array_push($resultJson, $type4);
-//     	array_push($resultJson, $type5);
-    	
-    	
-    	echo json_encode($resultJson, JSON_NUMERIC_CHECK  );
-    }
 
-    public function actionGetCRpt03()
-    {
-    	
-    	// Create connection
-    	$con = mysqli_connect(ConfigUtil::getHostName(), ConfigUtil::getUsername(), ConfigUtil::getPassword(), ConfigUtil::getDbName());
-    	
-    	$sql = "
-		   SELECT
-		   COUNT(CASE WHEN dammage_type = 1  THEN dammage_type END) AS 'typ1',
-		   COUNT(CASE WHEN dammage_type = 2  THEN dammage_type END) AS 'typ2',
-		   COUNT(CASE WHEN dammage_type = 3  THEN dammage_type END) AS 'typ3',
-		   COUNT(CASE WHEN dammage_type = 4  THEN dammage_type END) AS 'typ4',
-		   COUNT(CASE WHEN dammage_type = 5  THEN dammage_type END) AS 'typ5'
-		   FROM TB_ACCIDENT
-			";
-    	
-    	$type1 = array();
-    	$type2 = array();
-    	$type3 = array();
-    	$type4 = array();
-    	$type5= array();
-    	
-    	$type1['name'] = iconv("tis-620","utf-8","àÊÕÂªÕÇÔµ(ÃÒÂ)");
-    	$type2['name'] = iconv("tis-620","utf-8","ÊÙ­àÊÕÂÍÇÑÂÇÐ/·Ø¾¾ÅÀÒ¾");
-    	$type3['name'] = iconv("tis-620","utf-8","ºÒ´à¨çº/à¨çº»èÇÂ");
-    	$type4['name'] = iconv("tis-620","utf-8","·ÃÑ¾ÂìÊÔ¹àÊÕÂËÒÂ");
-    	$type5['name'] = iconv("tis-620","utf-8","Í×è¹ æ");
-    	
-    	if ($result1 = mysqli_query($con, $sql)) {
-    		while ($r = mysqli_fetch_array($result1)) {
-    			$type1['data'][] = $r['typ1'];//"ÍØºÑµÔàËµØÍ×è¹ æ"
-    			$type1['data'][] = 0;//"ÍØºÑµÔàËµØ·Ò§à¤ÁÕ"
-    			$type1['data'][] = 0;//"ÍØºÑµÔàËµØ·Ò§ªÕÇÀÒ¾"
-    			$type1['data'][] = 0;//"ÍØºÑµÔàËµØ·Ò§ÃÑ§ÊÕ"
-    			$type1['data'][] = 0;//"ÍØºÑµÔàËµØ·Ò§ä¿¿éÒ"
-    			$type1['data'][] = 0;//"ÍÑ¤¤ÕÀÑÂ"
-    			
-    			$type2['data'][] = $r['typ2'];
-    			$type2['data'][] = 0;
-    			$type2['data'][] = 0;
-    			$type2['data'][] = 0;
-    			$type2['data'][] = 0;
-    			$type2['data'][] = 0;
-    			
-    			$type3['data'][] = $r['typ3'];
-    			$type3['data'][] = 0;
-    			$type3['data'][] = 0;
-    			$type3['data'][] = 0;
-    			$type3['data'][] = 0;
-    			$type3['data'][] = 0;
-    			
-    			$type4['data'][] = $r['typ4'];
-    			$type4['data'][] = 0;
-    			$type4['data'][] = 0;
-    			$type4['data'][] = 0;
-    			$type4['data'][] = 0;
-    			$type4['data'][] = 0;
-    			
-    			$type5['data'][] = $r['typ5'];
-    			$type5['data'][] = 0;
-    			$type5['data'][] = 0;
-    			$type5['data'][] = 0;
-    			$type5['data'][] = 0;
-    			$type5['data'][] = 0;
-    		}
-    	} else {
-    		print mysql_error();
-    	}
-    	
-    	$resultJson = array();
-    	array_push($resultJson, $type1);
-    	array_push($resultJson, $type2);
-    	array_push($resultJson, $type3);
-    	array_push($resultJson, $type4);
-    	array_push($resultJson, $type5);
-    	
-    	
-    	echo json_encode($resultJson, JSON_NUMERIC_CHECK  );
-    }
+		$type4 = array ();
+		$type4 ['name'] = "à¸—à¸£à¸±à¸žà¸¢à¹Œà¸ªà¸´à¸™à¹€à¸ªà¸µà¸¢à¸«à¸²à¸¢(à¸šà¸²à¸—)";
 
-    public function actionGetCRpt04()
-    {
-    	
-    	// Create connection
-    	$con = mysqli_connect(ConfigUtil::getHostName(), ConfigUtil::getUsername(), ConfigUtil::getPassword(), ConfigUtil::getDbName());
-    	
-    	$sql = "
-		   SELECT
-		   COUNT(CASE WHEN dammage_type = 1  THEN dammage_type END) AS 'typ1',
-		   COUNT(CASE WHEN dammage_type = 2  THEN dammage_type END) AS 'typ2',
-		   COUNT(CASE WHEN dammage_type = 3  THEN dammage_type END) AS 'typ3',
-		   COUNT(CASE WHEN dammage_type = 4  THEN dammage_type END) AS 'typ4',
-		   COUNT(CASE WHEN dammage_type = 5  THEN dammage_type END) AS 'typ5'
-		   FROM TB_ACCIDENT
-			";
-    	
-    	$type1 = array();
-    	$type2 = array();
-    	$type3 = array();
-    	$type4 = array();
-    	$type5= array();
-    	
-    	$type1['name'] = iconv("tis-620","utf-8","àÊÕÂªÕÇÔµ(ÃÒÂ)");
-    	$type2['name'] = iconv("tis-620","utf-8","ÊÙ­àÊÕÂÍÇÑÂÇÐ/·Ø¾¾ÅÀÒ¾");
-    	$type3['name'] = iconv("tis-620","utf-8","ºÒ´à¨çº/à¨çº»èÇÂ");
-    	$type4['name'] = iconv("tis-620","utf-8","·ÃÑ¾ÂìÊÔ¹àÊÕÂËÒÂ");
-    	$type5['name'] = iconv("tis-620","utf-8","Í×è¹ æ");
-    	
-    	if ($result1 = mysqli_query($con, $sql)) {
-    		while ($r = mysqli_fetch_array($result1)) {
-    			$type1['data'][] = $r['typ1'];//"ÍØºÑµÔàËµØÍ×è¹ æ"
-    			$type1['data'][] = 0;//"ÍØºÑµÔàËµØ·Ò§à¤ÁÕ"
-    			$type1['data'][] = 0;//"ÍØºÑµÔàËµØ·Ò§ªÕÇÀÒ¾"
-    			$type1['data'][] = 0;//"ÍØºÑµÔàËµØ·Ò§ÃÑ§ÊÕ"
-    			$type1['data'][] = 0;//"ÍØºÑµÔàËµØ·Ò§ä¿¿éÒ"
-    			$type1['data'][] = 0;//"ÍÑ¤¤ÕÀÑÂ"
-    			
-    			$type2['data'][] = $r['typ2'];
-    			$type2['data'][] = 0;
-    			$type2['data'][] = 0;
-    			$type2['data'][] = 0;
-    			$type2['data'][] = 0;
-    			$type2['data'][] = 0;
-    			
-    			$type3['data'][] = $r['typ3'];
-    			$type3['data'][] = 0;
-    			$type3['data'][] = 0;
-    			$type3['data'][] = 0;
-    			$type3['data'][] = 0;
-    			$type3['data'][] = 0;
-    			
-    			$type4['data'][] = $r['typ4'];
-    			$type4['data'][] = 0;
-    			$type4['data'][] = 0;
-    			$type4['data'][] = 0;
-    			$type4['data'][] = 0;
-    			$type4['data'][] = 0;
-    			
-    			$type5['data'][] = $r['typ5'];
-    			$type5['data'][] = 0;
-    			$type5['data'][] = 0;
-    			$type5['data'][] = 0;
-    			$type5['data'][] = 0;
-    			$type5['data'][] = 0;
-    		}
-    	} else {
-    		print mysql_error();
-    	}
-    	
-    	$resultJson = array();
-    	array_push($resultJson, $type1);
-    	array_push($resultJson, $type2);
-    	array_push($resultJson, $type3);
-    	array_push($resultJson, $type4);
-    	array_push($resultJson, $type5);
-    	
-    	
-    	echo json_encode($resultJson, JSON_NUMERIC_CHECK  );
-    }
+		if ($result1 = mysqli_query ( $con, $sql )) {
+			while ( $r = mysqli_fetch_array ( $result1 ) ) {
 
+				$type4 ['data'] [] = $r ['typ'];
+				$type4 ['data'] [] = 0;
+				$type4 ['data'] [] = 0;
+				$type4 ['data'] [] = 0;
+				$type4 ['data'] [] = 0;
+				$type4 ['data'] [] = 0;
+			}
+		} else {
+			print mysql_error ();
+		}
+
+		$resultJson = array ();
+		array_push ( $resultJson, $type4 );
+
+		echo json_encode ( $resultJson, JSON_NUMERIC_CHECK );
+	}
+	public function actionGetCRpt03Dept() {
+
+		// Create connection
+		$con = mysqli_connect ( ConfigUtil::getHostName (), ConfigUtil::getUsername (), ConfigUtil::getPassword (), ConfigUtil::getDbName () );
+		mysqli_set_charset ( $con, "utf8" );
+
+		$sql = "select d.name
+				from tb_accident a
+				left join tb_m_department d on a.department_id = d.id
+				group by d.id";
+
+		$resultJson = array ();
+
+		if ($result1 = mysqli_query ( $con, $sql )) {
+			while ( $r = mysqli_fetch_array ( $result1 ) ) {
+				array_push ( $resultJson, $r ['name'] );
+			}
+		} else {
+			print mysql_error ();
+		}
+
+		echo json_encode ( $resultJson, JSON_NUMERIC_CHECK );
+	}
+	public function actionGetCRpt03() {
+
+		// Create connection
+		$con = mysqli_connect ( ConfigUtil::getHostName (), ConfigUtil::getUsername (), ConfigUtil::getPassword (), ConfigUtil::getDbName () );
+		mysqli_set_charset ( $con, "utf8" );
+
+		$sql = "select d.id, d.name, COUNT(a.id) AS 'typ'
+				from tb_accident a
+				left join tb_m_department d on a.department_id = d.id
+				group by d.id";
+
+		$type1 = array ();
+		$type2 = array ();
+		$type3 = array ();
+		$type4 = array ();
+		$type5 = array ();
+		$type6 = array ();
+
+		$type1 ['name'] = "à¸­à¸¸à¸šà¸±à¸•à¸´à¹€à¸«à¸•à¸¸à¸­à¸·à¹ˆà¸™ à¹†";
+		$type2 ['name'] = "à¸­à¸¸à¸šà¸±à¸•à¸´à¹€à¸«à¸•à¸¸à¸—à¸²à¸‡à¹€à¸„à¸¡à¸µ";
+		$type3 ['name'] = "à¸­à¸¸à¸šà¸±à¸•à¸´à¹€à¸«à¸•à¸¸à¸—à¸²à¸‡à¸Šà¸µà¸§à¸ à¸²à¸ž";
+		$type4 ['name'] = "à¸­à¸¸à¸šà¸±à¸•à¸´à¹€à¸«à¸•à¸¸à¸—à¸²à¸‡à¸£à¸±à¸‡à¸ªà¸µ";
+		$type5 ['name'] = "à¸­à¸¸à¸šà¸±à¸•à¸´à¹€à¸«à¸•à¸¸à¸—à¸²à¸‡à¹„à¸Ÿà¸Ÿà¹‰à¸²";
+		$type6 ['name'] = "à¸­à¸±à¸„à¸„à¸µà¸ à¸±à¸¢";
+
+		if ($result1 = mysqli_query ( $con, $sql )) {
+			while ( $r = mysqli_fetch_array ( $result1 ) ) {
+				$type1 ['data'] [] = $r ['typ'];
+				$type2 ['data'] [] = 0;
+				$type3 ['data'] [] = 0;
+				$type4 ['data'] [] = 0;
+				$type5 ['data'] [] = 0;
+				$type6 ['data'] [] = 0;
+			}
+		} else {
+			print mysql_error ();
+		}
+
+		$resultJson = array ();
+		array_push ( $resultJson, $type1 );
+		array_push ( $resultJson, $type2 );
+		array_push ( $resultJson, $type3 );
+		array_push ( $resultJson, $type4 );
+		array_push ( $resultJson, $type5 );
+		array_push ( $resultJson, $type6 );
+
+		echo json_encode ( $resultJson, JSON_NUMERIC_CHECK );
+	}
+	public function actionGetCRpt04Dept() {
+
+		// Create connection
+		$con = mysqli_connect ( ConfigUtil::getHostName (), ConfigUtil::getUsername (), ConfigUtil::getPassword (), ConfigUtil::getDbName () );
+		mysqli_set_charset ( $con, "utf8" );
+
+		$sql = "select d.name
+				from tb_accident a
+				left join tb_m_department d on a.department_id = d.id
+				group by d.id";
+
+		$resultJson = array ();
+
+		if ($result1 = mysqli_query ( $con, $sql )) {
+			while ( $r = mysqli_fetch_array ( $result1 ) ) {
+				array_push ( $resultJson, $r ['name'] );
+			}
+		} else {
+			print mysql_error ();
+		}
+
+		echo json_encode ( $resultJson, JSON_NUMERIC_CHECK );
+	}
+	public function actionGetCRpt04() {
+
+		// Create connection
+		$con = mysqli_connect ( ConfigUtil::getHostName (), ConfigUtil::getUsername (), ConfigUtil::getPassword (), ConfigUtil::getDbName () );
+		mysqli_set_charset ( $con, "utf8" );
+
+		$sql = "select d.id, d.name, SUM(a.dammage_type_4_value) AS 'typ'
+				from tb_accident a
+				left join tb_m_department d on a.department_id = d.id
+				group by d.id";
+
+		$type1 = array ();
+		$type2 = array ();
+		$type3 = array ();
+		$type4 = array ();
+		$type5 = array ();
+		$type6 = array ();
+
+		$type1 ['name'] = "à¸­à¸¸à¸šà¸±à¸•à¸´à¹€à¸«à¸•à¸¸à¸­à¸·à¹ˆà¸™ à¹†";
+		$type2 ['name'] = "à¸­à¸¸à¸šà¸±à¸•à¸´à¹€à¸«à¸•à¸¸à¸—à¸²à¸‡à¹€à¸„à¸¡à¸µ";
+		$type3 ['name'] = "à¸­à¸¸à¸šà¸±à¸•à¸´à¹€à¸«à¸•à¸¸à¸—à¸²à¸‡à¸Šà¸µà¸§à¸ à¸²à¸ž";
+		$type4 ['name'] = "à¸­à¸¸à¸šà¸±à¸•à¸´à¹€à¸«à¸•à¸¸à¸—à¸²à¸‡à¸£à¸±à¸‡à¸ªà¸µ";
+		$type5 ['name'] = "à¸­à¸¸à¸šà¸±à¸•à¸´à¹€à¸«à¸•à¸¸à¸—à¸²à¸‡à¹„à¸Ÿà¸Ÿà¹‰à¸²";
+		$type6 ['name'] = "à¸­à¸±à¸„à¸„à¸µà¸ à¸±à¸¢";
+
+		if ($result1 = mysqli_query ( $con, $sql )) {
+			while ( $r = mysqli_fetch_array ( $result1 ) ) {
+				$type1 ['data'] [] = $r ['typ'];
+				$type2 ['data'] [] = 0;
+				$type3 ['data'] [] = 0;
+				$type4 ['data'] [] = 0;
+				$type5 ['data'] [] = 0;
+				$type6 ['data'] [] = 0;
+			}
+		} else {
+			print mysql_error ();
+		}
+
+		$resultJson = array ();
+		array_push ( $resultJson, $type1 );
+		array_push ( $resultJson, $type2 );
+		array_push ( $resultJson, $type3 );
+		array_push ( $resultJson, $type4 );
+		array_push ( $resultJson, $type5 );
+		array_push ( $resultJson, $type6 );
+
+		echo json_encode ( $resultJson, JSON_NUMERIC_CHECK );
+	}
 }
 

@@ -444,8 +444,18 @@ jQuery(document).ready(function () {
 		     type: "GET",
 		     dataType: "json",
 		     success: function (json) {
-			     rpt03(json);
-		   		
+		 		$.ajax({
+				     url: host+"index.php/AjaxReport/GetCRpt03Dept",
+				     type: "GET",
+				     dataType: "json",
+				     success: function (cat) {
+					     rpt03(json,cat);
+				   		
+				     },
+				     error: function (xhr, ajaxOptions, thrownError) {
+						alert('ERROR');
+				     }
+				});
 		     },
 		     error: function (xhr, ajaxOptions, thrownError) {
 				alert('ERROR');
@@ -457,7 +467,18 @@ jQuery(document).ready(function () {
 		     type: "GET",
 		     dataType: "json",
 		     success: function (json) {
-			     rpt04(json);
+			 		$.ajax({
+					     url: host+"index.php/AjaxReport/GetCRpt04Dept",
+					     type: "GET",
+					     dataType: "json",
+					     success: function (cats) {
+						     rpt04(json,cats);
+					   		
+					     },
+					     error: function (xhr, ajaxOptions, thrownError) {
+							alert('ERROR');
+					     }
+					});
 		   		
 		     },
 		     error: function (xhr, ajaxOptions, thrownError) {
@@ -534,8 +555,8 @@ jQuery(document).ready(function () {
 		});
 	}
 
-	function rpt03 (data) {
-		
+	function rpt03 (data,cats) {
+
 		Highcharts.chart('container3', {
 			chart: {
 		        type: 'column'
@@ -544,14 +565,7 @@ jQuery(document).ready(function () {
 		        text: 'กราฟแสดงจำนวนครั้งของการเกิดอุบัติเหตุ จำแนกตามประเภทการเกิดอุบัติเหตุ'
 		    },
 	        xAxis: {
-	            categories: [
-	                'อุบัติเหตุอื่น ๆ',
-	                'อุบัติเหตุทางเคมี',
-	                'อุบัติเหตุทางชีวภาพ',
-	                'อุบัติเหตุทางรังสี',
-	                'อุบัติเหตุทางไฟฟ้า',
-	                'อัคคีภัย'
-	            ],
+	            categories: cats,
 	            crosshair: true
 	        },
 	        yAxis: {
@@ -566,7 +580,7 @@ jQuery(document).ready(function () {
 	        series: data
 		});
 	}
-	function rpt04 (data) {
+	function rpt04 (data,cats) {
 		
 		Highcharts.chart('container4', {
 			chart: {
@@ -576,20 +590,13 @@ jQuery(document).ready(function () {
 		        text: 'กราฟแสดงมูลค่าความเสียหาย จำแนกตามประเภทการเกิดอุบัติเหตุ'
 		    },
 	        xAxis: {
-	            categories: [
-	                'อุบัติเหตุอื่น ๆ',
-	                'อุบัติเหตุทางเคมี',
-	                'อุบัติเหตุทางชีวภาพ',
-	                'อุบัติเหตุทางรังสี',
-	                'อุบัติเหตุทางไฟฟ้า',
-	                'อัคคีภัย'
-	            ],
+	            categories: cats,
 	            crosshair: true
 	        },
 	        yAxis: {
 	            min: 0,
 	            title: {
-	                text: 'จำนวน'
+	                text: 'มูลค่า (บาท)'
 	            }
 	        },
 	        plotOptions: {

@@ -1,6 +1,7 @@
 eclipse.preferences.version=1
 encoding//protected/controllers/AccidentController.php=UTF-8
 encoding//protected/controllers/AccidentInvestigationController.php=UTF-8
+encoding//protected/controllers/AjaxReportController.php=UTF-8
 encoding//protected/controllers/IncidentController.php=UTF-8
 encoding//protected/controllers/NormalPersonController.php=UTF-8
 encoding//protected/controllers/ReportController.php=UTF-8
