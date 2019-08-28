@@ -349,15 +349,50 @@ if(isset($duplicateData)){
                     <div class="row">
 						<div class="col-lg-6 col-xs-12 col-sm-12">
                             <div class="portlet light bordered">
-                                <div class="portlet-title"><i class="fa fa-desktop" aria-hidden="true"></i> กราฟรายงาน จาก ประเภทของการเกิดอุบัติเหตุ
+                                <div class="portlet-title"><i class="fa fa-desktop" aria-hidden="true"></i> กราฟแสดงจำนวนความเสียหายจากการเกิดอุบัติเหตุ
                                     <div class="actions"></div>
                                 </div>
                                 <div class="portlet-body">
-									<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+									<div id="container1" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+                                </div>
+                            </div>
+                        </div>
+						<div class="col-lg-6 col-xs-12 col-sm-12">
+                            <div class="portlet light bordered">
+                                <div class="portlet-title"><i class="fa fa-desktop" aria-hidden="true"></i> กราฟแสดงมูลค่าความเสียหายจากการเกิดอุบัติเหตุ
+                                    <div class="actions"></div>
+                                </div>
+                                <div class="portlet-body">
+									<div id="container2" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+						<div class="col-lg-6 col-xs-12 col-sm-12">
+                            <div class="portlet light bordered">
+                                <div class="portlet-title"><i class="fa fa-desktop" aria-hidden="true"></i> กราฟแสดงจำนวนครั้งของการเกิดอุบัติเหตุ จำแนกตามประเภทการเกิดอุบัติเหตุ
+                                    <div class="actions"></div>
+                                </div>
+                                <div class="portlet-body">
+									<div id="container3" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+                                </div>
+                            </div>
+                        </div>
+						<div class="col-lg-6 col-xs-12 col-sm-12">
+                            <div class="portlet light bordered">
+                                <div class="portlet-title"><i class="fa fa-desktop" aria-hidden="true"></i> กราฟแสดงมูลค่าความเสียหาย จำแนกตามประเภทการเกิดอุบัติเหตุ
+                                    <div class="actions"></div>
+                                </div>
+                                <div class="portlet-body">
+									<div id="container4" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                    
                     <!-- XXXXXX -->
 			</div>
 		</div>
@@ -390,47 +425,178 @@ jQuery(document).ready(function () {
 				alert('ERROR');
 		     }
 		});
-
+	
+		$.ajax({
+		     url: host+"index.php/AjaxReport/GetCRpt02",
+		     type: "GET",
+		     dataType: "json",
+		     success: function (json) {
+			     rpt02(json);
+		   		
+		     },
+		     error: function (xhr, ajaxOptions, thrownError) {
+				alert('ERROR');
+		     }
+		});
+		
+		$.ajax({
+		     url: host+"index.php/AjaxReport/GetCRpt03",
+		     type: "GET",
+		     dataType: "json",
+		     success: function (json) {
+			     rpt03(json);
+		   		
+		     },
+		     error: function (xhr, ajaxOptions, thrownError) {
+				alert('ERROR');
+		     }
+		});
+		
+		$.ajax({
+		     url: host+"index.php/AjaxReport/GetCRpt04",
+		     type: "GET",
+		     dataType: "json",
+		     success: function (json) {
+			     rpt04(json);
+		   		
+		     },
+		     error: function (xhr, ajaxOptions, thrownError) {
+				alert('ERROR');
+		     }
+		});
 
 });
 
 
-function rpt01 (data) {
+	function rpt01 (data) {
 	
-	console.log(data);
+		Highcharts.chart('container1', {
+			chart: {
+		        type: 'column'
+		    },
+		    title: {
+		        text: 'กราฟแสดงจำนวนความเสียหายจากการเกิดอุบัติเหตุ'
+		    },
+	        xAxis: {
+	            categories: [
+	                'อุบัติเหตุอื่น ๆ',
+	                'อุบัติเหตุทางเคมี',
+	                'อุบัติเหตุทางชีวภาพ',
+	                'อุบัติเหตุทางรังสี',
+	                'อุบัติเหตุทางไฟฟ้า',
+	                'อัคคีภัย'
+	            ],
+	            crosshair: true
+	        },
+	        yAxis: {
+	            min: 0,
+	            title: {
+	                text: 'จำนวน'
+	            }
+	        },
+	        plotOptions: {
+	        },
+	    
+	        series: data
+		});
+	}
 
-	Highcharts.chart('container', {
-		chart: {
-	        type: 'column'
-	    },
-	    title: {
-	        text: 'กราฟรายงาน จาก ประเภทของการเกิดอุบัติเหตุ'
-	    },
-// 	    subtitle: {
-// 	        text: 'Source: www.mahidol.ac.th'
-// 	    },
-    
-        xAxis: {
-            type: 'datetime'
-        },
-    
-        plotOptions: {
-            series: {
-                pointStart: Date.UTC(2019, 0, 1),
-                pointIntervalUnit: 'month'
-            }
-        },
-    
-        series: data
-//             [{
-//             data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
-//         }, {
-//             data: [144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4, 29.9, 71.5, 106.4, 129.2]
-//         }]
-	});
-}
+	function rpt02 (data) {
+		
+		Highcharts.chart('container2', {
+			chart: {
+		        type: 'column'
+		    },
+		    title: {
+		        text: 'กราฟแสดงมูลค่าความเสียหายจากการเกิดอุบัติเหตุ'
+		    },
+	        xAxis: {
+	            categories: [
+	                'อุบัติเหตุอื่น ๆ',
+	                'อุบัติเหตุทางเคมี',
+	                'อุบัติเหตุทางชีวภาพ',
+	                'อุบัติเหตุทางรังสี',
+	                'อุบัติเหตุทางไฟฟ้า',
+	                'อัคคีภัย'
+	            ],
+	            crosshair: true
+	        },
+	        yAxis: {
+	            min: 0,
+	            title: {
+	                text: 'มูลค่า (บาท)'
+	            }
+	        },
+	        plotOptions: {
+	        },
+	    
+	        series: data
+		});
+	}
 
-
-
+	function rpt03 (data) {
+		
+		Highcharts.chart('container3', {
+			chart: {
+		        type: 'column'
+		    },
+		    title: {
+		        text: 'กราฟแสดงจำนวนครั้งของการเกิดอุบัติเหตุ จำแนกตามประเภทการเกิดอุบัติเหตุ'
+		    },
+	        xAxis: {
+	            categories: [
+	                'อุบัติเหตุอื่น ๆ',
+	                'อุบัติเหตุทางเคมี',
+	                'อุบัติเหตุทางชีวภาพ',
+	                'อุบัติเหตุทางรังสี',
+	                'อุบัติเหตุทางไฟฟ้า',
+	                'อัคคีภัย'
+	            ],
+	            crosshair: true
+	        },
+	        yAxis: {
+	            min: 0,
+	            title: {
+	                text: 'จำนวน'
+	            }
+	        },
+	        plotOptions: {
+	        },
+	    
+	        series: data
+		});
+	}
+	function rpt04 (data) {
+		
+		Highcharts.chart('container4', {
+			chart: {
+		        type: 'column'
+		    },
+		    title: {
+		        text: 'กราฟแสดงมูลค่าความเสียหาย จำแนกตามประเภทการเกิดอุบัติเหตุ'
+		    },
+	        xAxis: {
+	            categories: [
+	                'อุบัติเหตุอื่น ๆ',
+	                'อุบัติเหตุทางเคมี',
+	                'อุบัติเหตุทางชีวภาพ',
+	                'อุบัติเหตุทางรังสี',
+	                'อุบัติเหตุทางไฟฟ้า',
+	                'อัคคีภัย'
+	            ],
+	            crosshair: true
+	        },
+	        yAxis: {
+	            min: 0,
+	            title: {
+	                text: 'จำนวน'
+	            }
+	        },
+	        plotOptions: {
+	        },
+	    
+	        series: data
+		});
+	}
 </script>
 

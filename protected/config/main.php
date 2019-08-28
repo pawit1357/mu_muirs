@@ -14,15 +14,19 @@ return array (
 				'db' => array (
 						'class' => 'CDbConnection',
 						'connectionString' => 'mysql:host=localhost;dbname=muirs',
-// 						'connectionString' => 'mysql:host=mdc.mahidol;dbname=radbasewww',
 						'emulatePrepare' => true,
 						'username' => 'root',
 						'password' => 'P@ssw0rd',
-
-// 						'username' => 'radbasewww',
-// 						'password' => 'RadBase#2016#',
 						'charset' => 'utf8' 
 				),
+// 				'db' => array (
+// 						'class' => 'CDbConnection',
+// 						'connectionString' => 'mysql:host=localhost;dbname=cp900485_muirs',
+// 						'emulatePrepare' => true,
+// 						'username' => 'cp900485_muirs',
+// 						'password' => 'muirsP@ssw0rd',
+// 						'charset' => 'utf8'
+// 				),
 				'Smtpmail' => array (
 						'class' => 'application.extensions.smtpmail.PHPMailer',
 // 						'Host' => "smtp.gmail.com",

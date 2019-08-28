@@ -1,7 +1,4 @@
 <?php
-// use PhpOffice\PhpWord\PhpWord;
-// use PhpOffice\PhpWord\IOFactory;
-// use PhpOffice\PhpWord\Settings;
 use PhpOffice\PhpWord\TemplateProcessor;
 class ReportController extends CController {
 	const CRLF = ""; // \r\n";
@@ -161,7 +158,7 @@ class ReportController extends CController {
 			$criteria->addBetweenCondition ( 'case_date', $startDate, $endDate, 'AND' );
 		}
 
-		echo $startDate . ',' . $endDate;
+		//echo $startDate . ',' . $endDate;
 
 		ob_start ();
 
@@ -242,7 +239,7 @@ class ReportController extends CController {
 			$criteria->addBetweenCondition ( 'case_date', $startDate, $endDate, 'AND' );
 		}
 
-		echo $startDate . ',' . $endDate;
+		//echo $startDate . ',' . $endDate;
 
 		ob_start ();
 
@@ -250,19 +247,18 @@ class ReportController extends CController {
 		if (isset ( $datas )) {
 			$str = '';
 			// HEADER
-			$str .= '<br><br><table style="width: 100%">' . '<tr style="text-align: left">' . '<td>รายงานอุบัติเหตุ (' . $deptName . ') ข้อมูลตั้งแต่วันที่ ' . CommonUtil::DateThai ( $startDate ) . ' ถึงวันที่ ' . CommonUtil::DateThai ( $endDate ) . '</td>' . '</tr>' . '</table>';
+			$str .= '<br><br><table style="width: 100%">' . '<tr style="text-align: left">' . '<td>รายงานการสอบสวนอุบัติเหตุ (' . $deptName . ') ข้อมูลตั้งแต่วันที่ ' . CommonUtil::DateThai ( $startDate ) . ' ถึงวันที่ ' . CommonUtil::DateThai ( $endDate ) . '</td>' . '</tr>' . '</table>';
 			$str .= '<br><br>';
 			// TABLE
 			$str .= '<table style="text-align:left;font-family:arial;font-size:12px;" border="1" cellpadding="1" cellspacing="1" id="cssTable">
 					<thead>
 							<tr>
 								<th style="text-align: center;">ลำดับ</th>
-								<th style="text-align: center;">ชื่อ-นามสุกล</th>
-								<th style="text-align: center;">อายุ</th>
-								<th style="text-align: center;">ตำแหน่ง/ชั้นปี</th>
-								<th style="text-align: center;">คณะ/ส่วนงาน</th>
-								<th style="text-align: center;">หน้าที่</th>
-								<th style="text-align: center;">อวัยวะที่บาดเจ็บ</th>
+								<th style="text-align: center;">ผู้รายงาน</th>
+								<th style="text-align: center;">ตำแหน่ง</th>
+								<th style="text-align: center;">วันที่รายงาน</th>
+								<th style="text-align: center;">สถานที่เกิดเหตุ</th>
+								<th style="text-align: center;">ลักษณะเหตุการณ์เกิดขึ้นได้อย่างไร</th>
 							</tr>
 						</thead>
 							<tbody>';
@@ -272,13 +268,12 @@ class ReportController extends CController {
 
 				$str .= '<tr>';
 				$str .= '<td style="text-align: center">' . $order . '</td>';
-				$str .= '<td style="text-align: center">' . $item->person_name . '</td>';
-				$str .= '<td style="text-align: center">' . (isset ( $item->person_age ) ? $item->person_age : '') . '</td>';
+				$str .= '<td style="text-align: center">' . $item->report_name . '</td>';
 				$str .= '<td style="text-align: center">' . (isset ( $item->person_position ) ? $item->person_position : '') . '</td>';
-
-				$str .= '<td style="text-align: center">' . $item->department->name . '</td>';
-				$str .= '<td style="text-align: center">' . $item->person_responsibility . '</td>';
-				$str .= '<td style="text-align: center">' . (isset ( $item->person_dammage_body ) ? $item->person_dammage_body : '') . '</td>';
+				$str .= '<td style="text-align: center">' . CommonUtil::getDateThai($item->report_date) . '</td>';
+				
+				$str .= '<td style="text-align: center">' . $item->accident_location . '</td>';
+				$str .= '<td style="text-align: center">' . $item->accident_event_happen . '</td>';
 				$str .= '</tr>';
 				$order ++;
 			}
@@ -323,7 +318,7 @@ class ReportController extends CController {
 			$criteria->addBetweenCondition ( 'report_date', $startDate, $endDate, 'AND' );
 		}
 
-		echo $startDate . ',' . $endDate;
+		//echo $startDate . ',' . $endDate;
 
 		ob_start ();
 
@@ -331,7 +326,7 @@ class ReportController extends CController {
 		if (isset ( $datas )) {
 			$str = '';
 			// HEADER
-			$str .= '<br><br><table style="width: 100%">' . '<tr style="text-align: left">' . '<td>รายงานอุบัติเหตุ (' . $deptName . ') ข้อมูลตั้งแต่วันที่ ' . CommonUtil::DateThai ( $startDate ) . ' ถึงวันที่ ' . CommonUtil::DateThai ( $endDate ) . '</td>' . '</tr>' . '</table>';
+			$str .= '<br><br><table style="width: 100%">' . '<tr style="text-align: left">' . '<td>รายงานอุบัติการณ์ (' . $deptName . ') ข้อมูลตั้งแต่วันที่ ' . CommonUtil::DateThai ( $startDate ) . ' ถึงวันที่ ' . CommonUtil::DateThai ( $endDate ) . '</td>' . '</tr>' . '</table>';
 			$str .= '<br><br>';
 			// TABLE
 			$str .= '<table style="text-align:left;font-family:arial;font-size:12px;" border="1" cellpadding="1" cellspacing="1" id="cssTable">
