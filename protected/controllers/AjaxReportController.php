@@ -145,33 +145,46 @@ class AjaxReportController extends CController {
 		$con = mysqli_connect ( ConfigUtil::getHostName (), ConfigUtil::getUsername (), ConfigUtil::getPassword (), ConfigUtil::getDbName () );
 		mysqli_set_charset ( $con, "utf8" );
 
-		$sql = "select d.id, d.name, COUNT(a.id) AS 'typ'
-				from tb_accident a
-				left join tb_m_department d on a.department_id = d.id
-				group by d.id";
+		$sql = "
+select d.id, d.name, 
+COUNT(CASE WHEN dammage_type = 1  THEN dammage_type END) AS 'typ1',
+COUNT(CASE WHEN dammage_type = 2  THEN dammage_type END) AS 'typ2',
+COUNT(CASE WHEN dammage_type = 3  THEN dammage_type END) AS 'typ3',
+COUNT(CASE WHEN dammage_type = 4  THEN dammage_type END) AS 'typ4',
+COUNT(CASE WHEN dammage_type = 5  THEN dammage_type END) AS 'typ5'
+from tb_accident a
+left join tb_m_department d on a.department_id = d.id
+group by d.id
+";
 
 		$type1 = array ();
 		$type2 = array ();
 		$type3 = array ();
 		$type4 = array ();
 		$type5 = array ();
-		$type6 = array ();
-
-		$type1 ['name'] = "อุบัติเหตุอื่น ๆ";
-		$type2 ['name'] = "อุบัติเหตุทางเคมี";
-		$type3 ['name'] = "อุบัติเหตุทางชีวภาพ";
-		$type4 ['name'] = "อุบัติเหตุทางรังสี";
-		$type5 ['name'] = "อุบัติเหตุทางไฟฟ้า";
-		$type6 ['name'] = "อัคคีภัย";
+// 		$type6 = array ();
+		
+		$type1 ['name'] = "เสียชีวิต(ราย)";
+		$type2 ['name'] = "สูญเสียอวัยวะ/ทุพพลภาพ";
+		$type3 ['name'] = "บาดเจ็บ/เจ็บป่วย";
+		$type4 ['name'] = "ทรัพย์สินเสียหาย";
+		$type5 ['name'] = "อื่น ๆ";
+		
+// 		$type1 ['name'] = "อุบัติเหตุอื่น ๆ";
+// 		$type2 ['name'] = "อุบัติเหตุทางเคมี";
+// 		$type3 ['name'] = "อุบัติเหตุทางชีวภาพ";
+// 		$type4 ['name'] = "อุบัติเหตุทางรังสี";
+// 		$type5 ['name'] = "อุบัติเหตุทางไฟฟ้า";
+// 		$type6 ['name'] = "อัคคีภัย";
 
 		if ($result1 = mysqli_query ( $con, $sql )) {
 			while ( $r = mysqli_fetch_array ( $result1 ) ) {
-				$type1 ['data'] [] = $r ['typ'];
-				$type2 ['data'] [] = 0;
-				$type3 ['data'] [] = 0;
-				$type4 ['data'] [] = 0;
-				$type5 ['data'] [] = 0;
-				$type6 ['data'] [] = 0;
+				$type1 ['data'] [] = $r ['typ1'];
+				$type2 ['data'] [] = $r ['typ2'];
+				$type3 ['data'] [] = $r ['typ3'];
+				$type4 ['data'] [] = $r ['typ4'];
+				$type5 ['data'] [] = $r ['typ5'];
+// 				$type6 ['data'] [] = 0;
 			}
 		} else {
 			print mysql_error ();
@@ -183,7 +196,7 @@ class AjaxReportController extends CController {
 		array_push ( $resultJson, $type3 );
 		array_push ( $resultJson, $type4 );
 		array_push ( $resultJson, $type5 );
-		array_push ( $resultJson, $type6 );
+// 		array_push ( $resultJson, $type6 );
 
 		echo json_encode ( $resultJson, JSON_NUMERIC_CHECK );
 	}
@@ -216,7 +229,8 @@ class AjaxReportController extends CController {
 		$con = mysqli_connect ( ConfigUtil::getHostName (), ConfigUtil::getUsername (), ConfigUtil::getPassword (), ConfigUtil::getDbName () );
 		mysqli_set_charset ( $con, "utf8" );
 
-		$sql = "select d.id, d.name, SUM(a.dammage_type_4_value) AS 'typ'
+		$sql = "
+				select d.id, d.name, SUM(a.dammage_type_4_value) AS 'typ'
 				from tb_accident a
 				left join tb_m_department d on a.department_id = d.id
 				group by d.id";
@@ -226,23 +240,29 @@ class AjaxReportController extends CController {
 		$type3 = array ();
 		$type4 = array ();
 		$type5 = array ();
-		$type6 = array ();
+// 		$type6 = array ();
 
-		$type1 ['name'] = "อุบัติเหตุอื่น ๆ";
-		$type2 ['name'] = "อุบัติเหตุทางเคมี";
-		$type3 ['name'] = "อุบัติเหตุทางชีวภาพ";
-		$type4 ['name'] = "อุบัติเหตุทางรังสี";
-		$type5 ['name'] = "อุบัติเหตุทางไฟฟ้า";
-		$type6 ['name'] = "อัคคีภัย";
+		$type1 ['name'] = "เสียชีวิต(ราย)";
+		$type2 ['name'] = "สูญเสียอวัยวะ/ทุพพลภาพ";
+		$type3 ['name'] = "บาดเจ็บ/เจ็บป่วย";
+		$type4 ['name'] = "ทรัพย์สินเสียหาย";
+		$type5 ['name'] = "อื่น ๆ";
+		
+// 		$type1 ['name'] = "อุบัติเหตุอื่น ๆ";
+// 		$type2 ['name'] = "อุบัติเหตุทางเคมี";
+// 		$type3 ['name'] = "อุบัติเหตุทางชีวภาพ";
+// 		$type4 ['name'] = "อุบัติเหตุทางรังสี";
+// 		$type5 ['name'] = "อุบัติเหตุทางไฟฟ้า";
+// 		$type6 ['name'] = "อัคคีภัย";
 
 		if ($result1 = mysqli_query ( $con, $sql )) {
 			while ( $r = mysqli_fetch_array ( $result1 ) ) {
-				$type1 ['data'] [] = $r ['typ'];
+				$type1 ['data'] [] = 0;
 				$type2 ['data'] [] = 0;
 				$type3 ['data'] [] = 0;
-				$type4 ['data'] [] = 0;
+				$type4 ['data'] [] = $r ['typ'];
 				$type5 ['data'] [] = 0;
-				$type6 ['data'] [] = 0;
+// 				$type6 ['data'] [] = 0;
 			}
 		} else {
 			print mysql_error ();
@@ -254,7 +274,7 @@ class AjaxReportController extends CController {
 		array_push ( $resultJson, $type3 );
 		array_push ( $resultJson, $type4 );
 		array_push ( $resultJson, $type5 );
-		array_push ( $resultJson, $type6 );
+// 		array_push ( $resultJson, $type6 );
 
 		echo json_encode ( $resultJson, JSON_NUMERIC_CHECK );
 	}
