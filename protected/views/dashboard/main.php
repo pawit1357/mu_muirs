@@ -66,7 +66,7 @@ if(isset($duplicateData)){
 
 <style>
 .main-table {
-	width: 450px;
+	width: 420px;
 	border: 2px solid green;
 	background-color: white;
 	padding: 2px;
@@ -112,7 +112,8 @@ if(isset($duplicateData)){
                                 <div class="portlet-title"><i class="fa fa-desktop" aria-hidden="true"></i> ป้ายสถิติความปลอดภัย มหาวิทยาลัยมหิดล
                                     <div class="actions"></div>
                                 </div>
-                                <div class="portlet-body">
+                                <div class="portlet-body" >
+                                                                <div style="overflow-y: scroll;">
                                 
 
                                 <table>
@@ -220,7 +221,7 @@ if(isset($duplicateData)){
                                 </table>
 
 
-
+</div>
                                 </div>
                             </div>
                         </div>
@@ -233,6 +234,7 @@ if(isset($duplicateData)){
                                 </div>
                                 <div class="portlet-body">
                                 
+                                <div style="overflow-y: scroll;">
 
                                 <table>
                                 	<tr>
@@ -338,7 +340,7 @@ if(isset($duplicateData)){
                                 	</tr>
                                 </table>
 
-
+</div>
 
                                 </div>
                             </div>

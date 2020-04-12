@@ -7,7 +7,7 @@ class ConfigUtil {
 // 	private static $siteName = 'http://myapps1357.com/muirs/index.php/Site/LogOut';
 	
 	private static $ApplicationTitle = 'MU-IRS | MU Incident Report System';
-	private static $ApplicationCopyRight = '2012 &copy; ศูนย์บริหารความปลอดภัยอาชีวอนามัยและสิ่งแวดล้อม มหาวิทยาลัยมหิดล ศาลายา';
+	private static $ApplicationCopyRight = '2012 &copy; ศูนย์บริหารความปลอดภัย อาชีวอนามัย และสภาพแวดล้อมในการท างาน (COSHEM) มหาวิทยาลัยมหิดล ศาลายา';
 	private static $ApplicationAddress = '';
 	private static $ApplicationUpdateVersion = '<li class="fa fa-clock-o"></li><span> &nbsp;Lasted Update 2017-04-22</span>';
 	// private static $AppName = '';

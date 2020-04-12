@@ -76,11 +76,13 @@ if(isset($duplicateData)){
 </style>
 <div class="content" style="width: 510px !important">
 	<form id="Form1" method="post">
+
 <select class="form-control" name="Accident[department_id]" id="department_id" onchange="onchangeDepartment(this)">
 <option value="-1">-- มหาวิทยาลัยมหิดล --</option>
 <?php
 echo CommonUtil::getDepartment($model->department_id);
 ?>
+
 </select>
 		<br>
                            <table style="border: 2px solid green;color: green;">
@@ -110,7 +112,7 @@ echo CommonUtil::getDepartment($model->department_id);
                     									<tr id="one">
                     										<td align="center"><?php echo $day[0];?></td>
                     										<td align="center"><?php echo $day[1];?></td>
-                    										<td align="center"><?php echo CommonUtil::getShortThaiMonth($_month);?></td>
+                    										<td align="center" style="width:100px;"><?php echo CommonUtil::getShortThaiMonth($_month);?></td>
                     										<td align="center"><?php echo $year[2];?></td>
                     										<td align="center"><?php echo $year[3];?></td>
                     									</tr>

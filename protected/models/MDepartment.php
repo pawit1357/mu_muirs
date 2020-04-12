@@ -44,7 +44,7 @@ class MDepartment extends CActiveRecord {
 						'defaultOrder' => 'seq asc' 
 				),
 				'pagination' => array (
-						'pageSize' => 50 
+						'pageSize' => 500 
 				) // ConfigUtil::getDefaultPageSize()
  
 		) );

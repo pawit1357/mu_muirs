@@ -248,7 +248,7 @@ class CommonUtil {
 
 			foreach ( $deptChild as $child ) {
 				if (intval ( $parent ['id'] ) == intval ( $child ['faculty_id'] )) {
-					echo '<option style="color:#000;font-style:normal;font-weight:normal;" value="' . $child ['id'] . '" ' . ($selected == '' ? '' : ($child ['id'] == $selected ? 'selected="selected"' : '')) . '>&nbsp;&nbsp;&nbsp;-&nbsp;' . htmlspecialchars ( $child ['name'] ) . ' สังกัด' . htmlspecialchars ( $parent ['name'] ) . '</option>';
+					echo '<option style="color:#000;font-style:normal;font-weight:normal;" value="' . $child ['id'] . '" ' . ($selected == '' ? '' : ($child ['id'] == $selected ? 'selected="selected"' : '')) . '>&nbsp;&nbsp;&nbsp;&nbsp;' . htmlspecialchars ( $child ['name'] ) . ' ' . htmlspecialchars ( $parent ['name'] ) . '</option>';
 				}
 			}
 		}

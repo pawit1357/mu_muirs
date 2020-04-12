@@ -96,7 +96,7 @@ $departments = MDepartment::model ()->findAll ($criteria);
             return isNumber(event);
         });
    	 $("#id").attr('maxlength','3');
-	 $("#name").attr('maxlength','45');
+	 $("#name").attr('maxlength','200');
     	$( "#Form1" ).submit(function( event ) {
         	
         	if($("#id").val().length==0){
